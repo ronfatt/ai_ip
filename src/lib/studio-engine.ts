@@ -1,576 +1,451 @@
-import {
-  FullStudioResult,
-  ContentIntent,
-  ContentFormat,
-  VideoDuration,
-  ToneStyle,
-  ScriptBlock,
-  RepurposedEcosystem,
-  DaySeriesItem,
-  IdeaVaultItem,
-  StructuredCoachResponse,
-  CoachMode
-} from '@/types/studio-coach';
-import { TransformationKey, UserProfile } from '@/types/database';
+// AI Content Studio 核心引擎与策略检测算法 (全中文版)
 
-export const DEFAULT_IDEA_VAULT: IdeaVaultItem[] = [
-  {
-    id: 'vault_1',
-    topic: 'Why deep expertise can secretly hurt your short-form content hooks',
-    tag: 'Opinion',
-    transformation: 'JI',
-    createdAt: '2026-08-20'
-  },
-  {
-    id: 'vault_2',
-    topic: 'Three types of high-paying clients I would immediately refuse to work with',
-    tag: 'Case',
+import {
+  ContentIntent,
+  IntentConfig,
+  FormatDuration,
+  TonePreset,
+  AudiencePreset,
+  ScriptDraft,
+  IdeaCard,
+  SeriesCampaign,
+  RepurposedContent
+} from '@/types/studio-coach';
+import { UserProfile } from '@/types/database';
+
+export const INTENT_CONFIGS: Record<ContentIntent, IntentConfig> = {
+  authority_breakdown: {
+    id: 'authority_breakdown',
+    title: '深度权威拆解',
+    titleZh: '深度权威拆解',
     transformation: 'QUAN',
-    createdAt: '2026-08-19'
+    badgeColor: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
+    description: '通过严密逻辑与高维框架挑战行业伪共识，建立不可动摇的标准与定力。',
+    defaultFormula: '【认知反差】+【本质拆解】+【商业解法】+【权威行动指令】'
   },
-  {
-    id: 'vault_3',
-    topic: 'Behind every RM10k retainer is a founder who mastered boundary setting',
-    tag: 'Story',
+  contrarian_view: {
+    id: 'contrarian_view',
+    title: '逆主流洞察',
+    titleZh: '逆主流洞察',
+    transformation: 'QUAN',
+    badgeColor: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
+    description: '公开发表与主流相反但直击本质的犀利观点，迅速筛选同频高质量客户。',
+    defaultFormula: '【逆向观点】+【传统陷阱代价】+【底层逻辑推演】+【筛选反向指令】'
+  },
+  case_autopsy: {
+    id: 'case_autopsy',
+    title: '真实案例尸检',
+    titleZh: '真实案例尸检',
     transformation: 'KE',
-    createdAt: '2026-08-18'
+    badgeColor: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
+    description: '深入解剖高客单客户真实转型过程，用事实与交付细节构建无可撼动的信任。',
+    defaultFormula: '【前后对比悬念】+【核心瓶颈排查】+【3步定位重构】+【数据结果见证】'
+  },
+  checklist_audit: {
+    id: 'checklist_audit',
+    title: '诊断自测清单',
+    titleZh: '诊断自测清单',
+    transformation: 'KE',
+    badgeColor: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
+    description: '提供即插即用的结构化自查清单，让受众在自评过程中感知专业差距。',
+    defaultFormula: '【指标量化体检】+【高频盲点排查】+【对照评分体系】+【领取清单指令】'
+  },
+  unspoken_frustration: {
+    id: 'unspoken_frustration',
+    title: '隐性痛点共鸣',
+    titleZh: '隐性痛点共鸣',
+    transformation: 'LU',
+    badgeColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+    description: '精准说出高价值客户长期存在却无人言说的内心焦虑，瞬间激发强烈引力。',
+    defaultFormula: '【扎心情境还原】+【情绪与商业共振】+【认知升维破局】+【私信领取解药】'
+  },
+  behind_the_scenes: {
+    id: 'behind_the_scenes',
+    title: '幕后战略实录',
+    titleZh: '幕后战略实录',
+    transformation: 'LU',
+    badgeColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+    description: '展示商业决策与交付现场的真实思考，展现真实立体的专家人格魅力。',
+    defaultFormula: '【决策现场还原】+【重大取舍哲学】+【商业收获反思】+【互动引发讨论】'
+  },
+  blind_spot_warning: {
+    id: 'blind_spot_warning',
+    title: '致命盲区预警',
+    titleZh: '致命盲区预警',
+    transformation: 'JI',
+    badgeColor: 'text-purple-400 bg-purple-500/10 border-purple-500/30',
+    description: '警示正在造成重大隐性亏损的战略盲点，让受众产生急迫的避险需求。',
+    defaultFormula: '【隐性危机警报】+【致命损失计算】+【误区根源揭秘】+【预约排查指令】'
+  },
+  offer_invitation: {
+    id: 'offer_invitation',
+    title: '高客单服务邀请',
+    titleZh: '高客单服务邀请',
+    transformation: 'QUAN',
+    badgeColor: 'text-brand-champagne bg-brand-champagne/15 border-brand-champagne/30',
+    description: '清晰阐述高阶服务的交付承诺与筛选标准，吸引高意向精准客户主动咨询。',
+    defaultFormula: '【服务交付承诺】+【适合与不适合画像】+【席位限制规则】+【申请审核通道】'
+  }
+};
+
+export const SMART_IDEAS_BANK: IdeaCard[] = [
+  {
+    id: 'idea_01',
+    topic: '为什么年入百万的资深顾问从来不卖单次小时咨询？',
+    intent: 'authority_breakdown',
+    transformation: 'QUAN',
+    matchScore: 96,
+    reasonZh: '精准匹配你的权（Authority 92）能量，挑战行业按小时计费的伪常识。',
+    hookSample: '如果你还在按小时收费，说明你的商业模式还在石器时代。真正的顶级顾问卖的从来不是时间，而是确定性。'
   },
   {
-    id: 'vault_4',
-    topic: 'The 1-sentence positioning test: Can a 12-year old understand your value?',
-    tag: 'Education',
+    id: 'idea_02',
+    topic: '真实复盘：我们如何把一位财务顾问的单次 RM1,500 收费重塑为 RM18,000 咨询年框？',
+    intent: 'case_autopsy',
+    transformation: 'KE',
+    matchScore: 94,
+    reasonZh: '发挥科（Trust 87）的案例背书优势，用具体数据打消高净值客户疑虑。',
+    hookSample: '3个月前，一位拥有10年经验的精品财务顾问找到我，每天忙到半夜却只有微薄收入。这是我们重构其定位的全过程。'
+  },
+  {
+    id: 'idea_03',
+    topic: '90%的专家在做个人IP时最常犯的3个致命定位错误',
+    intent: 'blind_spot_warning',
+    transformation: 'JI',
+    matchScore: 91,
+    reasonZh: '切入忌（Breakthrough）盲点，警示表面高点赞但零转化的流量陷阱。',
+    hookSample: '很多专家做自媒体，点赞破万但从来没人找他买单。今天一次性把最致命的3个定位盲区讲透。'
+  },
+  {
+    id: 'idea_04',
+    topic: '为什么绝大多数资深专业人士每天工作14小时，却始终突破不了收入瓶颈？',
+    intent: 'unspoken_frustration',
     transformation: 'LU',
-    createdAt: '2026-08-17'
+    matchScore: 89,
+    reasonZh: '激发禄（Attraction 76）共鸣，精准直击高管与顾问群体内心的深层疲惫。',
+    hookSample: '你拥有行业顶尖的专业实力，但为什么客户在买单时总是犹豫不决？根本原因在于你缺乏一套定位翻译系统。'
+  },
+  {
+    id: 'idea_05',
+    topic: '公开唱反调：为什么我建议年营收低于50万的顾问千万不要做低价引流课？',
+    intent: 'contrarian_view',
+    transformation: 'QUAN',
+    matchScore: 95,
+    reasonZh: '强观点逆向切入，过滤只贪图便宜的非目标受众，锚定高客单定位。',
+    hookSample: '低价引流课正在悄悄杀死专业人士的商业品牌。今天冒着被同行骂的风险，也要告诉你背后的真相。'
+  },
+  {
+    id: 'idea_06',
+    topic: '5分钟自测：你的个人商业IP是否具备高客单溢价能力？（20项诊断清单）',
+    intent: 'checklist_audit',
+    transformation: 'KE',
+    matchScore: 92,
+    reasonZh: '用结构化清单建立专业门槛，让潜在客户在自测中主动寻求合作。',
+    hookSample: '拿出一张纸，对照这5条标准自测。如果只满足不到3条，你的内容根本无法支撑高客单报价。'
+  },
+  {
+    id: 'idea_07',
+    topic: '为什么我们上周坚决拒绝了一个年付10万的客户？谈谈专业顾问的边界感',
+    intent: 'behind_the_scenes',
+    transformation: 'LU',
+    matchScore: 88,
+    reasonZh: '通过幕后拒绝客户的真实故事展现专业定力，反而引发真正优质客户的敬重。',
+    hookSample: '不是所有给钱的客户都值得接。上周我们主动退掉了一个10万的定金，原因只有一条：战略价值观不符。'
+  },
+  {
+    id: 'idea_08',
+    topic: '商业IP私享陪跑席位招募：如何用8周时间打造专属于你的高客单交付系统？',
+    intent: 'offer_invitation',
+    transformation: 'QUAN',
+    matchScore: 90,
+    reasonZh: '承接高客单转化，针对成熟顾问与实体企业主释放稀缺席位。',
+    hookSample: '我们正式开放2026年第二季度的商业IP私享陪跑计划。本期仅限6席，只接受符合条件的资深顾问与创始人。'
+  },
+  {
+    id: 'idea_09',
+    topic: '传统B2B企业老板转型做个人IP，必须绕开的4个“网红陷阱”',
+    intent: 'blind_spot_warning',
+    transformation: 'JI',
+    matchScore: 93,
+    reasonZh: '针对企业主受众，破除把个人商业IP当成网红搞怪的认知误区。',
+    hookSample: '实体老板千万不要去学网红在镜头前跳舞。你的客户是看重你的商业判断力，而不是你的娱乐表演。'
+  },
+  {
+    id: 'idea_10',
+    topic: '从0到1构建高客单咨询飞轮：专业人士必备的5阶产品阶梯模型',
+    intent: 'authority_breakdown',
+    transformation: 'QUAN',
+    matchScore: 94,
+    reasonZh: '结构化交付干货，展示高阶商业模式设计能力。',
+    hookSample: '为什么大多数专家的知识变现做得很累？因为产品结构断层了。今天公开我们内部使用的5阶产品天梯。'
+  },
+  {
+    id: 'idea_11',
+    topic: '深度拆解：一位资深企业高管转型独立顾问的前90天真实历程',
+    intent: 'case_autopsy',
+    transformation: 'KE',
+    matchScore: 90,
+    reasonZh: '陪伴感与事实力量并存，极大增强处于转型期高管的决策信心。',
+    hookSample: '从500强高管到独立顾问，最难的不是专业技能，而是心理账户的重塑。看看他是如何在90天内拿下第一单的。'
+  },
+  {
+    id: 'idea_12',
+    topic: '深度胜过泛流量：为什么你不需要10万粉丝，也能年入百万？',
+    intent: 'contrarian_view',
+    transformation: 'QUAN',
+    matchScore: 97,
+    reasonZh: '直击核心商业常识，打消客户对“做自媒体需要海量粉丝”的畏难情绪。',
+    hookSample: '做个人IP最大的谎言就是追求海量粉丝。如果你做的是高客单业务，只要有100个精准买家，就足够支撑百万年薪。'
   }
 ];
 
-export function detectStrategyFromTopic(topic: string): {
-  recommendedTrans: TransformationKey;
-  recommendedIntent: ContentIntent;
-  confidence: number;
-  reason: string;
-  alternatives: { trans: TransformationKey; score: number }[];
+export function detectStrategyFromTopic(topic: string, user: UserProfile): {
+  detectedIntent: ContentIntent;
+  targetTransformation: 'LU' | 'QUAN' | 'KE' | 'JI';
+  fitScore: number;
+  strategicReasonZh: string;
 } {
-  const lower = topic.toLowerCase();
+  const t = topic.toLowerCase();
 
-  if (lower.includes('stop') || lower.includes('never') || lower.includes('mistake') || lower.includes('fail') || lower.includes('copying') || lower.includes('rule')) {
+  if (t.includes('复盘') || t.includes('案例') || t.includes('真实') || t.includes('客户')) {
     return {
-      recommendedTrans: 'QUAN',
-      recommendedIntent: 'Build Authority',
-      confidence: 88,
-      reason: 'This topic is strongest when positioned as an expert judgment and boundary-setting framework rather than a general educational post.',
-      alternatives: [
-        { trans: 'KE', score: 72 },
-        { trans: 'JI', score: 65 }
-      ]
+      detectedIntent: 'case_autopsy',
+      targetTransformation: 'KE',
+      fitScore: 94,
+      strategicReasonZh: '检测到案例与实证关键词，自动匹配科（信任背书）策略，通过细节闭环构建高信任度。'
     };
   }
 
-  if (lower.includes('case') || lower.includes('client') || lower.includes('how we') || lower.includes('result') || lower.includes('pipeline') || lower.includes('from 0')) {
+  if (t.includes('错误') || t.includes('盲区') || t.includes('陷阱') || t.includes('别再') || t.includes('代价')) {
     return {
-      recommendedTrans: 'KE',
-      recommendedIntent: 'Build Trust',
-      confidence: 92,
-      reason: 'This topic demonstrates proven transformation and forensic evidence, maximizing institutional trust and credibility.',
-      alternatives: [
-        { trans: 'QUAN', score: 76 },
-        { trans: 'LU', score: 60 }
-      ]
+      detectedIntent: 'blind_spot_warning',
+      targetTransformation: 'JI',
+      fitScore: 92,
+      strategicReasonZh: '检测到风险与避坑关键词，自动匹配忌（盲点突破）策略，通过代价前置激发避险紧迫感。'
     };
   }
 
-  if (lower.includes('why') || lower.includes('struggle') || lower.includes('trap') || lower.includes('feel') || lower.includes('frustrated')) {
+  if (t.includes('为什么') || t.includes('焦虑') || t.includes('痛点') || t.includes('瓶颈')) {
     return {
-      recommendedTrans: 'LU',
-      recommendedIntent: 'Attract Attention',
-      confidence: 84,
-      reason: 'This topic taps into unspoken founder frustrations, making ideal clients feel seen and understood before you introduce solutions.',
-      alternatives: [
-        { trans: 'JI', score: 78 },
-        { trans: 'QUAN', score: 64 }
-      ]
+      detectedIntent: 'unspoken_frustration',
+      targetTransformation: 'LU',
+      fitScore: 90,
+      strategicReasonZh: '检测到深层痛点诉求，自动匹配禄（吸引共鸣）策略，用认知共鸣快速建立初始引力。'
+    };
+  }
+
+  if (t.includes('清单') || t.includes('自测') || t.includes('体检') || t.includes('标准')) {
+    return {
+      detectedIntent: 'checklist_audit',
+      targetTransformation: 'KE',
+      fitScore: 93,
+      strategicReasonZh: '检测到工具与评估属性，自动匹配科（工具背书）策略，通过量化自查体现专业标准。'
     };
   }
 
   return {
-    recommendedTrans: 'JI',
-    recommendedIntent: 'Challenge Assumptions',
-    confidence: 81,
-    reason: 'This topic uncovers hidden cognitive blind spots and converts friction into a breakthrough perspective shift.',
-    alternatives: [
-      { trans: 'QUAN', score: 74 },
-      { trans: 'LU', score: 68 }
-    ]
+    detectedIntent: 'authority_breakdown',
+    targetTransformation: 'QUAN',
+    fitScore: 96,
+    strategicReasonZh: '精准匹配你的策略型破局者主原型与权（权威定力 92）能量，用结构化逻辑建立行业权威。'
   };
 }
 
-export function buildCompleteStudioResult(params: {
-  topic: string;
-  intent?: ContentIntent;
-  transformation?: TransformationKey;
-  format?: ContentFormat;
-  duration?: VideoDuration;
-  tone?: ToneStyle;
-  audience?: string;
-  userProfile: UserProfile;
-}): FullStudioResult {
-  const {
-    topic,
-    userProfile,
-    intent = 'Build Authority',
-    transformation = 'QUAN',
-    format = 'Short Video',
-    duration = '45s',
-    tone = 'My Brand Voice',
-    audience = 'SME Owners & Knowledge-Based Entrepreneurs'
-  } = params;
-
-  const cleanTopic = topic.trim() || 'Why most professionals fail at personal branding.';
-  const id = `gen_${Date.now()}`;
-
-  // Check similar topic in history simulation
-  const isSimilar = cleanTopic.toLowerCase().includes('fail') || cleanTopic.toLowerCase().includes('influencer');
-
-  const strategicAngle =
-    transformation === 'QUAN'
-      ? 'Position the problem as a positioning and standard-setting failure, not a content production failure.'
-      : transformation === 'KE'
-      ? 'Walk through the diagnostic before-and-after autopsy to prove the methodology.'
-      : transformation === 'LU'
-      ? 'Resonate with the silent fatigue of copying others before introducing authentic clarity.'
-      : 'Deconstruct why high expertise secretly creates content friction and how to simplify it.';
-
-  const primaryHook =
-    transformation === 'QUAN'
-      ? 'Most professionals don’t have a visibility problem. They have a positioning problem.'
-      : transformation === 'KE'
-      ? 'Here is the exact diagnostic audit that took an advisory firm from RM1,500 hourly rates to RM18,000 retainers.'
-      : transformation === 'LU'
-      ? 'You probably don’t need to create more content. You need a clearer reason for people to remember you.'
-      : 'Having 15 years of deep domain experience may be the exact reason your content feels too complicated.';
+export function buildCompleteScript(
+  topic: string,
+  intent: ContentIntent,
+  duration: FormatDuration,
+  tone: TonePreset,
+  audience: AudiencePreset,
+  user: UserProfile
+): ScriptDraft {
+  const intentConfig = INTENT_CONFIGS[intent];
+  const transformation = intentConfig.transformation;
 
   const hookOptions = [
     {
-      id: 'h1',
-      text: primaryHook,
-      style: 'Direct & Polarizing' as const,
-      retentionScore: 94
+      id: 'hook_01',
+      text: `如果你还在用传统方式处理【${topic.slice(0, 14)}】，说明你根本没有看清背后的商业杠杆。`,
+      score: 96,
+      style: '高定力挑战型',
+      reasonZh: '前3秒直击痛点，打破受众既有认知，树立不容置疑的专家权威。'
     },
     {
-      id: 'h2',
-      text: `If you are selling high-ticket services to ${audience.toLowerCase()}, copying 20-year-old viral influencer trends is costing you clients.`,
-      style: 'Diagnostic Question' as const,
-      retentionScore: 89
+      id: 'hook_02',
+      text: `为什么业内顶级的专家，从不在【${topic.slice(0, 14)}】上浪费哪怕一分钟？`,
+      score: 92,
+      style: '认知反差悬念型',
+      reasonZh: '用顶级圈层的做法形成鲜明反差，激发决策者的好奇心与窥探欲。'
     },
     {
-      id: 'h3',
-      text: `The single counter-intuitive shift that separates high-status advisors from commodity freelancers.`,
-      style: 'Counter-Intuitive' as const,
-      retentionScore: 86
+      id: 'hook_03',
+      text: `在这个问题上踩坑，每年至少让一位资深顾问白白损失 RM50,000 的隐性收入。`,
+      score: 89,
+      style: '商业代价警示型',
+      reasonZh: '量化不改变的商业代价，让目标受众瞬间产生紧迫感。'
     }
   ];
 
-  const coreMessage = `Your audience does not need to hear everything you know. They need a clear reason to associate you with solving one high-value commercial bottleneck.`;
-
-  const scriptBlocks: ScriptBlock[] = [
+  const blocks = [
     {
       id: 'blk_1',
-      type: 'HOOK',
-      timestamp: '0–3s',
-      title: 'Hook & Pattern Interrupt',
-      content: primaryHook
+      timestampRange: '0:00 - 0:08',
+      stageName: '黄金破局钩子 (Hook)',
+      content: hookOptions[0].text,
+      screenGuidance: '【特写镜头】沉稳直视镜头，语速放缓，停顿0.8秒增强力量感。'
     },
     {
       id: 'blk_2',
-      type: 'PROBLEM',
-      timestamp: '3–12s',
-      title: 'Problem & False Consensus',
-      content: `Most entrepreneurs think building influence means shouting louder, dancing to trending audio, and posting 5 times a day.
-If you sell RM50 products, sure. But if you sell 5-figure advisory or consulting, that immediately destroys your perceived pricing power.`
+      timestampRange: '0:08 - 0:25',
+      stageName: '揭示传统误区代价 (Problem & Cost)',
+      content: `大多数人在处理这个问题时，习惯性陷入了表面低效内卷。你越是卖力解释，客户反而越觉得你没有核心竞争力，最终把你拖入毫无意义的价格战。`,
+      screenGuidance: '【切中景】配合 iPad 手绘“传统陷入点 vs 正确破局点”对比图。'
     },
     {
       id: 'blk_3',
-      type: 'INSIGHT',
-      timestamp: '12–30s',
-      title: 'Diagnostic Insight & Framework',
-      content: `Enterprise decision-makers don’t buy noise. They look for 3 specific signals:
-1. Deep Diagnostic Precision: Can you pinpoint their bottleneck in 30 seconds?
-2. Methodological Restraint: Do you have a structured framework, or are you just guessing?
-3. Unshakable Conviction: Do you hold your ground on standards?`
+      timestampRange: '0:25 - 0:48',
+      stageName: '核心结构化解法 (Core Framework)',
+      content: `真正聪明的破局逻辑只有三步：第一，重新定义你的商业主战场；第二，将非标经验提炼为标准方法论资产；第三，基于解决问题的商业价值而非时间进行定价。`,
+      screenGuidance: '【分步推演】屏幕左侧分行弹出 1、2、3 核心步骤卡片，保持呼吸感。'
     },
     {
       id: 'blk_4',
-      type: 'EXAMPLE',
-      timestamp: '30–40s',
-      title: 'Real-World Proof & Case Analogy',
-      content: `When we repositioned a boutique advisory founder from generic "growth consulting" to "IP Brand Intelligence", their consultation requests doubled—while their fees tripled.`
-    },
-    {
-      id: 'blk_5',
-      type: 'CTA',
-      timestamp: '40–45s',
-      title: 'High-Converting Action Trigger',
-      content: `Stop copying generic tactics. If you want our complete High-Ticket Positioning Framework, comment "IP" below and I’ll send you the confidential blueprint.`
+      timestampRange: '0:48 - 1:00',
+      stageName: '高转化指令 (Strategic CTA)',
+      content: `如果你也希望彻底重构自己的商业定位与高客单引流系统，在评论区回复【蓝图】，获取完整实操指引。`,
+      screenGuidance: '【镜头定焦】屏幕下方展示极简引导卡片，给出明确单一动作。'
     }
   ];
 
-  const shotPlan = [
-    { number: 'SHOT 01', framing: 'Medium close-up (Eye level)', action: 'Direct eye contact · Deliver hook with quiet conviction', duration: '3s' },
-    { number: 'SHOT 02', framing: '45-degree angle desk shot', action: 'Explain problem and why conventional industry advice fails', duration: '9s' },
-    { number: 'SHOT 03', framing: 'Cutaway / Over-the-shoulder', action: 'iPad screen draw showing the 3 structural trust pillars', duration: '18s' },
-    { number: 'SHOT 04', framing: 'Return to center eye-level', action: 'Final takeaway & unhurried call to action', duration: '15s' }
-  ];
+  const captions = `【${topic}】\n\n按传统逻辑做个人IP只会越做越累。专业人士的核心竞争力永远在于你的认知深度与商业架构能力。\n\n📌 核心干货要点：\n1. 拒绝小时计费，按商业价值定价\n2. 打造高壁垒的个人方法论资产\n3. 敢于反向筛选，只服务匹配客户\n\n💬 评论区回复【蓝图】，免费获取高清拆解导图。\n\n#个人商业IP #商业模式 #高客单定位 #认知升级 #企业战略`;
 
-  const bRollIdeas = [
-    'Overhead desk view drawing a 3-part framework on an iPad Pro in dark mode',
-    'Tight close-up of handwritten strategic notes with a fountain pen',
-    'Adjusting a podcast microphone in a minimalist, warm-lit studio',
-    'Reviewing an IP DNA Radar chart on a MacBook screen with quiet focus',
-    'Walking into a modern minimalist office boardroom'
-  ];
-
-  const thumbnailTitles = [
-    'STOP COPYING INFLUENCERS',
-    'YOUR CONTENT ISN’T THE PROBLEM',
-    'WHY NOBODY REMEMBERS YOU',
-    'POSITIONING > VOLUME',
-    'YOU’RE SAYING TOO MUCH'
-  ];
-
-  const captions = {
-    short: `Most professionals don’t have a visibility problem. They have a positioning problem. 🛑
-
-If you sell 5-figure consulting, trying to look like a viral influencer destroys your pricing power.
-
-Save this video and review your positioning before your next content sprint. 📌
-
-Comment "IP" to get our confidential High-Ticket Positioning Blueprint.`,
-    story: `Three years ago, I met a consultant who was publishing 7 videos a day. He was completely exhausted, but his bank account was flat.
-
-When I looked at his content, the problem was obvious: He was copying 20-year-old lifestyle creators. 
-
-High-ticket corporate clients weren’t taking him seriously because his brand looked like entertainment, not expertise.
-
-The moment we stripped away the hype and anchored his natural ${userProfile.primaryArchetype.name} strengths, he closed a RM36k retainer in 3 weeks.
-
-Stop competing on volume. Start competing on structural clarity.
-
-Comment "IP" below for the full framework.`,
-    conversion: `Are you tired of publishing content that gets likes but zero qualified inquiries?
-
-As an experienced practitioner, your greatest commercial asset isn’t viral reach—it’s intellectual authority.
-
-In this 45-second breakdown, I share the 3 criteria enterprise decision-makers evaluate before wiring 5-figure retainers.
-
-👉 Comment "IP" below and I’ll send you the complete 5-Step Brand Architecture Dossier.`
-  };
-
-  const discoveryKeywords = [
-    'Personal Branding Strategy',
-    'High-Ticket Positioning',
-    'Consulting Pricing Power',
-    'Authority Content Engine',
-    'Brand Intelligence Blueprint',
-    'Executive Thought Leadership'
-  ];
-
-  const repurposeEcosystem: RepurposedEcosystem = {
-    reelScript: `0-3s: Most professionals don't have a content problem. They have a positioning problem.
-3-15s: When you copy viral influencers, high-ticket clients assume you are an amateur.
-15-35s: Enterprise decision makers look for 3 things: Diagnostic precision, methodological restraint, and quiet conviction.
-35-45s: Comment "IP" to get our private High-Ticket Positioning Model.`,
-    facebookPost: `Why most business owners should stop copying social media influencers:
-
-If you sell high-ticket services (RM5k - RM50k), following viral trend advice is secretly repelling your highest-paying clients.
-
-Here is the difference:
-• Influencers monetize attention volume.
-• Strategists monetize trust density.
-
-When you switch from "trying to be popular" to "being indispensable to a specific decision-maker", your entire business changes.
-
-What is your biggest content bottleneck right now? Drop your thoughts below.`,
-    linkedInPost: `A contrarian observation from 10+ years of advisory work:
-
-The most successful consultants rarely have 100k followers. 
-
-What they have instead:
-1. Surgical positioning that disqualifies price-shoppers upfront.
-2. Proprietary frameworks that make complex problems look simple.
-3. Unshakable boundary setting on pricing and scope.
-
-Stop optimizing for vanity views. Optimize for inbound trust.
-
-#PersonalBranding #ConsultingStrategy #ExecutiveLeadership #BrandPositioning`,
-    carouselSlides: [
-      { slideNumber: 1, title: 'Why Most Professionals Fail at Personal Branding', body: 'The invisible mistake keeping 6-figure practitioners commoditized.' },
-      { slideNumber: 2, title: 'Mistake #1: The Generalist Trap', body: 'Trying to help everyone with everything makes you interchangeable.' },
-      { slideNumber: 3, title: 'Mistake #2: Copying Influencer Playbooks', body: 'Viral hype attracts spectators; structured depth attracts buyers.' },
-      { slideNumber: 4, title: 'The 3 Trust Signals of High-Ticket Brands', body: '1. Diagnostic Precision\n2. Methodological Restraint\n3. Quiet Conviction' },
-      { slideNumber: 5, title: 'The Next Step', body: 'Save this guide and comment "IP" for the complete Brand Intelligence Blueprint.' }
-    ],
-    threeStories: [
-      { storyNumber: 1, hook: 'Quick question for consultants: Are you still pricing by the hour?', action: 'Poll: Yes / No' },
-      { storyNumber: 2, hook: 'Here is why value pricing requires structured brand positioning first...', action: 'Slider: 100% Agree' },
-      { storyNumber: 3, hook: 'I just broke down the full 3-step model in today’s new video. DM "IP" to watch.', action: 'Link Sticker' }
-    ],
-    emailNewsletter: {
-      subject: 'Why your expertise might be hurting your content...',
-      preview: 'The difference between talking like a practitioner vs an advisor.',
-      body: `Hey ${userProfile.name.split(' ')[0]},
-
-Most smart professionals make one fatal mistake when creating content:
-
-They try to teach everything they know in one post.
-
-The result? The content feels dense, overwhelming, and difficult for busy clients to act upon.
-
-High-ticket buyers don't hire you because you gave them a 40-page textbook. They hire you because you gave them a 1-page diagnostic lens that made their problem crystal clear.
-
-In today's dispatch, I break down the 3 criteria high-value decision-makers evaluate before signing 5-figure retainers.
-
-Read the full breakdown on the blog [link].
-
-Best,
-Alex`
-    },
-    fiveShortHooks: [
-      'Stop copying 20-year-old influencers if you sell B2B consulting.',
-      'Why having 15 years experience is secretly ruining your video hooks.',
-      'You don’t have a visibility problem. You have a positioning problem.',
-      'Three things I would never recommend after a decade in consulting.',
-      'The single reason 6-figure founders fail to scale inbound authority.'
-    ]
-  };
-
-  const sevenDaySeries: DaySeriesItem[] = [
-    { dayNumber: 1, dayName: 'Day 1 (Monday)', transformation: 'QUAN', theme: 'Core Opinion & Contrarian Stance', hookIdea: 'Why business owners must stop copying generic creators.', format: '60s Sit-down Video' },
-    { dayNumber: 2, dayName: 'Day 2 (Tuesday)', transformation: 'JI', theme: 'Common Industry Mistake & Reframe', hookIdea: 'The expensive mistake I made trying to serve everyone in year 2.', format: 'Narrative Short' },
-    { dayNumber: 3, dayName: 'Day 3 (Wednesday)', transformation: 'KE', theme: 'Client Case Study & Autopsy', hookIdea: 'How we restructured a RM1.5k hourly rate into an RM18k retainer.', format: 'Client Breakdown' },
-    { dayNumber: 4, dayName: 'Day 4 (Thursday)', transformation: 'LU', theme: 'Behind The Scenes & Resonance', hookIdea: 'What my private weekly advisory review actually looks like.', format: 'BTS Vlog Reel' },
-    { dayNumber: 5, dayName: 'Day 5 (Friday)', transformation: 'QUAN', theme: 'Educational Framework Breakdown', hookIdea: 'The 5-Position Brand Radar: How to price with conviction.', format: 'Whiteboard Tutorial' },
-    { dayNumber: 6, dayName: 'Day 6 (Saturday)', transformation: 'JI', theme: 'Contrarian Viewpoint & Blind Spot', hookIdea: 'Why more knowledge won’t fix your client acquisition leaks.', format: 'Direct Perspective' },
-    { dayNumber: 7, dayName: 'Day 7 (Sunday)', transformation: 'KE', theme: 'Offer Showcase & Clear CTA', hookIdea: 'How to work with us on your 2026 Brand Intelligence Blueprint.', format: 'Offer Post & Link' }
+  const thumbnails = [
+    '告别低效内卷\n年入百万的定位底层逻辑',
+    '为什么顶级专家\n从不按小时计费？',
+    '3个定位致命盲区\n让顾问白白损失50万',
+    '真实商业案例复盘\n如何拿下18,000高客单？',
+    '5步商业定位诊断法\n测测你的IP溢价力'
   ];
 
   return {
-    id,
-    topic: cleanTopic,
+    id: `draft_${Date.now()}`,
+    topic,
     intent,
     transformation,
-    format,
-    duration,
+    formatDuration: duration,
     tone,
     audience,
-    confidenceScore: 88,
-    alternativeStrategies: [
-      { trans: 'KE', score: 72 },
-      { trans: 'JI', score: 65 }
-    ],
-    strategicAngle,
-    primaryHook,
+    readinessScore: 86,
+    brandFitScore: 94,
+    similarityAlert: '检测到与历史第1期脚本存在主题相关性，已自动调整切入视角以保证内容新颖度。',
     hookOptions,
-    coreMessage,
-    scriptBlocks,
+    selectedHookId: hookOptions[0].id,
+    structuredAngle: '从商业杠杆与价值定价的本质切入，彻底打破传统按小时计费的认知陷阱。',
+    blocks,
     deliveryCoach: {
-      delivery: 'Calm, measured, and in total control. Do not rush words.',
-      pace: 'Medium-slow (approx 120-130 words per minute).',
-      eyeContact: 'Direct into the camera lens with unwavering focus.',
-      pause: 'Hold a 1.5-second deliberate pause after the opening hook.',
-      avoid: 'Avoid over-explaining technical jargon before establishing emotional context.',
-      bodyLanguage: 'Minimal, deliberate hand movements. Keep shoulders relaxed and square.',
-      camera: 'Medium close-up framing with clean depth of field and soft side lighting.'
+      pace: '120 - 130 词/分钟 (沉稳不疾不徐)',
+      energy: '沉静威严 (顾问大师风范，切忌亢奋叫喊)',
+      pauses: '在第 8 秒与第 25 秒留出 0.8 秒深度停顿，强化受众消化感',
+      posture: '端坐于书桌前，双手自然平放于桌面，身体微微前倾 5 度'
     },
-    shotPlan,
-    bRollIdeas,
-    visualDirection: {
-      recommended: [
-        'Clean, minimalist studio background with walnut or charcoal tones',
-        'Neutral color palette (black, dark navy, charcoal, crisp white)',
-        'Medium-contrast key lighting with subtle warm edge separation',
-        'Professional broadcast mic visible on desk (e.g. Shure SM7B)'
-      ],
-      avoid: [
-        'Fast-paced flashing text transitions and auto-bouncing green subtitles',
-        'Loud viral meme audio tracks or dramatic Hollywood soundtrack swells',
-        'Exaggerated theatrical facial expressions or pointing at floating text bubbles'
-      ]
-    },
-    thumbnailTitles,
-    selectedThumbnail: thumbnailTitles[0],
-    captions,
-    selectedCaptionStyle: 'short',
-    ctaChoice: 'Comment "IP"',
-    discoveryKeywords,
-    optionalHashtags: ['#PersonalBranding', '#ConsultingStrategy', '#BrandIntelligence', '#HighTicketSales', '#ThoughtLeadership'],
-    repurposeEcosystem,
-    sevenDaySeries,
-    qualityScore: {
-      overall: 86,
-      breakdown: {
-        hookStrength: 91,
-        brandFit: 94,
-        audienceRelevance: 87,
-        authority: 90,
-        clarity: 81,
-        ctaStrength: 73
-      },
-      recommendation: 'Your CTA is currently weaker than your hook. Consider specifying an exact single-word DM trigger like Comment "IP".'
-    },
-    brandAlignment: {
-      percentage: 94,
-      matches: [
-        'Matches Brand Voice (Direct, Strategic, Calm, Confident)',
-        'Aligns with Authority Positioning (QUAN)',
-        'Targets SME Owners & Knowledge-Based Entrepreneurs',
-        'Reinforces High-Ticket Advisory Offer'
-      ],
-      potentialIssue: 'The hook is slightly more aggressive than your usual calm tone. You can soften it or keep the polarity.'
-    },
-    createdAt: new Date().toISOString(),
-    status: 'Ready',
-    similarTopicWarning: isSimilar
-      ? {
-          topic: 'Why professionals fail at personal branding',
-          daysAgo: 12,
-          suggestions: [
-            'Use a forensic case study angle instead of general critique',
-            'Contrast with a client transformation from last month',
-            'Address the specific fear of losing corporate credibility'
-          ]
-        }
-      : undefined
+    shotPlan: [
+      '0-8s：头部特写直视镜头，眼神聚焦坚定',
+      '8-25s：中景切入，配合 iPad 屏幕分屏展示',
+      '25-48s：白板手绘思维导图推演，展示逻辑链条',
+      '48-60s：镜头拉回正中，展示行动指引卡片'
+    ],
+    bRollIdeas: [
+      '特写：Apple Pencil 在 iPad Pro 黑暗模式上书写逻辑公式',
+      '俯拍：桌面上翻开的经典商业著作与手写笔记本',
+      '空镜：现代简约办公空间中专注推演的侧影'
+    ],
+    thumbnailTitles: thumbnails,
+    selectedThumbnailIndex: 0,
+    captionText: captions,
+    createdAt: new Date().toISOString()
   };
 }
 
-export function generateTwelveSmartIdeas(userProfile: UserProfile): {
-  trans: TransformationKey;
-  label: string;
-  ideas: { topic: string; angle: string }[];
-}[] {
-  return [
-    {
-      trans: 'LU',
-      label: 'LU — Attraction & Resonance',
-      ideas: [
-        { topic: '3 things high-paying clients secretly wish consultants explained better', angle: 'Empathic insight into unspoken buyer frustration' },
-        { topic: 'Why working 14 hours a day is a positioning failure, not a work ethic issue', angle: 'Validates exhausted founders with strategic reframe' },
-        { topic: 'The quiet reason introverted experts often build the most loyal audiences', angle: 'Celebrates depth over loud extroverted hype' }
-      ]
+export function generateRepurposedContent(script: ScriptDraft): RepurposedContent {
+  return {
+    linkedin: {
+      platform: 'LinkedIn (领英高管帖)',
+      content: `大多数资深专业人士在商业定位上犯的最大错误，就是把“专业能力”和“商业价值”混为一谈。\n\n最近复盘了几十位年营收突破百万的独立顾问，他们都有一个惊人的共同点：\n\n从来不按小时计费。\n\n为什么？因为按小时计费在底层逻辑上惩罚了你的效率。当你越专业、解决问题越快，按时间收费反而赚得越少。\n\n真正成熟的商业IP只有一套闭环：\n1. 明确商业主战场，主动过滤非目标受众\n2. 将隐性经验提炼为标准方法论资产\n3. 按为客户创造的确定性价值定价\n\n你是如何看待专业服务定价的？欢迎在评论区分享你的思考。`
     },
-    {
-      trans: 'QUAN',
-      label: 'QUAN — Authority & Conviction',
-      ideas: [
-        { topic: 'Three things I would never recommend after 12 years in brand consulting', angle: 'High-conviction boundary setting and anti-trends' },
-        { topic: 'Why charging by the hour is mathematically broken for elite advisors', angle: 'Definitive mathematical proof of value pricing' },
-        { topic: 'The unwritten rules of enterprise deal-making in the AI era', angle: 'Establishes executive category leadership' }
-      ]
+    xiaohongshu: {
+      platform: '小红书 (图文高赞爆款)',
+      content: `建议所有想做个人商业IP的顾问收藏这篇！干货满满🔥\n\n📌 为什么你的专业很强，却总是收不上价格？\n❌ 误区1：按小时计费，越做越累\n❌ 误区2：试图讨好所有人，没有定位边界\n❌ 误区3：输出泛娱乐鸡汤，缺乏交付确定性\n\n💡 逆袭三步法：\n① 提炼独家方法论资产\n② 搭建5阶高客单产品阶梯\n③ 设计反向客户筛选过滤器\n\n需要完整《个人商业IP战略蓝图》的宝子，评论区扣【蓝图】自取～\n#知识博主 #个人品牌 #商业思维 #副业搞钱 #认知觉醒`
     },
-    {
-      trans: 'KE',
-      label: 'KE — Trust & Proof',
-      ideas: [
-        { topic: 'Case Autopsy: How we turned a RM1.5k hourly rate into RM18k retainers', angle: 'Step-by-step diagnostic breakdown with real metrics' },
-        { topic: 'The exact 3-step audit I run before accepting any new advisory client', angle: 'Demonstrates surgical process and exclusivity' },
-        { topic: 'Behind the scenes: The positioning framework that generated RM84k pipeline', angle: 'Transparent documentation of methodology in action' }
-      ]
+    wechatArticle: {
+      platform: '微信公众号 (深度思想长文)',
+      content: `《为什么年入百万的资深顾问，从不把时间卖给任何人？》\n\n在商业世界中，最昂贵的事情莫过于用战术上的勤奋掩盖战略上的懒惰...\n\n（正文已展开 2,400 字深度商业架构拆解，包含 3 大核心模型与 2 个真实企业客户转型案例复盘，排版清晰美观，适合深度阅读）`
     },
-    {
-      trans: 'JI',
-      label: 'JI — Breakthrough & Blind Spot',
-      ideas: [
-        { topic: 'Why the advice everyone repeats about content volume is secretly ruining you', angle: 'Directly challenges consensus and creates breakthrough' },
-        { topic: 'The expensive mistake I made trying to serve everyone in year 2', angle: 'High-vulnerability founder lesson that builds magnetic loyalty' },
-        { topic: 'Why being too smart is costing you attention and high-ticket clients', angle: 'Reframes intellectual over-complication into simple clarity' }
-      ]
+    newsletter: {
+      platform: '专属邮件通讯 (EDM)',
+      content: `主题：致志远：一个关于高客单定位的关键商业思考\n\n你好 Alex，\n\n本周在为一位精品顾问做一对一战略梳理时，我发现了一个非常普遍的隐性瓶颈...\n\n与其每天花3小时在社交媒体上碰运气，不如花1周时间彻底把你的高客单产品阶梯搭建完毕。\n\n祝好，\nZIWEI IP 战略团队`
+    },
+    podcastOutline: {
+      platform: '播客/深度对谈大纲 (Podcast)',
+      content: `【对谈主题】跳出小时计费陷阱：资深专家的商业IP进阶之路\n\n🎙️ 讨论环节设计：\n00:00 - 05:00 为什么传统专业人士转型做IP往往痛苦不堪？\n05:00 - 18:00 深度剖析按价值定价与按时间定价的底层思维鸿沟\n18:00 - 32:00 真实案例拆解：从 RM1,500 到 RM18,000 的蜕变细节\n32:00 - 45:00 留给听众的 3 个自我诊断关键问题`
+    },
+    communityPrompt: {
+      platform: '私域社群讨论破冰 (Community)',
+      content: `各位群友大家上午好！今日话题研讨：\n\n💬 “大家目前在服务客户时，是按照【时间/工时】收费，还是按照【项目/交付结果】收费？在报价过程中遇到最大的困惑是什么？”\n\n欢迎在群内畅所欲言，今晚 8 点我会在群内针对大家的留言做一次语音复盘拆解！`
+    },
+    salesAngle: {
+      platform: '私信1对1咨询成交切入 (DM Script)',
+      content: `“看到您刚才在动态下方的留言，您提到的【高客单转化乏力】问题，我们在过去辅导的顾问中非常普遍。其实核心症结不在您的专业能力，而在于前端缺乏一套精准过滤的定位过滤器。如果您方便的话，我们可以安排一次 20 分钟的免费定位体检，帮您把这几个堵点梳理清楚。”`
     }
-  ];
+  };
 }
 
-export function generateCoachStructuredResponse(query: string, mode: CoachMode, userProfile: UserProfile): StructuredCoachResponse {
-  const lower = query.toLowerCase();
-
-  if (lower.includes('/today') || lower.includes('post today') || lower.includes('what to post')) {
-    return {
-      observation: 'Your content currently over-indexes on Attraction (48%) and underuses Authority (21%).',
-      whyItMatters: 'People may enjoy and resonate with your content, but without strong QUAN authority pieces, they may hesitate to wire 5-figure advisory retainers.',
-      recommendation: 'Publish one high-conviction expert opinion video directly challenging a common industry misconception today.',
-      nextAction: {
-        label: 'Generate QUAN Authority Script',
-        url: '/studio?trans=QUAN&topic=Why%20most%20businesses%20should%20stop%20copying%20influencer%20marketing',
-        transPreset: 'QUAN',
-        topicPreset: 'Why most businesses should stop copying influencer marketing'
-      }
-    };
-  }
-
-  if (lower.includes('/week') || lower.includes('weekly review') || lower.includes('review')) {
-    return {
-      observation: 'You published 4 pieces this week. Three were Attraction-led, one was Trust-led, and zero were Authority-led.',
-      whyItMatters: 'Inbound consultation velocity accelerates when you pair high-reach hooks (Lu) with hard standard-setting boundaries (Quan).',
-      recommendation: 'Deploy a 7-day balanced series starting with a core contrarian stance on Monday and a case study on Wednesday.',
-      nextAction: {
-        label: 'Launch 7-Day Series in Studio',
-        url: '/studio?mode=series&trans=QUAN',
-        transPreset: 'QUAN'
-      }
-    };
-  }
-
-  if (lower.includes('/offer') || lower.includes('sell') || lower.includes('monetiz')) {
-    return {
-      observation: 'Your Monetization Score is 88, and your Primary Archetype is Strategic Creator.',
-      whyItMatters: 'Selling low-ticket RM49 volume courses dilutes your executive positioning and creates heavy customer support drag.',
-      recommendation: 'Focus on a 5-tier Offer Ladder anchored by a RM4,800 12-Week Strategic Advisory Sprint, supported by a RM69 tripwire workshop.',
-      nextAction: {
-        label: 'Configure Offer Ladder in Business Builder',
-        url: '/business'
-      }
-    };
-  }
-
-  if (lower.includes('audience') || lower.includes('target') || lower.includes('who to target')) {
-    return {
-      observation: 'Your Blueprint currently targets Established SME Owners & Knowledge-Based Entrepreneurs.',
-      whyItMatters: 'This group has high willingness to pay (RM5k - RM30k) and immediately appreciates structural frameworks over hype.',
-      recommendation: 'Filter out spectators by stating your premium fee ranges and non-negotiables in your content.',
-      nextAction: {
-        label: 'Review Audience Filter in Blueprint',
-        url: '/blueprint'
-      },
-      inlineProfileUpdate: lower.includes('change') || lower.includes('new')
-        ? {
-            field: 'Target Audience',
-            currentValue: 'New Entrepreneurs & Beginners',
-            proposedValue: 'Established SME Owners & Knowledge-Based Founders'
-          }
-        : undefined
-    };
-  }
-
-  if (lower.includes('camera') || lower.includes('video') || lower.includes('film')) {
-    return {
-      observation: 'Your Camera Personality is calibrated as "Sit-down Deliberate Analysis with Whiteboard / iPad Notes".',
-      whyItMatters: 'Extroverted hyper-acting drains your cognitive battery and looks performative to high-ticket corporate buyers.',
-      recommendation: 'Use a clean broadcast mic, sit comfortably upright, and let the quiet weight of your frameworks do the selling.',
-      nextAction: {
-        label: 'View Camera Directives in Blueprint',
-        url: '/blueprint'
-      }
-    };
-  }
-
-  // Default Structured Response
+export function generateSeriesCampaign(mainTopic: string): SeriesCampaign {
   return {
-    observation: `Based on your **${userProfile.primaryArchetype.name}** profile with an Authority score of **${userProfile.scores.authority}**:`,
-    whyItMatters: 'Your greatest competitive advantage is diagnostic depth and structural clarity—not internet entertainment.',
-    recommendation: `Translate "${query}" into a 3-part framework: Identify the root cause, show the structural flaw in conventional thinking, and provide your proprietary solution.`,
-    nextAction: {
-      label: 'Build This Content in Studio',
-      url: `/studio?topic=${encodeURIComponent(query)}&trans=QUAN`,
-      transPreset: 'QUAN',
-      topicPreset: query
-    }
+    campaignTitle: `《${mainTopic.slice(0, 16)}》7天深度破局战役`,
+    themeZh: '从底层认知、产品设计到高转化闭环的7天连载',
+    days: [
+      {
+        dayNumber: 1,
+        title: '【破局篇】为什么传统方法注定失灵？',
+        transformation: 'QUAN',
+        focus: '挑战行业伪常识，建立强大权威定力'
+      },
+      {
+        dayNumber: 2,
+        title: '【痛点篇】不改变将付出怎样的商业代价？',
+        transformation: 'LU',
+        focus: '激发目标受众内心深处未被言说的焦虑'
+      },
+      {
+        dayNumber: 3,
+        title: '【避坑篇】90%的人最常踩的3个致命陷阱',
+        transformation: 'JI',
+        focus: '揭示隐性亏损盲区，强化避险紧迫感'
+      },
+      {
+        dayNumber: 4,
+        title: '【方法篇】顶级专家都在用的3步破局框架',
+        transformation: 'QUAN',
+        focus: '结构化输出核心方法论，展示专业深度'
+      },
+      {
+        dayNumber: 5,
+        title: '【实证篇】真实客户转型从0到1全复盘',
+        transformation: 'KE',
+        focus: '用事实与交付细节构建无可撼动的信任'
+      },
+      {
+        dayNumber: 6,
+        title: '【自测篇】5分钟定位体检清单与自查表',
+        transformation: 'KE',
+        focus: '提供即插即用工具，让客户感知专业差距'
+      },
+      {
+        dayNumber: 7,
+        title: '【行动篇】高客单私享陪跑计划正式开放招募',
+        transformation: 'QUAN',
+        focus: '释放稀缺席位，承接高意向精准客户转化'
+      }
+    ]
   };
 }

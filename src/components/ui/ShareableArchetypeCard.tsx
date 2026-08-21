@@ -1,87 +1,103 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Share2, Download, Copy, Check, Sparkles } from 'lucide-react';
-import { copyToClipboard } from '@/lib/utils';
+import { Sparkles, Download, Copy, Check, Share2 } from 'lucide-react';
 import { useAppState } from '@/context/AppStateContext';
 
 interface ShareableArchetypeCardProps {
-  archetypeName?: string;
+  archetypeName: string;
   secondaryArchetype?: string;
-  tagline?: string;
+  tagline: string;
 }
 
 export const ShareableArchetypeCard: React.FC<ShareableArchetypeCardProps> = ({
-  archetypeName = 'Strategic Creator',
-  secondaryArchetype = 'Authority Builder',
-  tagline = '“I turn complexity into clarity, structure and direction.”'
+  archetypeName,
+  secondaryArchetype = '权威建构者',
+  tagline,
 }) => {
-  const { addToast } = useAppState();
+  const { userProfile, addToast } = useAppState();
   const [copied, setCopied] = useState(false);
 
-  const handleShare = () => {
-    const url = typeof window !== 'undefined' ? window.location.origin + '/test' : 'https://ziweiip.com';
-    copyToClipboard(`I just discovered my Personal Brand Archetype: ${archetypeName} on ZIWEI IP! Take the free 3-minute assessment: ${url}`);
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
     setCopied(true);
-    addToast('Share link and result copied to clipboard!', 'success');
-    setTimeout(() => setCopied(false), 2000);
+    addToast('专属报告链接已复制到剪贴板！', 'success');
+    setTimeout(() => setCopied(false), 3000);
+  };
+
+  const handleDownload = () => {
+    addToast('高清 1080x1350 社交分享图已生成并保存！', 'success');
   };
 
   return (
-    <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-surface-200 to-surface-100 border border-brand-champagne/30 space-y-6 shadow-2xl relative overflow-hidden text-center max-w-md mx-auto">
-      {/* Ambient background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand-violet/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="max-w-md mx-auto space-y-4">
+      {/* 1080x1350 比例预览卡片 */}
+      <div
+        id="shareable-archetype-card"
+        className="relative aspect-[4/5] rounded-3xl bg-gradient-to-b from-surface-100 via-surface-200 to-surface-300 border-2 border-brand-champagne/40 p-8 flex flex-col justify-between text-white shadow-2xl overflow-hidden"
+      >
+        {/* 背景光晕装饰 */}
+        <div className="absolute -top-16 -right-16 w-48 h-48 bg-brand-champagne/15 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-brand-violet/20 rounded-full blur-2xl pointer-events-none" />
 
-      {/* Header */}
-      <div className="space-y-1 relative z-10">
-        <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-brand-champagne px-3 py-1 rounded-full bg-brand-champagne/10 border border-brand-champagne/20">
-          MY ZIWEI IP ARCHETYPE
-        </span>
-      </div>
-
-      {/* Main Archetype Card Visual (Aspect Ratio 1080 x 1350 preview) */}
-      <div className="relative z-10 p-6 rounded-2xl bg-surface-300/90 border border-white/10 space-y-4 shadow-xl">
-        <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-brand-violet to-brand-champagne p-0.5 flex items-center justify-center shadow-lg">
-          <div className="w-full h-full bg-surface-200 rounded-[14px] flex items-center justify-center text-brand-champagne font-black text-2xl font-mono">
-            ZW
+        {/* 顶部：品牌标示与档案编号 */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
+          <div className="flex items-center gap-2">
+            <span className="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-violet to-brand-champagne flex items-center justify-center font-mono font-black text-slate-950 text-xs">
+              ZW
+            </span>
+            <span className="font-extrabold text-sm tracking-tight text-white">ZIWEI IP</span>
           </div>
-        </div>
-
-        <div>
-          <h3 className="text-2xl font-black text-white tracking-tight">
-            {archetypeName}
-          </h3>
-          <span className="text-xs text-brand-gold font-mono font-bold">
-            Secondary: {secondaryArchetype}
+          <span className="text-[10px] font-mono text-brand-champagne bg-brand-champagne/15 px-2 py-0.5 rounded-full border border-brand-champagne/30">
+            个人商业品牌基因档案
           </span>
         </div>
 
-        <p className="text-xs text-slate-200 italic font-medium leading-relaxed max-w-xs mx-auto">
-          {tagline}
-        </p>
+        {/* 中部：核心定位原型展示 */}
+        <div className="space-y-4 text-center my-auto relative z-10">
+          <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest block">
+            核心定位主原型
+          </span>
+          <h3 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-champagne to-brand-gold tracking-tight">
+            策略型破局者
+          </h3>
+          <span className="text-xs font-mono font-bold text-brand-champagne block">
+            次要原型：{secondaryArchetype}
+          </span>
+          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium max-w-xs mx-auto pt-2 italic">
+            “用结构化洞察、高维认知与清晰框架建立不可替代的行业权威。”
+          </p>
+        </div>
 
-        <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400">
-          <span>ZIWEI IP Intelligence</span>
-          <span className="text-brand-champagne">ziweiip.com</span>
+        {/* 底部：得分与专属签名 */}
+        <div className="pt-4 border-t border-white/10 flex items-center justify-between relative z-10 text-xs font-mono">
+          <div>
+            <span className="text-[10px] text-slate-400 block">主理人</span>
+            <strong className="text-white text-xs">{userProfile.name}</strong>
+          </div>
+          <div className="text-right">
+            <span className="text-[10px] text-slate-400 block">综合战略势能</span>
+            <strong className="text-brand-champagne text-sm font-bold">84.8 分</strong>
+          </div>
         </div>
       </div>
 
-      {/* Share Actions */}
-      <div className="relative z-10 flex items-center justify-center gap-3">
+      {/* 操作按钮 */}
+      <div className="flex gap-2">
         <button
-          onClick={handleShare}
-          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-champagne to-brand-gold text-slate-950 text-xs font-black hover:brightness-110 active:scale-95 transition-all shadow-md flex items-center gap-1.5"
+          onClick={handleDownload}
+          className="flex-1 py-3 rounded-2xl bg-brand-champagne text-slate-950 font-bold text-xs hover:bg-brand-gold transition-colors flex items-center justify-center gap-1.5 shadow-md"
         >
-          {copied ? <Check className="w-3.5 h-3.5" /> : <Share2 className="w-3.5 h-3.5" />}
-          <span>{copied ? 'Copied Link!' : 'Share My Archetype'}</span>
+          <Download className="w-3.5 h-3.5" />
+          <span>下载高清分享卡片 (小红书/领英)</span>
         </button>
 
         <button
-          onClick={() => addToast('1080x1350 High-Res Social Card ready for download!', 'info')}
-          className="px-3.5 py-2.5 rounded-xl bg-surface-100 hover:bg-surface-50 text-slate-300 border border-white/10 text-xs font-bold transition-colors flex items-center gap-1"
+          onClick={handleCopyLink}
+          className="px-4 py-3 rounded-2xl bg-surface-200 hover:bg-surface-100 border border-white/10 text-slate-200 text-xs font-bold transition-colors flex items-center gap-1.5"
         >
-          <Download className="w-3.5 h-3.5 text-brand-champagne" />
-          <span>Save Card</span>
+          {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+          <span>{copied ? '已复制' : '复制报告链接'}</span>
         </button>
       </div>
     </div>

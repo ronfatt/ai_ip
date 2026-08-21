@@ -27,7 +27,7 @@ export const UpgradeModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-2xl bg-surface-100 border border-brand-champagne/40 rounded-3xl p-6 sm:p-8 text-slate-100 shadow-2xl space-y-6">
-        {/* Close Button */}
+        {/* 关闭按钮 */}
         <button
           onClick={closeUpgradeModal}
           className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white"
@@ -35,23 +35,23 @@ export const UpgradeModal: React.FC = () => {
           <X className="w-5 h-5" />
         </button>
 
-        {/* Header */}
+        {/* 头部标题 */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-champagne/15 text-brand-champagne text-xs font-mono font-bold border border-brand-champagne/30">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>EXECUTIVE UPGRADE REQUIRED</span>
+            <span>会员权限升级</span>
           </div>
           <h3 className="text-2xl sm:text-3xl font-black text-white">
             {upgradeModalFeature}
           </h3>
           <p className="text-xs text-slate-300 max-w-md mx-auto">
-            Upgrade your ZIWEI IP tier to unlock unlimited AI Content Studio generations, real-time AI Coach guidance, and the 7-channel repurposing engine.
+            升级您的 ZIWEI IP 权益，解锁无限次 AI 创作工作台脚本生成、专属 AI 战略教练实时指导与 7 大平台一键分发重构引擎。
           </p>
         </div>
 
-        {/* Tier Cards */}
+        {/* 权益卡片 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-          {/* PRO Membership */}
+          {/* PRO 会员 */}
           <div
             onClick={() => setSelectedTier('pro')}
             className={`p-5 rounded-2xl border cursor-pointer transition-all space-y-3 ${
@@ -61,20 +61,20 @@ export const UpgradeModal: React.FC = () => {
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="font-mono font-bold text-brand-champagne uppercase text-[10px]">PRO MEMBERSHIP</span>
-              <span className="text-sm font-black text-white font-mono">RM{pricing.proMonthlyPrice}/mo</span>
+              <span className="font-mono font-bold text-brand-champagne uppercase text-[10px]">PRO 会员体系</span>
+              <span className="text-sm font-black text-white font-mono">RM{pricing.proMonthlyPrice} / 月</span>
             </div>
             <p className="text-slate-300 text-[11px] leading-snug">
-              For active founders and creators building a consistent, high-converting weekly content engine.
+              适合需要每周持续发布高质量内容、构建稳定客流引擎的独立顾问与创作者。
             </p>
             <ul className="space-y-1.5 text-slate-300 text-[11px]">
-              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> Unlimited AI Studio Scripts</li>
-              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 7-Channel Repurpose Engine</li>
-              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> Real-time IP AI Coach</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 无限次 AI 爆款脚本生成</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 7大平台内容一键智能分发重构</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 24/7 专属 AI 战略教练陪伴</li>
             </ul>
           </div>
 
-          {/* ELITE Advisory */}
+          {/* ELITE 私享陪跑 */}
           <div
             onClick={() => setSelectedTier('elite')}
             className={`p-5 rounded-2xl border cursor-pointer transition-all space-y-3 ${
@@ -84,32 +84,32 @@ export const UpgradeModal: React.FC = () => {
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="font-mono font-bold text-amber-400 uppercase text-[10px]">ELITE ADVISORY</span>
+              <span className="font-mono font-bold text-amber-400 uppercase text-[10px]">商业IP私享陪跑</span>
               <span className="text-sm font-black text-white font-mono">RM{pricing.eliteStartingPrice.toLocaleString()}+</span>
             </div>
             <p className="text-slate-300 text-[11px] leading-snug">
-              8–12 week 1-on-1 private guided implementation program with lead brand strategists.
+              8-12周资深品牌战略顾问一对一深度定制与高客单产品设计。
             </p>
             <ul className="space-y-1.5 text-slate-300 text-[11px]">
-              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 1-on-1 Diagnostic Refinement</li>
-              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> High-Ticket Offer Architecture</li>
-              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> Direct WhatsApp Strategist Access</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 一对一深度定位与产品阶梯重构</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 坐姿视频出镜表现力导师一对一打磨</li>
+              <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 专属战略顾问微信直接沟通答疑通道</li>
             </ul>
           </div>
         </div>
 
-        {/* Action Button */}
+        {/* 提交动作 */}
         <div className="space-y-2 pt-2">
           <button
             onClick={handleConfirmUpgrade}
             className="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-champagne via-brand-gold to-brand-champagne text-slate-950 font-black text-sm hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-brand-champagne/20 flex items-center justify-center gap-2"
           >
-            <span>{selectedTier === 'pro' ? `Upgrade to PRO (RM${pricing.proMonthlyPrice}/month)` : 'Apply for Elite Guided Cohort'}</span>
+            <span>{selectedTier === 'pro' ? `立即升级为 PRO 会员 (RM${pricing.proMonthlyPrice}/月)` : '申请私享陪跑席位'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <p className="text-[10px] text-slate-400 font-mono text-center">
-            Cancel anytime in Account Settings. 256-Bit SSL Encrypted checkout.
+            支持随时在账户设置中取消订阅。256 位 SSL 安全加密。
           </p>
         </div>
       </div>

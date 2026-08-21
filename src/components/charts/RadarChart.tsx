@@ -21,11 +21,11 @@ export const RadarChart: React.FC<RadarChartProps> = ({
   const [hoveredAxis, setHoveredAxis] = useState<string | null>(null);
 
   const axes = [
-    { key: 'authority', label: 'Authority (权威)', value: scores.authority, color: '#F59E0B' },
-    { key: 'trust', label: 'Trust (信任)', value: scores.trust, color: '#3B82F6' },
-    { key: 'attraction', label: 'Attraction (引力)', value: scores.attraction, color: '#10B981' },
-    { key: 'expression', label: 'Expression (表达)', value: scores.expression, color: '#8B5CF6' },
-    { key: 'monetization', label: 'Monetization (变现)', value: scores.monetization, color: '#E5C07B' },
+    { key: 'authority', label: '权威定力 (92)', value: scores.authority, color: '#F59E0B' },
+    { key: 'trust', label: '信任背书 (87)', value: scores.trust, color: '#3B82F6' },
+    { key: 'attraction', label: '共情引力 (76)', value: scores.attraction, color: '#10B981' },
+    { key: 'expression', label: '表达语态 (81)', value: scores.expression, color: '#8B5CF6' },
+    { key: 'monetization', label: '变现势能 (88)', value: scores.monetization, color: '#E5C07B' },
   ];
 
   const totalAxes = axes.length;

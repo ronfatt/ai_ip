@@ -10,7 +10,7 @@ import {
 
 export const DEMO_USER_PROFILE: UserProfile = {
   id: 'usr_alextan_2026',
-  name: 'Alex Tan',
+  name: '陈志远 (Alex Tan)',
   email: 'alex.tan@ziwei-ip.io',
   role: 'Consultant',
   avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
@@ -26,329 +26,343 @@ export const DEMO_USER_PROFILE: UserProfile = {
   },
   primaryArchetype: {
     id: 'arch_strategic_creator',
-    name: 'Strategic Creator',
-    titleZh: '策略型破局者 (Strategic Creator)',
-    tagline: 'Build authority through structural insight, frameworks, and sharp clarity.',
-    description: 'You naturally build influence through insight, structure, and strategic thinking. You distill complicated problems into clean mental models that earn instant respect from high-value decision-makers.',
-    naturalRole: 'Advisor / Educator / Challenger',
-    audiencePerception: 'Calm, analytical, decisive, uncompromising on standards',
-    growthLever: 'High-density authority breakdowns and contrasting frameworks',
-    potentialBlindSpot: 'Over-explaining technical nuances before building emotional rapport',
+    name: '策略型破局者 (Strategic Creator)',
+    titleZh: '策略型破局者',
+    tagline: '用结构化洞察、高维认知与清晰框架建立不可替代的行业权威。',
+    description: '你天生具备强大的洞察力与战略思维，擅长将极其复杂的商业与认知难题提炼为清晰易懂的思维模型，能在极短时间内赢得高客单决策者的深度信任与专业尊重。',
+    naturalRole: '商业顾问 / 认知导师 / 破局挑战者',
+    audiencePerception: '沉着冷静、逻辑严密、洞察深刻、对专业标准绝不妥协',
+    growthLever: '高密度认知拆解、对比思维模型与商业实战复盘',
+    potentialBlindSpot: '在建立情感连接前过早阐述底层技术细节与复杂逻辑',
     recommendedFormats: [
-      'Sit-down structured breakdown',
-      'Contrasting 2x2 matrix analysis',
-      'Whiteboard mental model teardown',
-      'Client autopsy case study'
+      '坐姿结构化深度拆解视频',
+      '2x2 对比定位矩阵剖析',
+      '白板/iPad 思维导图推演',
+      '高客单客户真实案例尸检'
     ],
   },
   secondaryArchetype: {
     id: 'arch_authority_builder',
-    name: 'Authority Builder',
-    titleZh: '权威建构者 (Authority Builder)',
-    tagline: 'Command natural leadership by setting industry standards and rules.',
-    description: 'You gain trust not by pleasing everyone, but by demonstrating undeniable competence, high conviction, and structured boundary-setting.',
-    naturalRole: 'Industry Standard-Setter / Executive Mentor',
-    audiencePerception: 'Authoritative, dependable, seasoned veteran',
-    growthLever: 'Behind-the-scenes decision teardowns and anti-trend perspectives',
-    potentialBlindSpot: 'Appearing unapproachable to beginners who need initial warmth',
+    name: '权威建构者 (Authority Builder)',
+    titleZh: '权威建构者',
+    tagline: '通过制定行业标准与规则，建立天然的领导力与话语权。',
+    description: '你赢得信任的方式从来不是迎合所有人，而是展现无法反驳的专业实力、强烈的战略定力以及清晰的边界感。',
+    naturalRole: '行业标准制定者 / 高管导师',
+    audiencePerception: '威严沉稳、值得托付、经验深厚的大师级专家',
+    growthLever: '幕后决策逻辑拆解与逆主流趋势的独立观点',
+    potentialBlindSpot: '对需要基础引导的小白用户可能显得过于严肃或有距离感',
     recommendedFormats: [
-      'Opinion-led thought leadership',
-      'Industry myth-busting',
-      'Executive roundtable interviews'
+      '强观点型思想领导力内容',
+      '行业迷思与伪概念辟谣',
+      '高管圆桌与深度访谈'
     ],
   },
   supportingArchetype: {
-    id: 'arch_system_architect',
-    name: 'System Architect',
-    titleZh: '系统架构师 (System Architect)',
-    tagline: 'Turn scattered tactics into repeatable monetization engines.',
-    description: 'You see underlying patterns where others see chaos, building blueprints that scale effortlessly.',
-    naturalRole: 'Methodology Designer / Growth Strategist',
-    audiencePerception: 'Rigorous, pragmatic, highly systematized',
-    growthLever: 'Process transparency & step-by-step methodology frameworks',
-    potentialBlindSpot: 'Spending too much time perfecting the system before launching',
-    recommendedFormats: ['SaaS teardowns', 'SOP templates', 'Framework walkthroughs'],
+    id: 'arch_clarity_synthesizer',
+    name: '认知提炼者 (Clarity Synthesizer)',
+    titleZh: '认知提炼者',
+    tagline: '化繁为简，将海量信息转化为直击本质的行动指南。',
+    description: '你拥有出色的降维表达能力，能够把晦涩的专业知识翻译成可立即落地的执行清单，让受众产生“醍醐灌顶”的顿悟感。',
+    naturalRole: '方法论架构师 / 知识产品设计师',
+    audiencePerception: '条理分明、清晰高效、实用落地',
+    growthLever: '诊断自测清单与即插即用的商业工具模板',
+    potentialBlindSpot: '可能过于聚焦工具层面，而弱化了自身的个人魅力与独家哲学',
+    recommendedFormats: [
+      '10分钟结构化大师课',
+      '可落地的操作清单（Checklist）拆解',
+      '方法论演进图谱'
+    ],
   },
   positioningStatement:
-    'I help high-ticket consultants and service founders clarify their authentic positioning using structural brand intelligence so they can command premium fees and attract inbound enterprise clients without copying generic creator tactics.',
-  brandVoice: ['Direct', 'Analytical', 'Confident', 'Calm', 'Strategic', 'High-conviction'],
+    '帮助专业顾问、高管与企业主，将隐性专业经验转化为高辨识度的个人商业IP，摆脱低效内卷，建立持续获取高客单客户的影响力系统。',
+  brandVoice: [
+    '直接且富有战略定力（不绕弯子，直击商业本质）',
+    '高信息密度（拒绝空洞鸡汤，每句话都有认知增量）',
+    '冷静克制（拒绝夸张煽情与过度营销）',
+    '专业顾问视角（以解决问题为导向，而非纯娱乐）'
+  ],
   cameraPersonality: {
     recommended: [
-      'Sit-down deliberate analysis with clean audio',
-      'Visual breakdown with iPad or whiteboard drawings',
-      'Case study autopsy with real before/after metrics',
-      'High-conviction direct-to-lens perspective shorts',
-      'Unscripted tactical Q&A with elite peers'
+      '坐姿深度对镜头讲解（书房/极简现代办公场景）',
+      '语速保持 120-130 词/分钟，留白沉稳有力量',
+      '配合 iPad/白板 手绘结构图进行认知拆解',
+      '使用广播级麦克风（如 Shure SM7B），突出沉稳音频质感'
     ],
     avoid: [
-      'Fast-paced viral trend dancing or meme audio lip-syncing',
-      'Hyped exaggerated YouTube facial expressions',
-      'Generic motivational platitudes with dramatic cinematic music',
-      'Vague lifestyle flexing without actionable business value'
+      '抖音常见的快节奏蹦跳字幕与浮夸背景音效',
+      '在屏幕前跟随流行音乐跳舞或夸张表演',
+      '虚假的情感戏剧化与制造焦虑式营销',
+      '无信息量的话题蹭热点'
     ],
   },
   audience: {
     primary:
-      'Established consultants, coaches, and professional firm owners (RM15k - RM80k/mo) struggling to scale inbound trust.',
+      '年营收 RM200k - RM2M 的中小企业主、B2B 专业顾问、资深教练与高管，具备深厚专业积累，渴望建立个人品牌获取高客单客户。',
     secondary:
-      'Senior corporate executives & specialists transitioning into high-ticket advisory and independent thought leadership.',
+      '处于转型期的资深专业人士（律师、精算师、企业培训师），希望将自身经验产品化并建立行业话语权。',
     avoid:
-      'Get-rich-quick opportunists, passive spectators looking for magic overnight tricks without real skill.',
+      '寻找“7天快速暴富”的投机者、只看价格不重落地的伸手党、缺乏实操经验的纯理论讨论者。',
   },
 };
 
 export const FOUR_TRANSFORMATIONS: Record<string, TransformationDetail> = {
   LU: {
     key: 'LU',
-    chineseName: '禄',
+    chineseName: '禄 (吸引引力)',
+    chineseChar: '禄',
     pinyin: 'Lu',
-    businessTitle: 'Attraction & Resonance (引力)',
+    businessTitle: '共情吸引与商业引力 (Attraction)',
     themeColor: '#10B981',
     badgeBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
     borderColor: 'border-emerald-500/30',
     glowColor: 'rgba(16, 185, 129, 0.2)',
     iconName: 'Sparkles',
-    summary: 'What naturally draws clients to notice, like, and want to learn from you.',
+    summary: '你天生吸引客户关注、产生共鸣并主动寻求合作的引力源泉。',
     strategicInsight:
-      'For your profile, Attraction does not come from superficial entertainment. It is triggered when you articulate an unspoken frustration your ideal client feels with surgical precision.',
+      '对你的定位而言，吸引力并非来自搞笑娱乐，而是源于你能够精准用一句话说出目标客户心中多年未解的商业痛点。',
     recommendedContent: [
-      '“Why most high-performers feel stuck despite working 14-hour days”',
-      '“The invisible trap keeping 6-figure consultants from hitting 7 figures”',
-      '“3 signs your positioning is repelling your highest-paying clients”'
+      '“为什么绝大多数资深顾问每天工作14小时，却始终突破不了收入瓶颈？”',
+      '“年入百万与千万顾问之间，差的不是专业技能，而是这套定位底层逻辑”',
+      '“你的专业能力很强，但客户为什么总觉得你和普通同行没区别？”'
     ],
     avoidances: [
-      'Clickbait that fails to deliver depth in the first 10 seconds',
-      'Trying to appeal to entry-level beginners who are not your buyer'
+      '前10秒缺乏认知密度的标题党点击诱饵',
+      '试图讨好预算不足且非目标画像的初级小白'
     ],
     suggestedCTAs: [
-      'Comment "IP" to get my private 5-Step Brand Audit Checklist',
-      'Save this framework for your next offer overhaul'
+      '在评论区回复【诊断】，免费领取《5步个人品牌定位体检清单》',
+      '建议收藏本期框架，下次优化服务报价时对照使用'
     ],
-    samplePrompt: 'Why most professionals fail at personal branding by treating it like an Instagram influencer contest.'
+    samplePrompt: '为什么大多数专业人士做个人IP会失败？因为他们把商业定位当成了网红发帖。'
   },
   QUAN: {
     key: 'QUAN',
-    chineseName: '权',
+    chineseName: '权 (权威定力)',
+    chineseChar: '权',
     pinyin: 'Quan',
-    businessTitle: 'Authority & Conviction (定力与领导力)',
+    businessTitle: '专业权威与领导定力 (Authority)',
     themeColor: '#F59E0B',
     badgeBg: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
     borderColor: 'border-amber-500/30',
     glowColor: 'rgba(245, 158, 11, 0.2)',
     iconName: 'ShieldCheck',
-    summary: 'Where you establish unquestioned leadership, clear boundaries, and industry standards.',
+    summary: '树立行业标准、确立专业边界并掌控议价主导权的核心能量。',
     strategicInsight:
-      'Your Quan energy is built on structural critique. When you explain WHY a conventional industry practice is fundamentally flawed and offer a superior alternative, high-paying clients instantly recognize your caliber.',
+      '权威不是靠自夸，而是通过敢于公开挑战行业伪共识、输出高穿透力见解来建立的。',
     recommendedContent: [
-      '“3 things I would never recommend after 12 years of consulting”',
-      '“Stop charging by the hour: The structural reason value pricing wins”',
-      '“The myth of personal branding as an influencer game”'
+      '“公开唱反调：为什么我建议年营收低于50万的顾问千万不要做低价引流课？”',
+      '“深度复盘：我们如何把一位财务顾问的客单价从 RM1,500 提升至 RM18,000 咨询年框”',
+      '“真正的高客单客户在买单时，真正看重的3个核心决策信号”'
     ],
     avoidances: [
-      'Hedging your opinions with timid disclaimers like "just my personal 2 cents"',
-      'Apologizing for charging premium rates or enforcing client boundaries'
+      '为了讨好大众而模糊自己的专业边界',
+      '跟风模仿没有根据的网络流行观点'
     ],
     suggestedCTAs: [
-      'Apply for our next private 12-week advisory cohort (Limited to 5)',
-      'Read the full whitepaper on High-Ticket Positioning Models'
+      '若你的业务目前面临同样的定位瓶颈，欢迎预约一对一深度诊断',
+      '转发给正在重塑商业模式的合伙人'
     ],
-    samplePrompt: 'Three counter-intuitive decisions that separated my top 1% advisory clients from the rest.'
+    samplePrompt: '低价竞争是认知懒惰的避难所：专业人士如何跳出小时计费陷阱？'
   },
   KE: {
     key: 'KE',
-    chineseName: '科',
+    chineseName: '科 (信任背书)',
+    chineseChar: '科',
     pinyin: 'Ke',
-    businessTitle: 'Trust & Proof (声誉与信任链)',
+    businessTitle: '信任背书与专业口碑 (Trust & Proof)',
     themeColor: '#3B82F6',
     badgeBg: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
     borderColor: 'border-blue-500/30',
     glowColor: 'rgba(59, 130, 246, 0.2)',
     iconName: 'Award',
-    summary: 'What creates deep institutional trust, undeniable client case studies, and enduring reputation.',
+    summary: '将客户的疑虑转化为确定性，建立长期高复购信任资产。',
     strategicInsight:
-      'Your Ke credibility skyrockets when you show the exact mechanics behind a transformation. Rather than just saying "we doubled their revenue", walk through the diagnostic problem, the friction point, and the positioning lever.',
+      '用真实客户案例实战拆解、逻辑闭环与交付过程透明化，构建坚不可摧的专业信用护城河。',
     recommendedContent: [
-      '“Client Case Study: How we restructured a RM2,000 offer into a RM18,000 package”',
-      '“The exact diagnostic audit I use before onboarding any new advisory client”',
-      '“Behind the scenes of our 2026 methodology sprint”'
+      '“实操全过程拆解：从0到1构建高转化个人商业IP的8个关键里程碑”',
+      '“我们为某B2B企业设计的客户筛选问卷与成交话术SOP”',
+      '“一位企业高管转型独立顾问的前90天真实经历与避坑指南”'
     ],
     avoidances: [
-      'Fake glowing testimonials without concrete business metrics',
-      'Hiding the difficulties or trade-offs involved in real success'
+      '只展示炫耀式收入截图，而没有交付逻辑与实战方法',
+      '使用模糊无法验证的虚假客户评价'
     ],
     suggestedCTAs: [
-      'DM me "CASE" to see the full confidential case breakdown',
-      'Book a 20-minute Diagnostic Strategy Session'
+      '点击主页链接，查阅完整客户交付案例库与白皮书',
+      '在后台私信【蓝图】，获取完整实操文档'
     ],
-    samplePrompt: 'A client case study: What changed when an executive coach pivoted from generic life coaching to CEO Brand Advisory.'
+    samplePrompt: '拆解一个真实商业案例：如何将10年隐性专业经验提炼为标准产品？'
   },
   JI: {
     key: 'JI',
-    chineseName: '忌',
+    chineseName: '忌 (盲点突破)',
+    chineseChar: '忌',
     pinyin: 'Ji',
-    businessTitle: 'Breakthrough & Blind Spot (盲点转化与破局点)',
-    themeColor: '#EC4899',
-    badgeBg: 'bg-pink-500/10 text-pink-400 border-pink-500/30',
-    borderColor: 'border-pink-500/30',
-    glowColor: 'rgba(236, 72, 153, 0.2)',
-    iconName: 'Zap',
-    summary: 'Where friction, self-doubt, or client misunderstanding arises—and how to convert it into a breakthrough.',
+    businessTitle: '认知盲点与危机突破 (Breakthrough)',
+    themeColor: '#8B5CF6',
+    badgeBg: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    borderColor: 'border-purple-500/30',
+    glowColor: 'rgba(139, 92, 246, 0.2)',
+    iconName: 'AlertTriangle',
+    summary: '揭示最致命的认知陷阱与战略误区，帮助受众避坑避险。',
     strategicInsight:
-      'In traditional metaphysics, Ji is feared; in Personal Brand Intelligence, Ji is your single highest-converting content trigger. When you openly deconstruct your own struggles, mistakes, or intellectual blind spots, you become magnetic.',
+      '指出客户看不见但正在造成巨大隐性损失的致命盲区，能瞬间建立无可替代的高价值顾问认知。',
     recommendedContent: [
-      '“Your deep expertise may be the exact reason your content feels complicated”',
-      '“The expensive mistake I made trying to serve everyone in year 2”',
-      '“Why smart people make terrible content creators (and how to fix it)”'
+      '“90%的专家在做自媒体时最常犯的3个致命定位错误”',
+      '“为什么你输出的内容点赞很高，却从来没有高净值客户找你咨询？”',
+      '“盲目追求粉丝量是很多实体老板转型做IP最大的时间陷阱”'
     ],
     avoidances: [
-      'Toxic positivity that pretends you never face doubts or positioning friction',
-      'Venting emotionally without distilling a constructive framework for the audience'
+      '只指出问题却不给解决方案，导致受众产生绝望感',
+      '过度自责或攻击同行的攻击性言论'
     ],
     suggestedCTAs: [
-      'Take the Free 3-Minute IP DNA Assessment to pinpoint your blind spots',
-      'Reply with your biggest content hurdle this week'
+      '对照自测：这3个定位盲区中，你目前占了几个？',
+      '立即预约私人诊断，排查当前商业定位中的致命阻碍'
     ],
-    samplePrompt: 'Why having 15 years of industry experience is secretly ruining your short-form video hooks.'
+    samplePrompt: '为什么高点赞量反而可能毁掉你的高客单咨询业务？'
   }
 };
 
 export const INITIAL_CONTENT_PILLARS: ContentPillar[] = [
   {
-    id: 'pillar_1',
-    title: 'High-Conviction Opinion',
-    chineseTitle: '行业针砭与认知差',
-    description: 'Challenge industry consensus and articulate what 95% of practitioners get wrong about brand equity.',
+    id: 'pillar_01',
+    title: '高客单商业案例深度尸检',
+    chineseTitle: '商业案例深度复盘',
+    description: '深度解剖高客单客户的真实转型过程，剖析核心痛点、定位重塑与业绩增长的底层逻辑。',
+    ratioPercent: 35,
+    transformation: 'QUAN',
+    examples: [
+      '“从单次 RM1,500 到年框 RM18,000 的定位升级全复盘”',
+      '“传统B2B企业主如何用个人IP拿下300万大单”'
+    ]
+  },
+  {
+    id: 'pillar_02',
+    title: '高穿透力逆主流观点',
+    chineseTitle: '逆主流认知洞察',
+    description: '挑战行业流行但无效的表面做法，树立独特的专业观点与权威边界。',
     ratioPercent: 30,
     transformation: 'QUAN',
     examples: [
-      'Why personal branding is not an aesthetic mood board',
-      'The death of generic consultation calls',
-      'Why low prices attract high-maintenance clients'
+      '“为什么你不需要10万粉丝也能年入百万？”',
+      '“低价引流课正在杀死专业顾问的商业信誉”'
     ]
   },
   {
-    id: 'pillar_2',
-    title: 'Strategic Frameworks',
-    chineseTitle: '方法论与底层模型',
-    description: 'Deconstruct complex brand positioning into memorable mental models, 2x2 matrices, and step-by-step systems.',
-    ratioPercent: 35,
-    transformation: 'LU',
-    examples: [
-      'The 5-Position Identity Radar',
-      'Offer Ladder: Free to RM10k architecture',
-      'How to write a positioning sentence that converts'
-    ]
-  },
-  {
-    id: 'pillar_3',
-    title: 'Diagnostic Case Autopsies',
-    chineseTitle: '真实案例与实战复盘',
-    description: 'Show real transformations with specific before-and-after positioning breakthroughs and client feedback.',
+    id: 'pillar_03',
+    title: '认知诊断与自测清单',
+    chineseTitle: '定位体检与工具清单',
+    description: '提供结构化的自我排查工具与评估模型，让潜在客户在互动中感知专业差距。',
     ratioPercent: 20,
     transformation: 'KE',
     examples: [
-      'Rebranding a boutique accounting partner for tech founders',
-      'From 0 inbound to RM45k pipeline in 60 days',
-      'How fixing the hook doubled consultation requests'
+      '“5分钟自测：你的个人IP具备高客单变现力吗？”',
+      '“专业顾问服务产品化自检清单（20条关键指标）”'
     ]
   },
   {
-    id: 'pillar_4',
-    title: 'Vulnerability & Blind Spot Teardown',
-    chineseTitle: '认知盲区与真实破局',
-    description: 'Humanize your authority by candidly dissecting founder bottlenecks, imposter syndrome, and pivot lessons.',
+    id: 'pillar_04',
+    title: '幕后战略决策实录',
+    chineseTitle: '幕后决策思考',
+    description: '真实分享作为商业顾问在战略制定、客户筛选与产品迭代时的深度思考。',
     ratioPercent: 15,
-    transformation: 'JI',
+    transformation: 'LU',
     examples: [
-      'The time I lost a RM30k deal by over-explaining',
-      'Why being too smart is costing you attention',
-      'What I wish I knew before leaving corporate leadership'
+      '“为什么我们拒绝了一个年付10万的客户？”',
+      '“我们在设计2026年商业模式时的3个核心假设”'
     ]
   }
 ];
 
 export const INITIAL_BUSINESS_OFFERS: BusinessOffer[] = [
   {
-    id: 'off_free',
+    id: 'offer_lead_magnet',
     tier: 'Free',
-    name: 'Personal Brand IP DNA Scorecard',
-    priceFormatted: 'Free / RM 0',
+    name: '五维个人商业IP智能体检问卷',
+    priceFormatted: '免费 (Free)',
     priceNumeric: 0,
-    promise: 'Pinpoint your primary IP Archetype, 5-Score Brand Momentum, and top growth lever in 3 minutes.',
-    audience: 'Broad audience of ambitious creators, consultants, and business owners.',
+    promise: '3分钟获取专属IP定位快照与5大维度诊断得分，看清天然核心优势。',
+    audience: '渴望看清自我定位与商业路径的顾问、企业主与创作者。',
     deliverables: [
-      '5-Dimension Brand Radar Score (Authority, Trust, Attraction, Expression, Monetization)',
-      'Primary & Secondary Archetype Diagnostic',
-      'Top 3 High-Leverage Strategic Directives'
+      '专属主辅IP原型分析报告',
+      '5大维度能力得分（权威/信任/吸引/表达/变现）',
+      '前3条核心破局战略建议',
+      '高清可分享原型卡片'
     ],
-    cta: 'Take Free IP Test',
-    conversionFunnelStage: 'Top of Funnel (Attraction)'
+    cta: '立即免费测试',
+    conversionFunnelStage: '流量引流与认知破冰'
   },
   {
-    id: 'off_entry',
+    id: 'offer_tripwire',
     tier: 'Entry',
-    name: 'IP Positioning Sprint Workshop',
-    priceFormatted: 'RM 69',
-    priceNumeric: 69,
-    promise: 'A 90-minute live tactical sprint to draft your 1-Sentence High-Converting Positioning Statement and 4 Content Pillars.',
-    audience: 'Action-oriented professionals ready to stop wasting time on generic content.',
+    name: '紫微IP定位战略蓝图',
+    priceFormatted: 'RM 299 (一次性)',
+    priceNumeric: 299,
+    promise: '获得一套完整的个人品牌战略地图与30天内容落地引擎。',
+    audience: '准备认真把个人经验变现为商业影响力的专业人士。',
     deliverables: [
-      '90-Minute Interactive Masterclass Recording',
-      'The 2026 Brand Positioning Notion Workspace',
-      '20 High-Converting Hook Formulas tailored to your archetype'
+      '完整五维IP模型与深层张力解析',
+      '精准目标受众筛选与反向过滤标准',
+      '定制化品牌语态与防坑准则',
+      '四化内容飞轮分配比例与4大核心内容支柱',
+      '高客单产品阶梯设计与30天行动日历'
     ],
-    cta: 'Enroll in Sprint (RM69)',
-    conversionFunnelStage: 'Tripwire / Front-end Offer'
+    cta: '解锁完整战略蓝图',
+    conversionFunnelStage: '付费转化与意向筛选'
   },
   {
-    id: 'off_core',
+    id: 'offer_core_masterclass',
     tier: 'Core',
-    name: 'ZIWEI IP Blueprint & Studio Pro',
-    priceFormatted: 'RM 499 / Year (or RM 99/mo)',
-    priceNumeric: 499,
-    promise: 'The complete software suite: Automated AI Content Studio, Four Transformations Engine, and Monthly IP Coaching.',
-    audience: 'Active creators, solo consultants, and coaches building consistent inbound pipelines.',
+    name: '《紫微IP定位学》 核心大师课',
+    priceFormatted: 'RM 899 (一次性)',
+    priceNumeric: 899,
+    promise: '8大战略实战模块，带你从底层认知到构建完整的高客单商业闭环。',
+    audience: '需要手把手建立内容与商业操作系统的顾问、教练与创始人。',
     deliverables: [
-      'Full Unlocked 15-Page IP DNA Blueprint',
-      'Unlimited AI Content Studio Generations (Scripts, Hooks, Shot lists)',
-      'Access to 8-Module Video Academy & Downloadable Workbooks',
-      '24/7 Context-Aware AI Coach'
+      '8大核心视频实战模块（终身有效）',
+      '即插即用的实战工作手册与模板工具',
+      '与战略蓝图实时同步的个人资产库',
+      '社群交流与后续更新权益'
     ],
-    cta: 'Upgrade to PRO',
-    conversionFunnelStage: 'Core SaaS Revenue'
+    cta: '开启体系化学习',
+    conversionFunnelStage: '核心知识交付与能力赋能'
   },
   {
-    id: 'off_premium',
-    tier: 'Premium',
-    name: '1-on-1 Brand Strategy Advisory (12-Week)',
-    priceFormatted: 'RM 4,800',
-    priceNumeric: 4800,
-    promise: 'End-to-end bespoke positioning, offer packaging, and video production direction with Alex Tan.',
-    audience: 'Established founders, medical/legal directors, and senior firm partners demanding maximum discretion and ROI.',
-    deliverables: [
-      'Deep Diagnostic Birth-Profile & Commercial Matrix Audit',
-      'High-Ticket Offer Packaging (RM5k - RM30k pricing models)',
-      'Bi-weekly 60-Minute 1-on-1 Strategy Calls',
-      'Direct WhatsApp Advisory Access'
-    ],
-    cta: 'Apply for 1-on-1 Advisory',
-    conversionFunnelStage: 'High-Ticket Back-End'
-  },
-  {
-    id: 'off_continuity',
+    id: 'offer_pro_membership',
     tier: 'Continuity',
-    name: 'IP Mastermind Inner Circle',
-    priceFormatted: 'RM 149 / Month',
-    priceNumeric: 149,
-    promise: 'Monthly peer teardowns, algorithm update briefings, and collaborative creator networking.',
-    audience: 'Graduates of Core and Premium programs wanting ongoing community and accountability.',
+    name: 'ZIWEI IP PRO 会员',
+    priceFormatted: 'RM 99 / 月 (或 RM 899 / 年)',
+    priceNumeric: 99,
+    promise: '无限次调用 AI 创作工作室与 AI 专属战略教练，保持每周高效产出。',
+    audience: '每周持续发布内容、需要高质量灵感与即时战略反馈的创作者与顾问。',
     deliverables: [
-      'Monthly Live Strategy & Script Review Hot Seat',
-      'Private High-Value Member Directory',
-      'Quarterly In-Person Mastermind Dinners in KL'
+      '无限次 AI 脚本与爆款选题生成',
+      '7大平台一键智能内容分发重构引擎',
+      '7天主题战役连载内容生成器',
+      '24/7 上下文感知的 AI 专属战略教练',
+      '每周自动化发布数据与策略复盘'
     ],
-    cta: 'Join Inner Circle',
-    conversionFunnelStage: 'Recurring Community Revenue'
+    cta: '升级为 PRO 会员',
+    conversionFunnelStage: '高频日常使用与订阅留存'
+  },
+  {
+    id: 'offer_elite_coaching',
+    tier: 'Premium',
+    name: '商业IP高阶私享陪跑计划',
+    priceFormatted: 'RM 3,800+ (8-12周)',
+    priceNumeric: 3800,
+    promise: '由资深品牌战略顾问一对一深度指导，打造专属于你的高客单商业IP交付系统。',
+    audience: '月营收 RM20k 以上、希望彻底摆脱低效内卷的企业主、头部顾问与高管。',
+    deliverables: [
+      '一对一深度认知诊断与商业定位重塑',
+      '高客单产品结构设计与定价阶梯制定',
+      '坐姿视频出镜表现力与表达节奏一对一调优',
+      '季度四化内容路线图与引流话术设计',
+      '专属战略顾问微信直接沟通答疑通道'
+    ],
+    cta: '申请私享陪跑席位',
+    conversionFunnelStage: '高客单咨询转化与深度交付'
   }
 ];
 
@@ -356,366 +370,304 @@ export const ACADEMY_MODULES: AcademyModule[] = [
   {
     id: 'mod_01',
     moduleNumber: '01',
-    title: 'You Are Not Missing Positioning, You Are Missing Self-Knowledge',
-    subtitle: '为什么普通人做人设会累，而顶级高手只需放大天性',
-    durationMinutes: 18,
+    title: '第一模块：看懂天赋本性，确立商业定位',
+    subtitle: 'Nature & Positioning Calibration',
+    durationMinutes: 45,
     completed: true,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'Personal branding is NOT about fabricating an artificial internet persona.',
-      'The reason creators burn out is energetic misalignment with their natural strengths.',
-      'Zi Wei Dou Shu is the ancient science of structural tendency, repurposed as personal IP intelligence.'
+      '为什么从“我是谁”出发做个人品牌，比盲目迎合市场流行快10倍且永不内耗。',
+      '主辅原型的战略张力：如何在权威沉稳与共情亲和之间找到完美平衡点。',
+      '定位的核心不是给自己贴标签，而是清晰定义你的“商业主战场”与“不做什么”。'
     ],
-    lessonContent: `Most people fail at personal branding because they try to force themselves into somebody else's template. They see an energetic, bubbly lifestyle influencer and try to act hyper on camera, even when their natural essence is quiet, intellectual, and strategic.
-
-Within this opening module, we establish the core philosophy of ZIWEI IP:
-1. Nature over Construction: You do not build a brand from scratch; you reveal what is already within you.
-2. The 5 Resonance Points: Identity, Values, Expertise, Public Perception, and Commercial Value.
-3. Clarity eliminates competition: When you operate in your natural archetype, no one can replicate your conviction.`,
+    lessonContent: '在本模块中，我们将结合紫微命盘的核心星盘能量，精准提炼出你最值得放大的个人天赋，并将其转化为高辨识度的商业定位陈述句。',
     workbookPrompts: [
       {
         id: 'q1_1',
-        question: 'What type of content has historically drained your energy the most?',
-        placeholder: 'e.g., Trying to dance or do overly energetic vlog edits when I prefer deep breakdowns...',
-        userAnswer: 'Short hype videos with trending songs. I felt foolish and disingenuous.'
+        question: '用一句话写出你的专属商业定位（我是谁 + 帮助谁 + 解决什么核心问题 + 带来什么结果）：',
+        placeholder: '例如：我帮助年营收50万以上的中小企业主，通过结构化IP打造高客单引流系统...',
+        userAnswer: '帮助专业顾问、高管与企业主，将隐性专业经验转化为高辨识度的个人商业IP，摆脱低效内卷，建立持续获取高客单客户的影响力系统。'
       },
       {
-        id: 'q1_2',
-        question: 'When do clients naturally say "That made so much sense!" to you?',
-        placeholder: 'e.g., Whenever I draw out the business bottlenecks on a notepad during meetings...',
-        userAnswer: 'When I diagram their client acquisition pipeline and point out the single leak.'
+        id: 'q2_1',
+        question: '列出3个你在行业中绝对不服务、主动过滤的客户画像：',
+        placeholder: '例如：只看价格的投机者、没有实操经验的理论党...',
+        userAnswer: '1. 寻找快速暴富捷径的小白；2. 习惯比价的伸手党；3. 缺乏执行力只想听鸡汤的人。'
       }
     ],
-    actionTask: 'Complete your 5-Dimension Nature Audit and commit to dropping 1 synthetic content habit this week.'
+    actionTask: '完成定位陈述句并在学员群中进行同行压力测试。'
   },
   {
     id: 'mod_02',
     moduleNumber: '02',
-    title: 'Identity & IP Archetype Mapping',
-    subtitle: '解码你的命宫与核心能量原型：战略家、赋能者还是开拓者？',
-    durationMinutes: 24,
+    title: '第二模块：目标客户画像与反向过滤法则',
+    subtitle: 'Audience Disqualification & Filtering',
+    durationMinutes: 50,
     completed: true,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'Every major leader embodies a distinct IP Archetype: Strategic Creator, Authority Builder, Empathic Healer, or Relentless Pioneer.',
-      'Your Primary Archetype dictates your core value proposition; your Secondary Archetype adds flavor and edge.',
-      'Mismatching your archetype leads to attracting the wrong clients who demand low prices and high maintenance.'
+      '高客单客户买单的3个隐性心理门槛：确定性、专业共鸣、边界感。',
+      '反向营销的力量：敢于公开拒绝不匹配的客户，反而会让优质客户对你深信不疑。',
+      '设计你的“防小白”内容过滤器，让每一次咨询都是高质量意向客户。'
     ],
-    lessonContent: `Your primary IP Archetype defines your gravitational pull. When clients encounter your brand, what is the immediate psychological imprint you leave behind?
-
-- The Strategic Creator: Solves chaotic problems through frameworks and clarity.
-- The Authority Builder: Establishes uncompromising industry standards and leadership.
-- The Empathic Mentor: Guides transformations through emotional safety and deep understanding.
-- The Visionary Disruptor: Challenges conventional rules and breaks stale paradigms.`,
+    lessonContent: '学习如何精准识别真正有付费能力且懂得尊重专业价值的高价值客户，并在所有前端内容中植入自然的筛选机制。',
     workbookPrompts: [
       {
-        id: 'q2_1',
-        question: 'How do you want a potential client to describe you to a peer behind your back?',
-        placeholder: 'e.g., "Sharp, direct, cuts straight to the root cause without wasting time"...',
-        userAnswer: 'The strategist who redesigned our entire commercial engine in one session.'
+        id: 'q2_1_mod2',
+        question: '你的理想核心买家目前最难以忍受的3个商业痛点是什么？',
+        placeholder: '写下他们夜不能寐的核心焦虑...',
+        userAnswer: '1. 收入过度依赖不稳定的人脉转介绍；2. 专业实力强但在市场上缺乏知名度；3. 咨询单价低导致精力耗尽。'
       }
     ],
-    actionTask: 'Refine your Primary Archetype summary and align your LinkedIn/Social headline to match.'
+    actionTask: '优化个人主页简介，植入清晰的受众反向过滤话术。'
   },
   {
     id: 'mod_03',
     moduleNumber: '03',
-    title: 'Values & Brand Soul: What You Truly Stand For',
-    subtitle: '价值观不是墙上的口号，而是你在商业冲突中放弃利益的底线',
-    durationMinutes: 20,
-    completed: true,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=80',
+    title: '第三模块：个人品牌语态与出镜镜头人设',
+    subtitle: 'Brand Voice & Camera Presence',
+    durationMinutes: 40,
+    completed: false,
     keyInsights: [
-      'A personal brand without clear boundaries has no spine.',
-      'Strong brands are defined as much by who they repel as who they attract.',
-      'Polarity done with elegance creates lifetime loyalty.'
+      '为什么专业人士不需要假装热情奔放：安静的力量如何转化高客单决策者。',
+      '坐姿深度视频录制的4大黄金法则：布景、语速留白、眼神与手势。',
+      '定义你的品牌负面清单：哪些词汇、语气与套路永远不要出现在你的内容中。'
     ],
-    lessonContent: `Brand values are tested only when money is on the table. If you say you value quality over speed, do you decline rush clients who offer double pay? When your audience sees you honor your boundaries publicly, trust transitions from transactional to unconditional.`,
+    lessonContent: '告别镜头恐惧与虚假表演，找到最舒适、最具穿透力的自然表达状态，让屏幕前的受众感受到强大的专业气场。',
     workbookPrompts: [
       {
         id: 'q3_1',
-        question: 'What is 1 industry practice you refuse to partake in even if it makes quick money?',
-        placeholder: 'e.g., Fake revenue screenshots, countdown timer pressure tactics...',
-        userAnswer: 'Fabricated income claims and predatory urgency countdowns.'
+        question: '写下3条你在镜头表达中坚决禁止的负面行为（Anti-Tone）：',
+        placeholder: '例如：禁止使用夸张震惊体、禁止在短视频中跟随音乐跳舞...',
+        userAnswer: '1. 坚决不用快节奏弹幕与制造焦虑的话术；2. 绝不迎合泛娱乐流行梗；3. 绝不讲未经实操验证的大道理。'
       }
     ],
-    actionTask: 'Draft your "Anti-Pitch" manifesto: 3 things you will never do in your consulting practice.'
+    actionTask: '录制一段60秒坐姿出镜短视频并上传至作业区进行导师批改。'
   },
   {
     id: 'mod_04',
     moduleNumber: '04',
-    title: 'Professional Positioning: Solving High-Value Problems',
-    subtitle: '从“什么都会做”到“只解决价值百万元的具体痛点”',
-    durationMinutes: 28,
+    title: '第四模块：四化内容飞轮运转体系',
+    subtitle: 'Four Transformation Content Engine',
+    durationMinutes: 60,
     completed: false,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'Generalists compete on price; specialists set the market terms.',
-      'The formula for an irresistible positioning statement: Who + Specific Constraint + Proprietary Vehicle + Desired Reality.',
-      'Why narrowing your market by 80% increases your revenue by 300%.'
+      '禄（吸引）、权（权威）、科（信任）、忌（盲点）的科学配比逻辑。',
+      '如何避免账号沦为纯教学账号或纯鸡汤账号的失衡陷阱。',
+      '打造季度内容飞轮：每周4篇内容如何协同推动潜在客户完成购买决策。'
     ],
-    lessonContent: `If you say "I help entrepreneurs grow their business", you are competing with 500,000 other people. If you say "I help B2B boutique consulting partners restructure their RM2k hourly model into RM25k retainers using IP Brand Intelligence", you have virtually zero competitors.`,
+    lessonContent: '掌握紫微四化在现代内容战略中的深度应用，让每一篇内容都承担明确的商业使命。',
     workbookPrompts: [
       {
         id: 'q4_1',
-        question: 'Fill in your exact positioning statement draft below:',
-        placeholder: 'I help [audience] overcome [struggle] using [method] so they can achieve [result]...',
+        question: '规划你下周的4篇内容主题（禄/权/科/忌各1篇）：',
+        placeholder: '禄：吸引共鸣话题；权：权威观点；科：案例复盘；忌：误区排查...',
         userAnswer: ''
       }
     ],
-    actionTask: 'Test your new positioning statement with 3 existing trusted clients and gather raw feedback.'
+    actionTask: '在 AI 创作工作室中生成完整的下周4篇脚本初稿。'
   },
   {
     id: 'mod_05',
     moduleNumber: '05',
-    title: 'Public Image & Camera Personality: Unlocking Natural Presence',
-    subtitle: '面对镜头不僵硬的秘密：找到属于你的表达场景与镜头语态',
-    durationMinutes: 22,
+    title: '第五模块：4大核心内容支柱与爆款选题库',
+    subtitle: 'Content Pillars & Endless Topic Ideation',
+    durationMinutes: 55,
     completed: false,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'You do not need to be a theatrical extrovert to dominate video.',
-      'Quiet, thoughtful, high-conviction speakers often achieve far higher retention on business content.',
-      'Choose the environment that matches your cognitive flow (Desk, Whiteboard, Walk & Talk, Podcast mic).'
+      '建立永不枯竭的12大签名选题库（Signature Topics）。',
+      '从客户日常咨询与交付现场中提取高价值选题的方法论。',
+      '爆款钩子（Hook）的3大公式：认知反差、代价前置、结构化对比。'
     ],
-    lessonContent: `The biggest camera mistake is trying to generate false enthusiasm. If your voice is naturally deep and deliberate, use a quality Shure SM7B mic, sit upright in a minimalist studio, and speak with measured authority. Let the silence between your words carry weight.`,
+    lessonContent: '搭建专属于你的内容支柱资产库，告别每天抓耳挠腮想选题的创作痛苦。',
     workbookPrompts: [
       {
         id: 'q5_1',
-        question: 'Which physical setup makes you feel the most confident and focused?',
-        placeholder: 'e.g., Sitting at my walnut desk with a podcast microphone and iPad notes...',
+        question: '提炼属于你的3个核心签名话题：',
+        placeholder: '这是任何人提到你都会瞬间想到的专业领域...',
         userAnswer: ''
       }
     ],
-    actionTask: 'Record a 60-second test video following the "Sit-down deliberate analysis" format without editing.'
+    actionTask: '在系统内收藏并整理出属于你的12个高优先级选题。'
   },
   {
     id: 'mod_06',
     moduleNumber: '06',
-    title: 'The Four Transformations Content Engine (Lu, Quan, Ke, Ji)',
-    subtitle: '四化变现模型：引力、定力、背书与破局的内容组合拳',
-    durationMinutes: 32,
+    title: '第六模块：高客单产品阶梯与定价设计',
+    subtitle: 'Offer Ladder & Pricing Architecture',
+    durationMinutes: 65,
     completed: false,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'Lu attracts attention through resonance.',
-      'Quan anchors respect through conviction.',
-      'Ke builds proof through evidence and case studies.',
-      'Ji converts skepticism into breakthroughs through vulnerability and blind spot awareness.'
+      '五阶产品天梯模型：免费引流 $\rightarrow$ 低门槛破冰 $\rightarrow$ 核心课程 $\rightarrow$ 持续会员 $\rightarrow$ 私享高客单。',
+      '基于价值而非时间的定价心法：如何自信报出 RM5,000+ 的咨询费。',
+      '如何将非标的服务经验包装成客户一眼能看懂的标准交付方案。'
     ],
-    lessonContent: `A healthy content ecosystem never relies on one single angle. If you only post Lu (Attraction), you get vanity views without buyers. If you only post Quan (Authority), you intimidate people. If you balance all four transformations across your weekly schedule, your audience naturally flows from awareness to buying.`,
+    lessonContent: '重新梳理你的知识与经验资产，设计出一套层层递进、自然转化的商业产品阶梯。',
     workbookPrompts: [
       {
         id: 'q6_1',
-        question: 'Which transformation have you been neglecting the most over the past 3 months?',
-        placeholder: 'e.g., Ke (Trust/Case Studies) or Ji (Vulnerability/Blind spots)...',
+        question: '设计你的高客单核心产品名称、价格与交付承诺：',
+        placeholder: '例如：12周一对一商业定位陪跑，售价 RM4,800...',
         userAnswer: ''
       }
     ],
-    actionTask: 'Use the AI Content Studio to generate 1 Lu, 1 Quan, 1 Ke, and 1 Ji script for next week.'
+    actionTask: '在商业构建器中完成5阶产品阶梯的配置与更新。'
   },
   {
     id: 'mod_07',
     moduleNumber: '07',
-    title: 'Monetization & Offer Engineering: From Views to Wire Transfers',
-    subtitle: '如何构建你的高客单阶梯产品库（从免费诱饵到 RM8,000 旗舰交付）',
-    durationMinutes: 26,
+    title: '第七模块：高转化私域承接与咨询闭环',
+    subtitle: 'Inbound Conversion & Sales Funnel',
+    durationMinutes: 50,
     completed: false,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'Attention without an offer ladder is just unpaid entertainment.',
-      'Design your Free $\\rightarrow$ Entry $\\rightarrow$ Core $\\rightarrow$ Premium ecosystem before producing 100 videos.',
-      'How to position a RM4,800 offer so clients feel they are getting RM50,000 of value.'
+      '从公域短视频到私域微信/领英的无痕引流路径设计。',
+      '20分钟战略诊断对话框架：不推销也能让客户主动追问如何合作。',
+      '异议处理心法：当客户说“价格太贵”时，高段位顾问该如何优雅应对。'
     ],
-    lessonContent: `Your content exists to pre-sell your worldview. When a potential client completes your video, what is the logical next step? An organized offer ladder gives every segment of your audience an appropriate entry point to exchange value with you.`,
+    lessonContent: '打通从公域流量到私域成交的最后一公里，让内容带来的影响力真正转化为真金白银的商业回报。',
     workbookPrompts: [
       {
         id: 'q7_1',
-        question: 'What is the primary transformation your Core or Premium offer promises to deliver?',
-        placeholder: 'e.g., Transition from chaotic founder-led delivery to a structured 4-pillar IP system...',
+        question: '写下你的核心引流话术（Lead Magnet CTA）：',
+        placeholder: '在每期视频结尾你将如何引导客户产生互动...',
         userAnswer: ''
       }
     ],
-    actionTask: 'Open the Business Builder tool and configure all 5 tiers of your Offer Ladder.'
+    actionTask: '编写并演练一段20分钟的客户初次诊断问答脚本。'
   },
   {
     id: 'mod_08',
     moduleNumber: '08',
-    title: 'Build Your Ziwei IP 360° Strategy Map & 90-Day Execution',
-    subtitle: '从蓝图到实操：90天个人品牌资产落地与自动化获客系统',
-    durationMinutes: 30,
+    title: '第八模块：30天个人商业IP启动与执行飞轮',
+    subtitle: '30-Day Launch & Operating Cadence',
+    durationMinutes: 45,
     completed: false,
-    videoPlaceholderUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
     keyInsights: [
-      'Consistency is not about discipline; it is about having a repeatable system.',
-      'The 3-hour weekly creation ritual: Ideate $\\rightarrow$ Generate with Studio $\\rightarrow$ Record $\\rightarrow$ Syndicate.',
-      'Measuring what matters: Leads & Revenue over likes and viral metrics.'
+      '周发布节奏表：如何用每周3小时的时间精力维持高品质IP运营。',
+      '核心数据追踪：摆脱泛点赞焦虑，只看咨询量、线索量与成交转化率。',
+      '长期主义心法：如何在6-12个月内建立不可撼动的行业细分领袖地位。'
     ],
-    lessonContent: `In this capstone module, we bring together your Archetype, Brand Voice, Content Pillars, Four Transformations, and Offer Ladder into an airtight 90-Day Execution Map. You will never wake up asking "What should I post today?" again.`,
+    lessonContent: '制定清晰的30天执行里程碑，将所有学到的策略落地为日常可执行的创作者工作流。',
     workbookPrompts: [
       {
         id: 'q8_1',
-        question: 'What day and time will you block out each week for your 3-hour batching ritual?',
-        placeholder: 'e.g., Every Monday 9:00 AM - 12:00 PM uninterrupted...',
+        question: '你的未来30天核心执行目标（视频发布数量 + 获取线索数量 + 目标营收）：',
+        placeholder: '写下具体数字与截止日期...',
         userAnswer: ''
       }
     ],
-    actionTask: 'Export your complete Brand Blueprint PDF and schedule your first 4 weeks of content.'
+    actionTask: '生成并导出你的30天落地行动计划日历。'
   }
 ];
 
 export const DEMO_BUSINESS_METRICS: BusinessMetrics = {
-  leads: 28,
-  consultations: 7,
-  sales: 3,
-  revenueRM: 8400,
-  contentPublishedCount: 14,
-  videosCreatedCount: 9,
+  leads: 142,
+  consultations: 28,
+  sales: 14,
+  revenueRM: 48600,
+  contentPublishedCount: 16,
+  videosCreatedCount: 12,
   targetContentCount: 20,
   transformationMix: {
-    authority: 38,
-    trust: 27,
-    attraction: 25,
-    breakthrough: 10
+    authority: 48,
+    trust: 23,
+    attraction: 21,
+    breakthrough: 8
   }
 };
 
 export const INITIAL_SAVED_SCRIPTS: GeneratedScript[] = [
   {
-    id: 'scr_01',
-    topic: 'Why business owners should stop copying generic influencers',
+    id: 'script_01',
+    topic: '为什么年薪百万的顾问从来不卖小时咨询？',
     contentType: 'Opinion',
     transformation: 'QUAN',
     hookOptions: [
-      {
-        text: 'If you have a 7-figure business, copying a 22-year-old lifestyle influencer is costing you clients.',
-        score: 96,
-        style: 'High-Conviction Polarizing'
-      },
-      {
-        text: 'The fastest way to look cheap in front of enterprise clients is following viral social media advice.',
-        score: 91,
-        style: 'Direct Warning'
-      },
-      {
-        text: 'Why your 15 years of industry experience is being wasted on generic 10-second TikTok trends.',
-        score: 88,
-        style: 'Problem Agitation'
-      }
+      { text: '如果你还在按小时计费，说明你根本没有找到自己的商业杠杆。', score: 96, style: '高定力挑战' },
+      { text: '一位年入百万的资深顾问，绝不会把时间卖给任何人。', score: 91, style: '对比悬念' },
+      { text: '小时计费是专业人士通往财务自由最大的陷阱。', score: 88, style: '代价警示' }
     ],
-    coreIdea: 'High-ticket buyers judge credibility through restraint, structural insight, and depth—not by how loud or trendy your video looks.',
-    script30s: `Most entrepreneurs think personal branding means posting every meal, dancing to trending audio, and shouting at the camera.
-If you sell RM500 t-shirts, sure. But if you sell RM20,000 consulting or enterprise advisory, that destroys your perceived value instantly.
-Your ideal clients don't buy hype. They buy clarity, conviction, and strategic competence.
-Stop trying to be viral. Start being indispensable.
-Follow for structured brand intelligence.`,
-    script60s: `Here is the painful truth most content coaches will never tell you:
-If you are a high-ticket consultant, lawyer, or business founder, trying to look like a viral TikToker makes you look desperate.
-When a corporate decision-maker is about to wire RM50,000 for your advice, they are not checking how many dancing videos you published.
-They are assessing three specific things:
-First: Do you understand the root cause of their bottleneck better than they do?
-Second: Do you possess a structured, repeatable methodology, or are you just improvising?
-Third: Do you hold your ground with quiet, unshakeable conviction?
-Notice that none of these three require you to lip-sync to pop music or use clickbait emojis.
-Your personal brand is not an entertainment channel. It is a strategic trust engine.
-If you're ready to build influence that converts into high-ticket clients without copying teenagers, comment "IP" and I'll send you our complete Brand Intelligence Blueprint.`,
-    cta: 'Comment "IP" below to receive our confidential High-Ticket Positioning Blueprint.',
-    caption: `If you have 10+ years of domain expertise, why are you copying 20-year-old viral trends? 🛑
-
-High-value clients don't buy from the loudest person in the room; they buy from the clearest strategist.
-
-In this video, I break down the 3 criteria high-ticket buyers evaluate before wiring 5-figure retainers.
-
-Save this video and review your positioning before your next content sprint. 📌
-
-#PersonalBranding #ConsultingStrategy #BrandIntelligence #HighTicketSales #ZiweiIP #ExecutiveLeadership`,
-    thumbnailTitle: 'STOP COPYING INFLUENCERS',
-    bRollIdeas: [
-      'Slow pan over a sleek laptop showing a clean structural 2x2 framework chart',
-      'Over-the-shoulder shot writing notes on an iPad Pro with Apple Pencil',
-      'High-contrast shot adjusting a microphone in a clean, modern studio setup'
-    ],
-    shotSuggestions: [
-      '0:00-0:05 - Tight medium close-up, direct eye contact with high conviction',
-      '0:06-0:20 - Wide angle at desk, gesturing deliberately to emphasize the 3 trust pillars',
-      '0:21-0:45 - Cut to screen capture showing the structural positioning formula',
-      '0:46-0:60 - Return to close-up for the final unhurried CTA'
-    ],
-    createdAt: '2026-08-20T10:15:00Z',
+    coreIdea: '按小时计费惩罚了专业效率，只有将专业能力产品化、按解决问题的商业价值收费，才能跳出时间穷忙陷阱。',
+    script30s: '如果你还在按小时收费，说明你的商业模式还在石器时代。真正的顶级顾问卖的从来不是时间，而是确定性与商业结果。当你能帮客户多赚100万，收10万咨询费就是理所当然。关注我，教你将专业经验转化为高客单商业IP。',
+    script60s: '为什么绝大多数专业顾问每天工作14个小时，收入却始终突破不了瓶颈？因为你在按小时计费。当你越专业，解决问题越快，按小时收费反而赚得越少——这在商业逻辑上是极其荒谬的。真正聪明的做法只有一种：将隐性专业能力提炼为标准化的方法论资产，按商业价值定价。评论区回复【蓝图】，获取完整的高客单产品阶梯设计指南。',
+    cta: '在评论区回复【蓝图】，获取完整的高客单产品阶梯设计指南。',
+    caption: '按小时计费正在悄悄惩罚你的专业效率。专业人士如何跳出时间陷阱？本期深度拆解。 #个人商业IP #商业模式 #高客单变现',
+    thumbnailTitle: '告别小时计费\n年入百万的商业底层逻辑',
+    bRollIdeas: ['特写：在 iPad 上勾画产品价值阶梯', '中景：沉稳坐姿对镜头直视表达'],
+    shotSuggestions: ['0-10s 镜头推近强调挑战观点', '10-45s 配合白板图表分步推演', '45-60s 定焦收尾给出行动指令'],
+    createdAt: '2026-08-20T14:30:00Z',
     saved: true
   }
 ];
 
 export const AI_COACH_KNOWLEDGE_RESPONSES: Record<string, string> = {
-  post_today: `Based on your current **Strategic Creator** IP Blueprint and this week's content mix, you are currently at **38% Authority** and **25% Attraction**.
+  post_today: `根据你的 **策略型破局者 (Strategic Creator)** 蓝图与本周发布数据，你当前的能量配比为 **48% 权威 (QUAN)** 与 **21% 吸引 (LU)**。
 
-I recommend posting a **KE (Trust & Credibility)** breakdown today to balance your pipeline and drive consultation bookings:
+建议你今天发布一篇 **科 (KE 信任背书)** 类型的实战复盘，以平衡内容生态并带动高客单咨询转化：
 
-🎯 **Recommended Topic**:
-*“Case Study Autopsy: What happened when we repositioned a boutique financial consultant from RM1,500 hourly rates to RM18,000 value-based retainers.”*
+🎯 **推荐核心选题**：
+*“真实案例复盘：我们如何把一位精品财务顾问的客单价，从 RM1,500 单次收费提升至 RM18,000 咨询年框？”*
 
-💡 **Key Angle**:
-Walk through the exact 3 positioning bottlenecks they faced, show the diagnostic framework, and end with an invitation to book a 20-minute Diagnostic Audit.
+💡 **战略切入角度**：
+详细拆解他们面临的3大定位瓶颈，展示前后对比矩阵图，并在结尾引导预约 20 分钟战略定位体检。
 
-Would you like me to open the AI Content Studio and generate the 60-second video script and hook options for this topic?`,
+需要我立即为你打开 AI 创作工作室并生成 60 秒的视频脚本和 3 组高转化钩子吗？`,
 
-  what_to_sell: `Looking at your **Monetization Score of 88** and your Primary Archetype (**Strategic Creator**), your natural sweet spot is high-leverage advisory rather than cheap volume courses.
+  what_to_sell: `结合你 **88分的变现势能** 与 **策略型破局者** 主原型，你的天然盈利区间是高客单深度交付，而非靠低价走量课走弯路。
 
-Here is how your Offer Ladder should be configured:
+建议你的产品阶梯按如下方式配置：
 
-1. 🆓 **Lead Magnet**: *The 5-Dimension Personal Brand Intelligence Scorecard* (captures qualified consultants).
-2. 🚀 **Tripwire (RM69)**: *90-Minute Positioning Sprint Workshop* (converts intent into buying momentum).
-3. 💎 **Flagship Core (RM499/yr or RM99/mo)**: *ZIWEI IP Blueprint & AI Studio Access*.
-4. 👑 **High-Ticket Advisory (RM4,800)**: *12-Week 1-on-1 Brand Strategy Implementation* (Limit to 5 clients/quarter).
+1. 🆓 **引流钩子 (免费)**：《五维个人商业IP智能体检问卷》（筛选有认知基础的潜在客户）。
+2. 🚀 **低门槛破冰 (RM299)**：《紫微IP定位战略蓝图》（过滤高意向付费买家）。
+3. 💎 **核心大师课 (RM899)**：《紫微IP定位学》8大实战模块。
+4. 👑 **私享高客单 (RM3,800+)**：8-12周一对一商业IP落地陪跑（每季度严格限制6席）。
 
-With just 2 new High-Ticket advisory clients and 25 Core members per month, you will generate **RM12,000+ monthly recurring revenue** with minimal delivery strain.`,
+每月只需新增 2 位私享陪跑客户与 20 位大师课学员，即可轻松实现 **RM20,000+ 稳健月营收**。`,
 
-  not_converting: `Let's analyze why your content may feel high-view but low-conversion. Looking at your profile's potential blind spot:
+  not_converting: `深入排查你的内容“高点赞但低转化”的底层原因。结合你的原型盲点分析：
 
-⚠️ **Identified Friction Point**: *Over-explaining technical nuances before establishing emotional resonance.*
+⚠️ **核心摩擦点**：*在建立情感共鸣前，过早且过度阐述复杂的技术细节与专业术语。*
 
-When you explain every sub-system and jargon upfront:
-1. Viewers feel overwhelmed rather than enlightened.
-2. They consume the advice intellectually but don't feel the urgent pain of their current bottleneck.
-3. Your CTA feels like homework rather than a relief.
+当你在内容一开始就堆砌过多方法论框架时：
+1. 受众在理智上觉得你很厉害，但并没有感受到自身当前痛点的紧迫代价。
+2. 你的结尾行动指令（CTA）显得像是在给他们布置课后作业，而非提供解药。
 
-🛠️ **Strategic Adjustments for This Week**:
-- **Sharpen the Hook**: Start with the cost of inaction (*"This one positioning mistake cost a client RM40k last quarter..."*).
-- **Keep the Bridge Simple**: Deliver 1 single takeaway per video rather than 5.
-- **Use Direct-Response CTAs**: Prompt for a specific single-word DM (e.g. *Comment "AUDIT"*), rather than asking them to click 3 links.`,
+🛠️ **本周3大立竿见影的调整策略**：
+- **钩子前置代价**：从不改变的商业损失切入（“这个定位误区让一位学员上季度白白损失了 RM40k...”）。
+- **单篇只讲一个核心突破点**：每期视频只聚焦 1 个顿悟，拒绝一期讲 5 个大点。
+- **使用极简指令型 CTA**：提示回复单一词汇（如：在评论区回复【诊断】），降低行动门槛。`,
 
-  video_fit: `Given your **Strategic Creator / Authority Builder** archetype, you should avoid hype-heavy, fast-cut editing styles.
+  video_fit: `基于你的 **策略型破局者 / 权威建构者** 复合原型，你应当坚决避开泛娱乐、快节奏与浮夸的网红风格。
 
-Here is your ideal Video Setup:
-- **Format**: Sit-down deliberate analysis (Desk or Studio Armchair).
-- **Visual Aid**: iPad Pro screen draw or physical whiteboard framework.
-- **Audio Tone**: Measured, unhurried, calm, high-conviction.
-- **Duration**: 45 to 75 seconds for short-form, 8 to 12 minutes for YouTube / Deep-dives.
+你的黄金镜头配置：
+- **场景**：极简现代书房、实木大桌或极简办公扶手椅。
+- **视觉辅助**：iPad Pro 屏幕手绘思维导图或物理白板推演。
+- **音频质感**：沉稳、不疾不徐、咬字清晰有力量。
+- **时长**：短视频控制在 45-75 秒，深度长视频 8-12 分钟。
 
-🚫 **Avoid at all costs**:
-- Fast TikTok auto-captions bouncing across the screen in neon green.
-- Pointing at floating text boxes with pop music.
-- Fabricated emotional drama.
+🚫 **坚决禁止**：
+- 屏幕上方花哨跳动的荧光绿字幕。
+- 跟着流行音乐指点空中弹出的文本框。
+- 制造夸张的情感闹剧。
 
-Your superpower is *intellectual gravity*. Let your depth do the selling.`,
+你的核心武器是**认知重力**。让你的深度替你完成高客单成交。`,
 
-  ideal_audience: `According to your Brand Blueprint, your highest-ROI audience is:
+  ideal_audience: `根据你的商业战略蓝图，你 ROI 最高的目标客户画像为：
 
-👔 **Primary Profile**:
-- Established B2B Consultants, Agency Founders, Executive Coaches, and Senior Specialists earning RM15k - RM80k/month.
-- They have 8+ years of real domain expertise but are exhausted from relying solely on unpredictable word-of-mouth.
-- They are willing and able to invest RM3,000 to RM10,000 for structured positioning clarity.
+👔 **核心买家画像**：
+- 年营收在 RM200k - RM2M 的中小企业主、B2B 资深顾问、高管教练与专业人士。
+- 拥有 8 年以上的真实行业经验，但受够了完全依赖不稳定的人脉转介绍。
+- 具备充足的支付能力与强烈的付费意愿（乐意为清晰的战略定位投资 RM3k - RM10k）。
 
-❌ **Audience to Intentionally Repel**:
-- Absolute beginners looking for "make money online in 7 days" shortcuts.
-- Spectators who argue about price rather than implementation speed.`,
+❌ **主动过滤的非目标人群**：
+- 渴望“7天快速暴富”的小白群体。
+- 习惯性比价、索要免费资料却从不行动的看客。`,
 
-  how_to_position: `Based on your **Authority (92)** and **Trust (87)** scores, your positioning formula should be:
+  how_to_position: `结合你的 **权威定力 (92)** 与 **信任背书 (87)**，你的黄金定位公式应为：
 
-*"I help high-ticket service founders clarify their authentic positioning using structural brand intelligence so they can command premium fees and attract inbound enterprise clients without copying generic creator tactics."*
+*“我帮助专业顾问、高管与企业主，将隐性专业经验转化为高辨识度的个人商业IP，摆脱低效内卷，建立持续获取高客单客户的影响力系统。”*
 
-Key pillars to emphasize in every piece of content:
-1. **Depth over Volume**: You don't need 100k followers to make RM50k/month.
-2. **Methodology over Tricks**: Sustainable influence is engineered, not guessed.
-3. **Authentic Nature**: Aligning with your natural archetypal strengths prevents creator burnout.`
+在每一篇内容中反复锚定的3大核心理念：
+1. **深度胜过泛流量**：你不需要10万泛粉，也能实现年入百万。
+2. **方法论重于技巧**：持续的影响力是系统工程，绝非碰运气。
+3. **顺应本性自然发光**：顺应天赋做IP，才能长久且不内耗。`
 };

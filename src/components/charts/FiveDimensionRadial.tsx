@@ -39,14 +39,14 @@ export const FIVE_DIMENSIONS_DATA: Record<string, DimensionDetail> = {
     name: 'IDENTITY',
     nameZh: '核心天性',
     score: 89,
-    status: 'Highly Defined',
+    status: '高度清晰',
     icon: User,
     color: 'text-purple-400',
     borderColor: 'border-purple-500/40',
-    coreInsight: 'You operate most naturally as a strategic interpreter and architectural guide rather than a pure entertainer.',
-    strengths: ['Clarity under ambiguity', 'Structural pattern recognition', 'Decisive prioritization'],
+    coreInsight: '你最自然的角色是战略解读者与架构导师，而非纯娱乐网红。',
+    strengths: ['在混乱中提炼清晰', '结构化模式识别能力', '果断的战略优先级'],
     risk: 'Can appear distant or intimidating when communication becomes overly rational and dry.',
-    action: 'Add 1 relatable personal context story before launching into your expert diagnostic frameworks.'
+    action: '在输出高维方法论前，先用 1 个简短故事建立情感共振。'
   },
   values: {
     id: 'values',
@@ -54,7 +54,7 @@ export const FIVE_DIMENSIONS_DATA: Record<string, DimensionDetail> = {
     name: 'VALUES',
     nameZh: '价值底线',
     score: 91,
-    status: 'High Conviction',
+    status: '极高定力',
     icon: Heart,
     color: 'text-blue-400',
     borderColor: 'border-blue-500/40',
@@ -110,7 +110,9 @@ export const FIVE_DIMENSIONS_DATA: Record<string, DimensionDetail> = {
   }
 };
 
-export const FiveDimensionRadial: React.FC = () => {
+interface FiveDimensionRadialProps { scores?: any; size?: number; }
+
+export const FiveDimensionRadial: React.FC<FiveDimensionRadialProps> = ({ size = 300 }) => {
   const [activeDimId, setActiveDimId] = useState<string>('identity');
 
   const activeDim = FIVE_DIMENSIONS_DATA[activeDimId] || FIVE_DIMENSIONS_DATA.identity;
@@ -148,7 +150,7 @@ export const FiveDimensionRadial: React.FC = () => {
           </span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Five-Dimension IP Model
+          五维个人品牌模型
         </h2>
         <p className="text-sm text-slate-400 max-w-2xl">
           Your personal brand is not a single attribute. It is an interconnected system of five distinct strategic dimensions.

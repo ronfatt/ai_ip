@@ -27,67 +27,67 @@ function CheckoutWorkspace() {
 
   const productParam = searchParams?.get('product') || 'blueprint';
 
-  // Product Selection & Details
-  let productName = 'ZIWEI IP Blueprint';
+  // 产品选择与详情
+  let productName = 'ZIWEI IP 战略蓝图';
   let basePrice = pricing.blueprintPrice;
   let isRecurring = false;
   let inclusions = [
-    'Complete IP DNA & Five-Dimension Model',
-    'Audience Disqualification & Brand Voice Matrix',
-    'Camera Personality & Delivery Directives',
-    'Four Transformation (LU/QUAN/KE/JI) Engine',
-    '4 Content Pillars with Strategic Ratio Sliders',
-    'High-Ticket Offer Direction & 30-Day Action Plan'
+    '完整 IP 基因档案与五维深度能力模型',
+    '目标受众反向筛选与品牌语态矩阵',
+    '坐姿出镜风格与镜头表达节奏指南',
+    '四化内容飞轮（禄/权/科/忌）运行体系',
+    '4大核心内容支柱与科学配比滑块',
+    '5阶高客单产品设计与30天行动日历'
   ];
 
   if (productParam === 'course') {
-    productName = '《紫微IP定位学》 Masterclass';
+    productName = '《紫微IP定位学》 核心大师课';
     basePrice = pricing.coursePrice;
     inclusions = [
-      '8 Comprehensive Strategic Video Modules',
-      'Workbook Templates & Action Blueprints',
-      'Direct Blueprint Synchronization',
-      'Lifetime Course Access & Updates'
+      '8大战略实战视频模块（终身有效）',
+      '即插即用的实战工作手册与模板工具',
+      '与战略蓝图实时同步的个人资产库',
+      '终身免费课程更新与社群答疑权益'
     ];
   } else if (productParam === 'bundle') {
-    productName = 'ZIWEI IP Starter Bundle (Blueprint + Course)';
+    productName = 'ZIWEI IP 新手起步套装 (蓝图 + 大师课)';
     basePrice = pricing.starterBundlePrice;
     inclusions = [
-      'Full ZIWEI IP Strategy Blueprint',
-      '《紫微IP定位学》 Complete Masterclass',
-      '4 Content Pillars & Offer Architecture',
-      '30-Day Action Plan & Workbooks'
+      'ZIWEI IP 完整个人品牌战略蓝图',
+      '《紫微IP定位学》 8大实战模块完整课程',
+      '4大核心内容支柱与高客单产品阶梯',
+      '30天行动执行日历与实战工作手册'
     ];
   } else if (productParam === 'pro') {
-    productName = 'ZIWEI IP PRO Membership';
+    productName = 'ZIWEI IP PRO 会员体系';
     basePrice = pricing.proMonthlyPrice;
     isRecurring = true;
     inclusions = [
-      'Unlimited AI Content Studio Generations',
-      'Real-Time Context-Aware AI Coach',
-      '7-Channel Repurpose Engine',
-      '7-Day Campaign Series Generator',
-      'Weekly AI Performance Review'
+      '无限次 AI 创作工作台脚本与爆款选题生成',
+      '24/7 上下文感知的 AI 专属战略教练',
+      '7大社交平台一键智能内容分发重构',
+      '7天主题战役连载内容生成器',
+      '每周自动化发布数据与策略复盘'
     ];
   }
 
-  // Order Bump state (optional 30-Day Starter Pack +RM49)
+  // 加购选项 (30天内容起步包 +RM49)
   const [hasOrderBump, setHasOrderBump] = useState(false);
   const bumpPrice = pricing.orderBumpStarterPack;
 
-  // Total calculation
+  // 总价计算
   const totalPrice = basePrice + (hasOrderBump ? bumpPrice : 0);
 
-  // Form states
-  const [email, setEmail] = useState('alex@brandstrategy.co');
-  const [fullName, setFullName] = useState('Alex Tan');
+  // 表单状态
+  const [email, setEmail] = useState('alex.tan@ziwei-ip.io');
+  const [fullName, setFullName] = useState('陈志远');
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'fpx' | 'duitnow'>('card');
   const [promoCode, setPromoCode] = useState('');
   const [isPromoOpen, setIsPromoOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'success' | 'failed' | 'pending'>('idle');
 
-  // Post-purchase soft upsell state
+  // 购买后软性追加销售状态 (Course Bundle)
   const [showSoftUpsell, setShowSoftUpsell] = useState(false);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function CheckoutWorkspace() {
       setPaymentStatus('success');
       triggerConfetti();
 
-      // Unlock entitlements in context
+      // 在全局上下文中解锁相应权益
       if (productParam === 'blueprint' || productParam === 'bundle') {
         unlockBlueprint();
       }
@@ -122,28 +122,28 @@ function CheckoutWorkspace() {
 
   const handleAddUpsellCourse = () => {
     unlockCourse();
-    addToast('🎉 Added 《紫微IP定位学》 to your account with bundle discount!', 'success');
+    addToast('🎉 已成功以优惠组合价将《紫微IP定位学》添加至您的账户！', 'success');
     router.push('/blueprint');
   };
 
   return (
     <div className="min-h-screen bg-surface-300 text-white selection:bg-brand-champagne selection:text-slate-950 flex flex-col justify-between p-4 sm:p-8">
-      {/* Top Header */}
+      {/* 顶部 Header */}
       <div className="max-w-4xl mx-auto w-full flex items-center justify-between pb-4 border-b border-surface-border">
         <Link href="/" className="flex items-center gap-2 text-xs font-bold text-white">
           <span className="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-violet to-brand-champagne flex items-center justify-center font-mono font-black text-slate-950 text-xs">
             ZW
           </span>
-          <span className="font-extrabold tracking-tight">ZIWEI IP Checkout</span>
+          <span className="font-extrabold tracking-tight">ZIWEI IP 安全结算收银台</span>
         </Link>
         <span className="text-xs text-slate-400 font-mono flex items-center gap-1">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" /> 256-Bit SSL Encrypted
+          <ShieldCheck className="w-4 h-4 text-emerald-400" /> 256 位 SSL 安全加密传输
         </span>
       </div>
 
       <main className="max-w-4xl mx-auto w-full my-auto py-8">
         {paymentStatus === 'success' ? (
-          /* ================= SUCCESS / SOFT UPSELL SCREEN ================= */
+          /* ================= 支付成功 / 软追加销售界面 ================= */
           <div className="p-8 sm:p-12 rounded-3xl bg-surface-200/95 border border-brand-champagne/40 shadow-2xl space-y-8 text-center max-w-xl mx-auto animate-scale-up">
             <div className="w-16 h-16 mx-auto rounded-3xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
               <CheckCircle2 className="w-8 h-8" />
@@ -151,31 +151,31 @@ function CheckoutWorkspace() {
 
             <div className="space-y-2">
               <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-400">
-                PAYMENT CONFIRMED
+                支付已确认成功
               </span>
               <h2 className="text-3xl font-black text-white">
-                Your Full Blueprint Is Unlocked
+                您的完整战略蓝图已正式解锁
               </h2>
               <p className="text-xs sm:text-sm text-slate-300">
-                Your complete personal brand strategy and 30-day execution framework are ready.
+                您的专属个人商业品牌战略地图与 30 天落地执行框架已就绪。
               </p>
             </div>
 
-            {/* Soft Post-Purchase Upsell (Course Bundle) */}
+            {/* 购买后软追加销售（大师课组合优惠） */}
             {showSoftUpsell && (
               <div className="p-6 rounded-2xl bg-gradient-to-br from-brand-violet/20 via-surface-100 to-surface-100 border border-brand-champagne/30 text-left space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold uppercase text-brand-champagne bg-brand-champagne/15 px-2.5 py-0.5 rounded">
-                    SPECIAL UPSELL OFFER
+                    学员专享特惠升级
                   </span>
-                  <span className="text-xs font-bold font-mono text-emerald-400">Save RM200 Today</span>
+                  <span className="text-xs font-bold font-mono text-emerald-400">今日立省 RM200</span>
                 </div>
 
                 <h3 className="text-base font-black text-white">
-                  Want Help Implementing Your Blueprint?
+                  需要实战导师手把手带你落地蓝图？
                 </h3>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  Add the complete <strong>《紫微IP定位学》</strong> 8-module Masterclass for only <strong>RM{pricing.upsellCourseBundle}</strong> (regular RM{pricing.coursePrice}).
+                  加购完整的 <strong>《紫微IP定位学》</strong> 8 大模块大师课，仅需 <strong>RM{pricing.upsellCourseBundle}</strong>（原价 RM{pricing.coursePrice}）。
                 </p>
 
                 <div className="pt-2 flex flex-col sm:flex-row gap-2">
@@ -183,13 +183,13 @@ function CheckoutWorkspace() {
                     onClick={handleAddUpsellCourse}
                     className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brand-champagne to-brand-gold text-slate-950 font-bold text-xs hover:brightness-110 active:scale-95 transition-all text-center"
                   >
-                    Add Masterclass (RM{pricing.upsellCourseBundle})
+                    以特惠价加购大师课 (RM{pricing.upsellCourseBundle})
                   </button>
                   <button
                     onClick={() => router.push('/blueprint')}
                     className="px-4 py-2.5 rounded-xl bg-surface-200 hover:bg-surface-50 text-slate-400 hover:text-white font-semibold text-xs text-center"
                   >
-                    No Thanks, View Blueprint
+                    暂不需要，直接查看蓝图
                   </button>
                 </div>
               </div>
@@ -200,31 +200,31 @@ function CheckoutWorkspace() {
                 onClick={() => router.push('/blueprint')}
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-champagne to-brand-gold text-slate-950 font-black text-sm hover:brightness-110 active:scale-95 transition-all shadow-xl"
               >
-                Explore My Blueprint &rarr;
+                立即进入我的战略蓝图 &rarr;
               </button>
             )}
           </div>
         ) : (
-          /* ================= MAIN CHECKOUT GRID ================= */
+          /* ================= 主收银结算网格 ================= */
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* LEFT COLUMN: ORDER SUMMARY (lg:col-span-5) */}
+            {/* 左列：订单详情与权益 (lg:col-span-5) */}
             <div className="lg:col-span-5 p-6 sm:p-7 rounded-3xl bg-surface-200/90 border border-white/10 space-y-6 shadow-xl">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-champagne">
-                  ORDER SUMMARY
+                  订单明细
                 </span>
                 <h3 className="text-xl font-black text-white mt-1">
                   {productName}
                 </h3>
                 <span className="text-xs text-slate-400 font-mono">
-                  {isRecurring ? 'Recurring monthly billing' : 'One-time investment · Lifetime access'}
+                  {isRecurring ? '按月自动续订，支持随时取消' : '一次性买断 · 享有终身访问权限'}
                 </span>
               </div>
 
-              {/* Inclusions list */}
+              {/* 权益列表 */}
               <div className="space-y-2 pt-2 border-t border-white/5 text-xs">
                 <span className="font-bold text-slate-300 font-mono text-[10px] uppercase block">
-                  What’s Included:
+                  所包含的专属权益：
                 </span>
                 <ul className="space-y-2 text-slate-300">
                   {inclusions.map((inc, i) => (
@@ -236,7 +236,7 @@ function CheckoutWorkspace() {
                 </ul>
               </div>
 
-              {/* Optional Order Bump: 30-Day Content Starter Pack */}
+              {/* 可选加购：30天内容起步包 */}
               {productParam === 'blueprint' && (
                 <div
                   onClick={() => setHasOrderBump(!hasOrderBump)}
@@ -254,17 +254,17 @@ function CheckoutWorkspace() {
                         onChange={() => {}}
                         className="accent-brand-champagne rounded"
                       />
-                      <strong className="text-xs text-white">Add 30-Day Content Starter Pack</strong>
+                      <strong className="text-xs text-white">加购 30 天内容落地起步包</strong>
                     </div>
                     <span className="text-xs font-mono font-bold text-brand-champagne">+RM{bumpPrice}</span>
                   </div>
                   <p className="text-[11px] text-slate-300 leading-snug pl-5">
-                    Includes 30 high-converting authority hooks, caption formulas, and CTA templates.
+                    包含 30 组高转化权威钩子公式、高赞文案模板与私域引流转化话术。
                   </p>
                 </div>
               )}
 
-              {/* Price Line Items */}
+              {/* 费用清单 */}
               <div className="pt-4 border-t border-white/5 space-y-2 text-xs font-mono">
                 <div className="flex justify-between text-slate-300">
                   <span>{productName}</span>
@@ -272,31 +272,31 @@ function CheckoutWorkspace() {
                 </div>
                 {hasOrderBump && (
                   <div className="flex justify-between text-brand-champagne">
-                    <span>30-Day Content Starter Pack</span>
+                    <span>30 天内容落地起步包</span>
                     <span>+RM{bumpPrice}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-base font-black text-white pt-2 border-t border-white/10">
-                  <span>Total Amount</span>
+                  <span>应付总额</span>
                   <span>RM{totalPrice}</span>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT COLUMN: PAYMENT FORM (lg:col-span-7) */}
+            {/* 右列：支付方式表单 (lg:col-span-7) */}
             <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-surface-200/95 border border-brand-champagne/30 space-y-6 shadow-xl">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-champagne">
-                  SECURE CHECKOUT
+                  安全支付通道
                 </span>
                 <h3 className="text-xl font-black text-white mt-0.5">
-                  Enter Payment Details
+                  填写结算信息
                 </h3>
               </div>
 
               <form onSubmit={handlePay} className="space-y-4 text-xs">
                 <div className="space-y-1">
-                  <label className="font-bold text-slate-300">Full Name</label>
+                  <label className="font-bold text-slate-300">姓名 / 称呼</label>
                   <input
                     type="text"
                     required
@@ -307,7 +307,7 @@ function CheckoutWorkspace() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-slate-300">Email Address (for instant access)</label>
+                  <label className="font-bold text-slate-300">接收账户邮箱（用于开通即时权限）</label>
                   <input
                     type="email"
                     required
@@ -317,14 +317,14 @@ function CheckoutWorkspace() {
                   />
                 </div>
 
-                {/* Payment Method Selector */}
+                {/* 支付方式选择 */}
                 <div className="space-y-2 pt-2">
-                  <label className="font-bold text-slate-300 block">Payment Method</label>
+                  <label className="font-bold text-slate-300 block">选择支付方式</label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
-                      { id: 'card', label: 'Credit Card', icon: CreditCard },
-                      { id: 'fpx', label: 'FPX Banking', icon: Building2 },
-                      { id: 'duitnow', label: 'DuitNow QR', icon: QrCode },
+                      { id: 'card', label: '信用卡 / 借记卡', icon: CreditCard },
+                      { id: 'fpx', label: 'FPX 网银转账', icon: Building2 },
+                      { id: 'duitnow', label: 'DuitNow QR 扫码', icon: QrCode },
                     ].map((m) => {
                       const Icon = m.icon;
                       const isSelected = paymentMethod === m.id;
@@ -347,11 +347,11 @@ function CheckoutWorkspace() {
                   </div>
                 </div>
 
-                {/* Mock Card Input fields */}
+                {/* 信用卡卡号输入模拟 */}
                 {paymentMethod === 'card' && (
                   <div className="space-y-3 p-4 rounded-2xl bg-surface-100 border border-white/5 animate-fade-in">
                     <div className="space-y-1">
-                      <label className="text-[10px] text-slate-400 font-mono">Card Number</label>
+                      <label className="text-[10px] text-slate-400 font-mono">卡号</label>
                       <input
                         type="text"
                         placeholder="4242 •••• •••• 4242"
@@ -361,7 +361,7 @@ function CheckoutWorkspace() {
                     </div>
                     <div className="grid grid-cols-2 gap-2 font-mono">
                       <div>
-                        <label className="text-[10px] text-slate-400">MM/YY</label>
+                        <label className="text-[10px] text-slate-400">有效日期 (MM/YY)</label>
                         <input
                           type="text"
                           defaultValue="12/28"
@@ -369,7 +369,7 @@ function CheckoutWorkspace() {
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] text-slate-400">CVC</label>
+                        <label className="text-[10px] text-slate-400">安全码 (CVC)</label>
                         <input
                           type="text"
                           defaultValue="888"
@@ -380,7 +380,7 @@ function CheckoutWorkspace() {
                   </div>
                 )}
 
-                {/* Collapsible Promo Code */}
+                {/* 折扣码输入框 */}
                 <div className="pt-1">
                   {!isPromoOpen ? (
                     <button
@@ -389,7 +389,7 @@ function CheckoutWorkspace() {
                       className="text-slate-400 hover:text-brand-champagne text-[11px] font-mono flex items-center gap-1"
                     >
                       <Tag className="w-3 h-3" />
-                      <span>Have a promo code?</span>
+                      <span>使用优惠折扣码？</span>
                     </button>
                   ) : (
                     <div className="flex gap-2 animate-fade-in">
@@ -397,38 +397,38 @@ function CheckoutWorkspace() {
                         type="text"
                         value={promoCode}
                         onChange={(e) => setPromoCode(e.target.value)}
-                        placeholder="Enter code (e.g. VIP2026)..."
+                        placeholder="输入折扣码 (如 VIP2026)..."
                         className="flex-1 p-2 rounded-lg bg-surface-100 border border-white/10 text-white text-xs uppercase font-mono"
                       />
                       <button
                         type="button"
-                        onClick={() => addToast('Promo code applied (Demo Mode)', 'success')}
+                        onClick={() => addToast('折扣码已成功应用（演示模式）', 'success')}
                         className="px-3 py-2 rounded-lg bg-surface-100 text-brand-champagne font-bold text-xs border border-brand-champagne/30"
                       >
-                        Apply
+                        兑换
                       </button>
                     </div>
                   )}
                 </div>
 
-                {/* Submit Pay Button */}
+                {/* 提交支付按钮 */}
                 <button
                   type="submit"
                   disabled={isProcessing}
                   className="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-champagne via-brand-gold to-brand-champagne text-slate-950 font-black text-sm hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-brand-champagne/20 flex items-center justify-center gap-2"
                 >
                   {isProcessing ? (
-                    <span>Processing Secure Payment...</span>
+                    <span>正在进行安全支付处理...</span>
                   ) : (
                     <>
                       <Lock className="w-4 h-4" />
-                      <span>Pay RM{totalPrice} & Unlock Access</span>
+                      <span>安全支付 RM{totalPrice} 并立即开通</span>
                     </>
                   )}
                 </button>
 
                 <p className="text-[10px] text-slate-400 font-mono text-center leading-snug">
-                  ZIWEI IP provides strategic self-reflection and business positioning guidance. It does not guarantee financial or life outcomes.
+                  ZIWEI IP 提供专业的战略自我认知与定位指导。支付即视为同意平台服务协议。
                 </p>
               </form>
             </div>
@@ -436,8 +436,8 @@ function CheckoutWorkspace() {
         )}
       </main>
 
-      <footer className="max-w-4xl mx-auto w-full pt-4 border-t border-surface-border text-center text-[10px] text-slate-500 font-mono">
-        © 2026 ZIWEI IP · All Rights Reserved · Secure Checkout System
+      <footer className="max-w-4xl mx-auto w-full pt-4 border-t border-surface-border text-center text-[10px] text-slate-400 font-mono">
+        © 2026 ZIWEI IP · 保留所有权利 · 安全结算系统
       </footer>
     </div>
   );
@@ -445,7 +445,7 @@ function CheckoutWorkspace() {
 
 export default function CheckoutPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-slate-400">Loading Checkout...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-slate-400">正在加载收银台...</div>}>
       <CheckoutWorkspace />
     </Suspense>
   );

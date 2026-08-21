@@ -30,7 +30,6 @@ export const CommandBarModal: React.FC<CommandBarModalProps> = ({ isOpen, onClos
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        // toggle if handled by parent
       }
       if (e.key === 'Escape' && isOpen) {
         onClose();
@@ -43,12 +42,12 @@ export const CommandBarModal: React.FC<CommandBarModalProps> = ({ isOpen, onClos
   if (!isOpen) return null;
 
   const suggestions = [
-    { label: 'What should I post today?', action: () => { router.push('/coach'); sendCoachMessage('What should I post today?'); onClose(); } },
-    { label: 'How can I improve my Authority score?', action: () => { router.push('/coach'); sendCoachMessage('How can I improve my Authority score?'); onClose(); } },
-    { label: 'Generate a QUAN Authority script in Studio', action: () => { router.push('/studio?trans=QUAN'); onClose(); } },
-    { label: 'Inspect 5-Dimension IP Model', action: () => { router.push('/ip-dna'); onClose(); } },
-    { label: 'Browse Professional Ziwei Database', action: () => { router.push('/database'); onClose(); } },
-    { label: 'Review High-Ticket Offer Ladder', action: () => { router.push('/business'); onClose(); } }
+    { label: '今天我应该发布什么内容驱动高客单咨询？', action: () => { router.push('/coach'); sendCoachMessage('今天我应该发布什么内容驱动高客单咨询？'); onClose(); } },
+    { label: '如何进一步提升我的权威定力得分 (QUAN 92)？', action: () => { router.push('/coach'); sendCoachMessage('如何进一步提升我的权威定力得分？'); onClose(); } },
+    { label: '在 AI 创作工作台生成一篇权（权威观点）视频脚本', action: () => { router.push('/studio?trans=QUAN'); onClose(); } },
+    { label: '查看我的五维 IP 基因与复合原型图谱', action: () => { router.push('/ip-dna'); onClose(); } },
+    { label: '查阅紫微专业数据库与星曜商业映射', action: () => { router.push('/database'); onClose(); } },
+    { label: '优化我的 5 阶高客单产品阶梯与定价', action: () => { router.push('/business'); onClose(); } }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -62,7 +61,7 @@ export const CommandBarModal: React.FC<CommandBarModalProps> = ({ isOpen, onClos
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 sm:pt-32 p-4 bg-black/80 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-2xl bg-surface-100 border border-brand-champagne/40 rounded-3xl p-4 sm:p-6 text-slate-100 shadow-2xl space-y-4">
-        {/* Search input bar */}
+        {/* 搜索框 */}
         <form onSubmit={handleSubmit} className="relative flex items-center">
           <Search className="w-5 h-5 text-brand-champagne absolute left-4" />
           <input
@@ -70,7 +69,7 @@ export const CommandBarModal: React.FC<CommandBarModalProps> = ({ isOpen, onClos
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Ask ZIWEI IP (e.g. What should I post today?)..."
+            placeholder="向 ZIWEI IP 提问（例如：今天我该发什么？输入回车直接咨询）..."
             className="w-full pl-12 pr-10 py-3.5 rounded-2xl bg-surface-200 border border-white/10 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-brand-champagne"
           />
           <button
@@ -82,10 +81,10 @@ export const CommandBarModal: React.FC<CommandBarModalProps> = ({ isOpen, onClos
           </button>
         </form>
 
-        {/* Shortcuts / Suggestions */}
+        {/* 推荐快捷指令 */}
         <div className="space-y-1.5 pt-2">
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2 block">
-            Suggested Intelligent Commands
+            智能推荐快捷指令
           </span>
           <div className="space-y-1">
             {suggestions.map((s, idx) => (
@@ -98,15 +97,16 @@ export const CommandBarModal: React.FC<CommandBarModalProps> = ({ isOpen, onClos
                   <Sparkles className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" />
                   <span>{s.label}</span>
                 </span>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-brand-champagne group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-brand-champagne transition-colors flex-shrink-0" />
               </button>
             ))}
           </div>
         </div>
 
-        <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 px-2">
-          <span>Press <strong>Enter</strong> to ask AI Coach</span>
-          <span>Press <strong>ESC</strong> to close</span>
+        {/* 底部快捷键提示 */}
+        <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+          <span>按 ESC 关闭指令面板</span>
+          <span>按 ⌘K 可随时唤起</span>
         </div>
       </div>
     </div>

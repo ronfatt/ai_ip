@@ -47,7 +47,7 @@ export default function DatabasePage() {
 
   const handleCopy = (text: string, label: string) => {
     copyToClipboard(text);
-    addToast(`${label} copied!`, 'success');
+    addToast(`${label} 已复制！`, 'success');
   };
 
   const handleSendToStudio = (topic: string) => {
@@ -101,13 +101,13 @@ export default function DatabasePage() {
               Professional Zi Wei Dou Shu Database
             </h1>
             <p className="text-sm text-slate-300">
-              Complete reference library mapping 14 Major Stars, 12 Palaces, 10 Heavenly Stems 4-Transformations, and Classic IP Patterns into high-ticket business strategy.
+              Complete reference library mapping 14 14主星, 12宫位, 10 Heavenly Stems 4-Transformations, and 经典商业格局 into high-ticket business strategy.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <span className="text-xs text-slate-400 font-mono">
-              Database Records: <strong className="text-brand-champagne">14 Stars · 12 Palaces · 10 Stems · 12 Aux</strong>
+              Database Records: <strong className="text-brand-champagne">14 Stars · 12宫位 · 10 Stems · 12 Aux</strong>
             </span>
           </div>
         </div>
@@ -117,11 +117,11 @@ export default function DatabasePage() {
           {/* Main Category Tabs */}
           <div className="flex flex-wrap items-center gap-1.5 bg-surface-200 p-1.5 rounded-2xl border border-white/10">
             {[
-              { id: 'stars', label: '14 Major Stars (十四正星)' },
-              { id: 'palaces', label: '12 Palaces (十二宫位)' },
-              { id: 'stems', label: '10 Stems 4-Transformations (十天干四化)' },
-              { id: 'auxiliary', label: 'Auxiliary Stars (吉星与煞星)' },
-              { id: 'patterns', label: 'Classic IP Patterns (经典商业格局)' },
+              { id: 'stars', label: '14 14主星 (十四正星)' },
+              { id: 'palaces', label: '12宫位 (十二宫位)' },
+              { id: 'stems', label: '十干四化 (十天干四化)' },
+              { id: 'auxiliary', label: '六吉六煞 (吉星与煞星)' },
+              { id: 'patterns', label: '经典商业格局 (经典商业格局)' },
             ].map((tab) => (
               <button
                 key={tab.id}

@@ -1,235 +1,174 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
-  Check,
-  X,
-  Crown,
   Sparkles,
-  Shield,
-  Rocket,
-  Zap,
-  Lock,
+  ShieldCheck,
+  CheckCircle2,
+  Crown,
   ArrowRight,
-  HelpCircle
+  Lock,
+  Compass,
+  GraduationCap,
+  Bot
 } from 'lucide-react';
 import { AppShell } from '@/components/layout/AppShell';
 import { useAppState } from '@/context/AppStateContext';
-import { triggerConfetti } from '@/lib/utils';
 
 export default function PricingPage() {
-  const { activePlan, setActivePlan, openUpgradeModal, addToast } = useAppState();
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
+  const { pricing } = useAppState();
 
-  const handleSelectPlan = (tier: 'free' | 'snapshot' | 'pro' | 'elite') => {
-    if (tier === 'free') {
-      setActivePlan('free');
-      addToast('Switched to Free Tier', 'info');
-      return;
+  const pricingTiers = [
+    {
+      id: 'blueprint',
+      name: 'ZIWEI IP 战略蓝图',
+      badge: '入门战略基石',
+      price: `RM ${pricing.blueprintPrice}`,
+      period: '一次性买断 · 终身有效',
+      desc: '专为需要看清自身天赋、建立精准定位与受众筛选体系的专业人士打造。',
+      inclusions: [
+        '完整个人 IP 基因与五维能力图谱',
+        '目标受众反向筛选与品牌语态矩阵',
+        '坐姿出镜风格与镜头表达节奏指南',
+        '四化内容飞轮与 4 大核心内容支柱',
+        '5 阶高客单产品设计与 30 天行动日历'
+      ],
+      ctaText: '立即解锁战略蓝图',
+      ctaLink: '/checkout?product=blueprint',
+      highlight: false
+    },
+    {
+      id: 'course',
+      name: '《紫微IP定位学》 大师课',
+      badge: '实战体系化进阶',
+      price: `RM ${pricing.coursePrice}`,
+      period: '一次性买断 · 包含工作手册',
+      desc: '8 大战略实战模块，手把手带你构建从内容生产到高客单成交的闭环系统。',
+      inclusions: [
+        '8 大实战视频大师模块（终身有效）',
+        '即插即用的实战工作手册与模板工具',
+        '与战略蓝图实时同步的个人资产库',
+        '专属学员社群交流与后续更新权益',
+        '包含战略蓝图所有基础核心权益'
+      ],
+      ctaText: '立即加入大师课',
+      ctaLink: '/checkout?product=course',
+      highlight: true
+    },
+    {
+      id: 'pro',
+      name: 'ZIWEI IP PRO 会员',
+      badge: '日常创作者操作系统',
+      price: `RM ${pricing.proMonthlyPrice}`,
+      period: '按月自动续订 · 随时取消',
+      desc: '无限次调用 AI 创作工作台与 AI 专属战略教练，保持每周高品质产出。',
+      inclusions: [
+        '无限次 AI 爆款脚本与分镜头生成',
+        '7 大社交平台一键智能内容分发重构',
+        '7 天主题战役连载内容生成器',
+        '24/7 专属 AI 战略教练实时答疑',
+        '每周自动化发布数据与策略复盘'
+      ],
+      ctaText: '开通 PRO 会员',
+      ctaLink: '/checkout?product=pro',
+      highlight: false
+    },
+    {
+      id: 'elite',
+      name: '商业IP私享陪跑计划',
+      badge: '顶级深度一对一定制',
+      price: `RM ${pricing.eliteStartingPrice.toLocaleString()}+`,
+      period: '8–12 周私享高阶陪跑',
+      desc: '由资深品牌战略顾问亲自下场，量身定制高客单产品阶梯与变现闭环。',
+      inclusions: [
+        '1对1 深度认知诊断与商业定位重塑',
+        '高客单产品阶梯与价值定价体系设计',
+        '坐姿短视频出镜表现力导师一对一调优',
+        '季度四化内容路线图与私域转化SOP',
+        '专属战略顾问微信直接沟通答疑通道'
+      ],
+      ctaText: '申请私享陪跑席位',
+      ctaLink: '/elite',
+      highlight: false
     }
-    openUpgradeModal(`Selected ${tier.toUpperCase()} plan`);
-  };
+  ];
 
   return (
     <AppShell>
-      <div className="space-y-12 animate-fade-in max-w-6xl mx-auto">
+      <div className="space-y-10 animate-fade-in max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 pt-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-champagne/10 border border-brand-champagne/30 text-brand-champagne text-xs font-semibold uppercase tracking-wider">
-            <Crown className="w-3.5 h-3.5" /> Investment Architecture
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Predictable Positioning. <br />
-            <span className="bg-gradient-to-r from-brand-champagne to-brand-gold bg-clip-text text-transparent">
-              Compounding Inbound Influence.
-            </span>
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-champagne bg-brand-champagne/15 px-3 py-1 rounded-full border border-brand-champagne/30">
+            TRANSPARENT PRICING
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            清晰透明的产品阶梯体系
           </h1>
-          <p className="text-sm sm:text-base text-slate-300">
-            Choose the tier that matches your current personal brand stage—from self-discovery to full 12-week advisory implementation.
+          <p className="text-sm text-slate-300">
+            按需选择适合您当前商业阶段的成长方案，从认知定位到持续创作与深度陪跑。
           </p>
+        </div>
 
-          {/* Billing Switcher */}
-          <div className="flex items-center justify-center gap-3 pt-4">
-            <span className={`text-xs font-medium ${billingCycle === 'monthly' ? 'text-white font-bold' : 'text-slate-400'}`}>
-              Monthly Billing
-            </span>
-            <button
-              onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
-              className="w-12 h-6 rounded-full bg-surface-50 p-1 border border-white/10 relative transition-colors focus:outline-none"
+        {/* 4 档定价卡片网格 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.id}
+              className={`p-7 rounded-3xl border flex flex-col justify-between space-y-6 transition-all ${
+                tier.highlight
+                  ? 'bg-gradient-to-b from-surface-100 to-surface-200 border-brand-champagne shadow-2xl ring-1 ring-brand-champagne/40 scale-102'
+                  : 'bg-surface-200/90 border-white/10'
+              }`}
             >
-              <div
-                className={`w-4 h-4 rounded-full bg-brand-champagne transition-transform ${
-                  billingCycle === 'yearly' ? 'translate-x-6' : 'translate-x-0'
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase text-brand-champagne bg-brand-champagne/15 px-2.5 py-0.5 rounded">
+                    {tier.badge}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-white">{tier.name}</h3>
+                  <div className="flex items-baseline gap-1 mt-2">
+                    <span className="text-3xl font-black text-white font-mono">{tier.price}</span>
+                  </div>
+                  <span className="text-[11px] text-slate-400 font-mono block mt-0.5">{tier.period}</span>
+                </div>
+
+                <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                  {tier.desc}
+                </p>
+
+                {/* 权益 */}
+                <div className="pt-3 border-t border-white/5 space-y-2 text-xs">
+                  <span className="font-bold text-slate-300 font-mono text-[10px] uppercase block">
+                    包含核心权益：
+                  </span>
+                  <ul className="space-y-2 text-slate-300">
+                    {tier.inclusions.map((inc, i) => (
+                      <li key={i} className="flex items-start gap-2 text-[11px]">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span className="leading-snug">{inc}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <Link
+                href={tier.ctaLink}
+                className={`w-full py-3.5 rounded-2xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center ${
+                  tier.highlight
+                    ? 'bg-gradient-to-r from-brand-champagne via-brand-gold to-brand-champagne text-slate-950 shadow-lg shadow-brand-champagne/20 hover:brightness-110 active:scale-95'
+                    : 'bg-surface-100 hover:bg-surface-50 text-white border border-white/10'
                 }`}
-              />
-            </button>
-            <span className={`text-xs font-medium flex items-center gap-1.5 ${billingCycle === 'yearly' ? 'text-brand-champagne font-bold' : 'text-slate-400'}`}>
-              Annual Billing <span className="px-2 py-0.5 text-[10px] bg-brand-gold/20 text-brand-gold rounded-full border border-brand-gold/30">Save 40%</span>
-            </span>
-          </div>
-        </div>
-
-        {/* 4 Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Plan 1: FREE */}
-          <div className="p-6 rounded-3xl bg-surface-200/80 border border-white/10 flex flex-col justify-between space-y-6">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-base font-bold text-white">Free IP Test</h3>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-slate-400 font-mono">STARTER</span>
-              </div>
-              <p className="text-xs text-slate-400 mb-4">Discover your primary archetype and initial momentum baseline.</p>
-              <div className="text-3xl font-black text-white font-mono mb-4">
-                RM 0 <span className="text-xs font-normal text-slate-400">/ forever</span>
-              </div>
-
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> 6-Step Cognitive IP Assessment</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> Primary Archetype Diagnosis</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> Basic IP Momentum Score</li>
-                <li className="flex items-center gap-2 text-slate-600"><X className="w-3.5 h-3.5 flex-shrink-0" /> AI Content Studio access</li>
-                <li className="flex items-center gap-2 text-slate-600"><X className="w-3.5 h-3.5 flex-shrink-0" /> Offer Ladder architecture</li>
-              </ul>
+              >
+                <span>{tier.ctaText}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-
-            <button
-              onClick={() => handleSelectPlan('free')}
-              className="w-full py-2.5 rounded-xl bg-surface-100 hover:bg-surface-50 text-slate-300 text-xs font-semibold border border-white/10 transition-colors"
-            >
-              Current / Free Tier
-            </button>
-          </div>
-
-          {/* Plan 2: SNAPSHOT */}
-          <div className="p-6 rounded-3xl bg-surface-200/80 border border-blue-500/30 hover:border-blue-500/60 flex flex-col justify-between space-y-6 transition-all">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-base font-bold text-blue-400">IP Snapshot</h3>
-                <Shield className="w-4 h-4 text-blue-400" />
-              </div>
-              <p className="text-xs text-slate-400 mb-4">Full 10-page diagnostic PDF dossier with personal recommendations.</p>
-              <div className="text-3xl font-black text-white font-mono mb-4">
-                RM 49 <span className="text-xs font-normal text-slate-400">/ one-time</span>
-              </div>
-
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" /> Full 5-Score IP DNA Analysis</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" /> Primary & Secondary Archetype breakdown</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" /> Downloadable 10-Page Dossier PDF</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" /> Core Strengths & Blind Spot map</li>
-                <li className="flex items-center gap-2 text-slate-600"><X className="w-3.5 h-3.5 flex-shrink-0" /> AI Content Studio access</li>
-              </ul>
-            </div>
-
-            <button
-              onClick={() => handleSelectPlan('snapshot')}
-              className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md"
-            >
-              Get Snapshot (RM49)
-            </button>
-          </div>
-
-          {/* Plan 3: PRO (Featured) */}
-          <div className="p-6 rounded-3xl bg-surface-200 border-2 border-brand-champagne shadow-2xl relative flex flex-col justify-between space-y-6 scale-[1.03]">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-brand-champagne text-slate-950 text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-md">
-              <Sparkles className="w-3 h-3" /> Most Recommended
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-2 mt-1">
-                <h3 className="text-base font-bold text-brand-champagne">PRO Blueprint & Studio</h3>
-                <Crown className="w-4 h-4 text-brand-champagne" />
-              </div>
-              <p className="text-xs text-slate-400 mb-4">Complete creator & advisory OS: AI studio, four transformations, & offer engine.</p>
-              <div className="text-3xl font-black text-white font-mono mb-4">
-                {billingCycle === 'yearly' ? 'RM 59' : 'RM 99'} <span className="text-xs font-normal text-slate-400">/ mo</span>
-              </div>
-
-              <ul className="space-y-2.5 text-xs text-slate-200">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" /> <strong>Full Brand Blueprint Access</strong></li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" /> <strong>Unlimited AI Content Studio</strong> (Scripts & Hooks)</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" /> <strong>Four Transformations Content Engine</strong></li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" /> <strong>Business Builder Offer Ladder</strong></li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" /> <strong>24/7 Context-Aware AI Coach</strong></li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-champagne flex-shrink-0" /> <strong>8-Module Video Academy</strong></li>
-              </ul>
-            </div>
-
-            <button
-              onClick={() => handleSelectPlan('pro')}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-brand-champagne to-brand-gold text-slate-950 font-extrabold text-xs hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-brand-champagne/20"
-            >
-              Start PRO Membership
-            </button>
-          </div>
-
-          {/* Plan 4: ELITE */}
-          <div className="p-6 rounded-3xl bg-surface-200/80 border border-brand-violet/40 hover:border-brand-violet/80 flex flex-col justify-between space-y-6 transition-all">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-base font-bold text-brand-violet">12-Week Elite</h3>
-                <Rocket className="w-4 h-4 text-brand-violet" />
-              </div>
-              <p className="text-xs text-slate-400 mb-4">Done-with-you high-ticket positioning & private brand consulting cohort.</p>
-              <div className="text-3xl font-black text-white font-mono mb-4">
-                RM 3,800 <span className="text-xs font-normal text-slate-400">/ 12 wks</span>
-              </div>
-
-              <ul className="space-y-2.5 text-xs text-slate-300">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-violet flex-shrink-0" /> Everything in PRO included</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-violet flex-shrink-0" /> 1-on-1 Deep Birth & Commercial Audit</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-violet flex-shrink-0" /> High-Ticket Offer Architecture (RM5k-30k)</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-violet flex-shrink-0" /> Bi-weekly 1-on-1 Consulting Calls</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-brand-violet flex-shrink-0" /> Direct WhatsApp Review Access</li>
-              </ul>
-            </div>
-
-            <button
-              onClick={() => handleSelectPlan('elite')}
-              className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-md"
-            >
-              Apply for Elite Advisory
-            </button>
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="p-8 rounded-3xl bg-surface-200/90 border border-white/10 space-y-6">
-          <div className="text-center max-w-xl mx-auto space-y-2">
-            <h3 className="text-xl font-bold text-white">Frequently Asked Questions</h3>
-            <p className="text-xs text-slate-400">Everything you need to know about ZIWEI IP positioning intelligence.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-300 pt-4">
-            <div className="space-y-1.5 p-4 rounded-2xl bg-surface-100 border border-white/5">
-              <span className="font-bold text-white block">Is this traditional Chinese fortune-telling?</span>
-              <p className="text-slate-400 leading-relaxed">
-                No. ZIWEI IP treats the ancient Zi Wei Dou Shu framework strictly as a cognitive and behavioral classification tool—similar to MBTI or Enneagram, but enhanced with actionable positioning and creator strategy.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 p-4 rounded-2xl bg-surface-100 border border-white/5">
-              <span className="font-bold text-white block">Can I cancel my subscription anytime?</span>
-              <p className="text-slate-400 leading-relaxed">
-                Yes. You can cancel your PRO subscription with a single click inside your Account settings. You will retain full access until the end of your billing cycle.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 p-4 rounded-2xl bg-surface-100 border border-white/5">
-              <span className="font-bold text-white block">How does the AI Content Studio generate scripts?</span>
-              <p className="text-slate-400 leading-relaxed">
-                Our model synthesizes your Primary IP Archetype, 5-Score Momentum, and the selected Transformation (Lu, Quan, Ke, Ji) into scripts that sound like an authentic high-ticket advisor rather than generic internet noise.
-              </p>
-            </div>
-
-            <div className="space-y-1.5 p-4 rounded-2xl bg-surface-100 border border-white/5">
-              <span className="font-bold text-white block">How is the 12-Week Elite cohort structured?</span>
-              <p className="text-slate-400 leading-relaxed">
-                The Elite program is limited to 5 high-performing consultants per quarter. It includes direct 1-on-1 positioning audits, bespoke high-ticket packaging, and bi-weekly advisory sessions with Alex Tan.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </AppShell>
