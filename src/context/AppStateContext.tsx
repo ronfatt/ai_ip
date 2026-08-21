@@ -4,231 +4,293 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   UserProfile,
   TestAnswers,
+  SavedScript,
+  OfferTier,
   ContentPillar,
-  BusinessOffer,
-  AcademyModule,
-  BusinessMetrics,
-  GeneratedScript,
   CoachMessage,
-  TransformationKey
+  PlanTier,
+  AcademyModule,
+  BusinessOffer,
+  BusinessMetrics
 } from '@/types/database';
+import {
+  UserEntitlements,
+  EntitlementRole,
+  PricingConfig,
+  DEFAULT_PRICING,
+  FunnelEvent,
+  EliteApplicationData
+} from '@/types/conversion';
 import {
   DEMO_USER_PROFILE,
   INITIAL_CONTENT_PILLARS,
   INITIAL_BUSINESS_OFFERS,
   ACADEMY_MODULES,
-  DEMO_BUSINESS_METRICS,
-  INITIAL_SAVED_SCRIPTS,
-  AI_COACH_KNOWLEDGE_RESPONSES
+  DEMO_BUSINESS_METRICS
 } from '@/lib/mock-data';
 
 interface AppStateContextType {
+  // User Profile & Entitlements
   userProfile: UserProfile;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
-  testAnswers: TestAnswers;
-  setTestAnswers: React.Dispatch<React.SetStateAction<TestAnswers>>;
+  entitlements: UserEntitlements;
+  demoRole: EntitlementRole;
+  setDemoRole: (role: EntitlementRole) => void;
+  pricing: PricingConfig;
+
+  // Free Usage Limit (Content Studio)
+  freeGenerationsUsed: number;
+  incrementGenerationCount: () => boolean; // returns true if permitted
+
+  // Purchase Actions
+  unlockBlueprint: () => void;
+  unlockCourse: () => void;
+  unlockPro: () => void;
+  submitEliteApplication: (data: EliteApplicationData) => void;
+
+  // Onboarding & Test
+  testAnswers: Partial<TestAnswers>;
+  updateTestAnswers: (answers: Partial<TestAnswers>) => void;
+  resetTest: () => void;
+
+  // Brand Pillars & Offers
+  customPillars: ContentPillar[];
+  updatePillars: (pillars: ContentPillar[]) => void;
   contentPillars: ContentPillar[];
   setContentPillars: React.Dispatch<React.SetStateAction<ContentPillar[]>>;
+  customOffers: BusinessOffer[];
+  updateOffers: (offers: BusinessOffer[]) => void;
   businessOffers: BusinessOffer[];
   setBusinessOffers: React.Dispatch<React.SetStateAction<BusinessOffer[]>>;
-  academyModules: AcademyModule[];
-  setAcademyModules: React.Dispatch<React.SetStateAction<AcademyModule[]>>;
+
+  // Business Metrics
   businessMetrics: BusinessMetrics;
-  setBusinessMetrics: React.Dispatch<React.SetStateAction<BusinessMetrics>>;
-  savedScripts: GeneratedScript[];
-  saveScript: (script: GeneratedScript) => void;
+
+  // Academy Modules
+  academyModules: AcademyModule[];
+  toggleModuleCompletion: (id: string) => void;
+  updateWorkbookAnswer: (moduleId: string, questionIndex: number, answer: string) => void;
+
+  // Saved Scripts
+  savedScripts: SavedScript[];
+  saveScript: (script: SavedScript) => void;
   removeSavedScript: (id: string) => void;
+
+  // AI Coach Chat
   coachMessages: CoachMessage[];
-  sendCoachMessage: (text: string) => void;
+  sendCoachMessage: (content: string) => void;
+
+  // Upgrade Modal Control
   isUpgradeModalOpen: boolean;
-  setIsUpgradeModalOpen: (open: boolean) => void;
-  upgradeModalTriggerReason: string;
-  openUpgradeModal: (reason?: string) => void;
-  activePlan: 'free' | 'snapshot' | 'pro' | 'elite';
-  setActivePlan: (plan: 'free' | 'snapshot' | 'pro' | 'elite') => void;
-  completeOnboarding: (answers: TestAnswers) => void;
-  toggleModuleCompletion: (moduleId: string) => void;
-  updateWorkbookAnswer: (moduleId: string, promptId: string, answer: string) => void;
+  upgradeModalFeature: string;
+  openUpgradeModal: (featureName?: string) => void;
+  closeUpgradeModal: () => void;
+
+  // Plan Tier
+  activePlan: PlanTier;
+  setActivePlan: (plan: PlanTier) => void;
+
+  // Toast System
+  toasts: { id: string; message: string; type: 'success' | 'info' | 'warning' }[];
   addToast: (message: string, type?: 'success' | 'info' | 'warning') => void;
+  removeToast: (id: string) => void;
+
+  // Analytics Tracking
+  trackEvent: (eventName: string, metadata?: Record<string, any>) => void;
+  eventsLog: FunnelEvent[];
 }
 
 const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
 
-const DEFAULT_TEST_ANSWERS: TestAnswers = {
-  birthProfile: {
-    name: 'Alex Tan',
-    birthDate: '1992-06-18',
-    birthTime: '09:30',
-    birthPlace: 'Kuala Lumpur, Malaysia',
-    gender: 'male',
-    calendarType: 'solar'
-  },
-  currentRole: 'Consultant',
-  currentChallenges: [
-    'I know a lot, but people do not know what I am best at',
-    'I create content, but nobody remembers me',
-    'I have expertise but no clear high-ticket monetization path'
-  ],
-  businessGoals: [
-    'Build high-ticket authority',
-    'Get premium inbound clients',
-    'Develop a scalable personal brand intelligence engine'
-  ],
-  communicationPrefs: {
-    analyticalVsEmotional: 25, // analytical
-    directVsGentle: 15,        // direct
-    structuredVsSpontaneous: 20, // structured
-    teachingVsStorytelling: 35,  // teaching/framework
-    expertVsLifestyle: 10        // expert-led
-  }
-};
-
 export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [userProfile, setUserProfile] = useState<UserProfile>(DEMO_USER_PROFILE);
-  const [testAnswers, setTestAnswers] = useState<TestAnswers>(DEFAULT_TEST_ANSWERS);
-  const [contentPillars, setContentPillars] = useState<ContentPillar[]>(INITIAL_CONTENT_PILLARS);
-  const [businessOffers, setBusinessOffers] = useState<BusinessOffer[]>(INITIAL_BUSINESS_OFFERS);
+  const [demoRole, setDemoRoleState] = useState<EntitlementRole>('BLUEPRINT');
+  const [pricing] = useState<PricingConfig>(DEFAULT_PRICING);
+
+  const [entitlements, setEntitlements] = useState<UserEntitlements>({
+    has_blueprint: true,
+    has_course: true,
+    has_pro: true,
+    has_elite: false,
+  });
+
+  const [freeGenerationsUsed, setFreeGenerationsUsed] = useState<number>(1);
+  const [testAnswers, setTestAnswers] = useState<Partial<TestAnswers>>({});
+  const [customPillars, setCustomPillars] = useState<ContentPillar[]>(INITIAL_CONTENT_PILLARS);
+  const [customOffers, setCustomOffers] = useState<BusinessOffer[]>(INITIAL_BUSINESS_OFFERS);
   const [academyModules, setAcademyModules] = useState<AcademyModule[]>(ACADEMY_MODULES);
-  const [businessMetrics, setBusinessMetrics] = useState<BusinessMetrics>(DEMO_BUSINESS_METRICS);
-  const [savedScripts, setSavedScripts] = useState<GeneratedScript[]>(INITIAL_SAVED_SCRIPTS);
-  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
-  const [upgradeModalTriggerReason, setUpgradeModalTriggerReason] = useState('Unlock full PRO intelligence');
-  const [activePlan, setActivePlan] = useState<'free' | 'snapshot' | 'pro' | 'elite'>('pro');
+  const [businessMetrics] = useState<BusinessMetrics>(DEMO_BUSINESS_METRICS);
+  const [savedScripts, setSavedScripts] = useState<SavedScript[]>([]);
+  const [activePlan, setActivePlan] = useState<PlanTier>('pro');
 
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState<boolean>(false);
+  const [upgradeModalFeature, setUpgradeModalFeature] = useState<string>('Pro Feature');
   const [toasts, setToasts] = useState<{ id: string; message: string; type: 'success' | 'info' | 'warning' }[]>([]);
+  const [eventsLog, setEventsLog] = useState<FunnelEvent[]>([]);
 
-  const [coachMessages, setCoachMessages] = useState<CoachMessage[]>([
-    {
-      id: 'msg_welcome',
-      sender: 'assistant',
-      content: `Good day Alex. I am your **ZIWEI IP Strategic Intelligence Coach**.
+  // Track Funnel Events
+  const trackEvent = (name: string, metadata?: Record<string, any>) => {
+    const newEvent: FunnelEvent = {
+      id: `evt_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      name,
+      timestamp: new Date().toISOString(),
+      userId: userProfile.id,
+      metadata,
+    };
+    setEventsLog((prev) => [newEvent, ...prev]);
+  };
 
-Based on your **Strategic Creator** archetype and **Authority (92)** / **Monetization (88)** profile, your fastest path to RM25k+ monthly revenue is publishing high-conviction diagnostic frameworks and driving qualified inbound leads to your high-ticket advisory offer.
-
-What positioning or content challenge would you like to optimize today?`,
-      timestamp: 'Just now',
-      actions: [
-        { label: '🎯 What should I post today?', linkUrl: 'coach:post_today' },
-        { label: '💰 How to structure my offer ladder?', linkUrl: 'coach:what_to_sell' },
-        { label: '🔍 Why is my content not converting?', linkUrl: 'coach:not_converting' },
-        { label: '🎬 What video setup fits my nature?', linkUrl: 'coach:video_fit' }
-      ]
+  // Demo Role Switcher
+  const setDemoRole = (role: EntitlementRole) => {
+    setDemoRoleState(role);
+    if (role === 'FREE') {
+      setEntitlements({ has_blueprint: false, has_course: false, has_pro: false, has_elite: false });
+      setActivePlan('free');
+    } else if (role === 'BLUEPRINT') {
+      setEntitlements({ has_blueprint: true, has_course: false, has_pro: false, has_elite: false });
+      setActivePlan('free');
+    } else if (role === 'COURSE') {
+      setEntitlements({ has_blueprint: true, has_course: true, has_pro: false, has_elite: false });
+      setActivePlan('free');
+    } else if (role === 'PRO') {
+      setEntitlements({ has_blueprint: true, has_course: true, has_pro: true, has_elite: false });
+      setActivePlan('pro');
+    } else if (role === 'ELITE') {
+      setEntitlements({ has_blueprint: true, has_course: true, has_pro: true, has_elite: true });
+      setActivePlan('elite');
     }
-  ]);
-
-  const addToast = (message: string, type: 'success' | 'info' | 'warning' = 'success') => {
-    const id = Math.random().toString(36).substring(2, 9);
-    setToasts((prev) => [...prev, { id, message, type }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 4000);
+    addToast(`Switched Demo Role to: ${role}`, 'info');
   };
 
-  const openUpgradeModal = (reason: string = 'Unlock full PRO intelligence') => {
-    setUpgradeModalTriggerReason(reason);
-    setIsUpgradeModalOpen(true);
+  // Increment Generation Count with Free Limit Check
+  const incrementGenerationCount = (): boolean => {
+    if (entitlements.has_pro || activePlan === 'pro' || activePlan === 'elite') {
+      return true; // Unlimited for PRO
+    }
+    if (freeGenerationsUsed >= 3) {
+      openUpgradeModal('AI Content Studio Limit Reached (3/3 Free Generations Used)');
+      return false;
+    }
+    setFreeGenerationsUsed((prev) => prev + 1);
+    return true;
   };
 
-  const saveScript = (script: GeneratedScript) => {
-    setSavedScripts((prev) => {
-      const exists = prev.some((s) => s.id === script.id);
-      if (exists) return prev;
-      return [script, ...prev];
-    });
-    addToast('Script saved to your Content Library!', 'success');
+  // Purchase Actions
+  const unlockBlueprint = () => {
+    setEntitlements((prev) => ({ ...prev, has_blueprint: true }));
+    trackEvent('blueprint_purchased', { price: pricing.blueprintPrice });
+    addToast('🎉 Full ZIWEI IP Blueprint Unlocked!', 'success');
   };
 
-  const removeSavedScript = (id: string) => {
-    setSavedScripts((prev) => prev.filter((s) => s.id !== id));
-    addToast('Script removed from Library', 'info');
+  const unlockCourse = () => {
+    setEntitlements((prev) => ({ ...prev, has_course: true }));
+    trackEvent('course_purchased', { price: pricing.coursePrice });
+    addToast('🎓 《紫微IP定位学》 Course Unlocked in Academy!', 'success');
   };
 
-  const completeOnboarding = (answers: TestAnswers) => {
-    setTestAnswers(answers);
-    setUserProfile((prev) => ({
-      ...prev,
-      name: answers.birthProfile.name || prev.name,
-      role: answers.currentRole || prev.role,
-      tier: 'free' // new test starts in free tier report preview
-    }));
+  const unlockPro = () => {
+    setEntitlements((prev) => ({ ...prev, has_pro: true }));
+    setActivePlan('pro');
+    trackEvent('pro_upgraded', { price: pricing.proMonthlyPrice });
+    addToast('⭐ Upgraded to ZIWEI IP PRO Membership!', 'success');
   };
 
-  const toggleModuleCompletion = (moduleId: string) => {
+  const submitEliteApplication = (data: EliteApplicationData) => {
+    trackEvent('elite_application_submitted', { business: data.currentBusiness });
+    addToast('📋 Elite Application submitted! Our advisory team will reach out within 24h.', 'success');
+  };
+
+  const updateTestAnswers = (answers: Partial<TestAnswers>) => {
+    setTestAnswers((prev) => ({ ...prev, ...answers }));
+  };
+
+  const resetTest = () => {
+    setTestAnswers({});
+  };
+
+  const updatePillars = (pillars: ContentPillar[]) => {
+    setCustomPillars(pillars);
+  };
+
+  const updateOffers = (offers: BusinessOffer[]) => {
+    setCustomOffers(offers);
+  };
+
+  const toggleModuleCompletion = (id: string) => {
     setAcademyModules((prev) =>
-      prev.map((mod) => (mod.id === moduleId ? { ...mod, completed: !mod.completed } : mod))
+      prev.map((m) => (m.id === id ? { ...m, completed: !m.completed } : m))
     );
-    addToast('Course progress updated!', 'success');
+    addToast('Module progress updated!', 'success');
   };
 
-  const updateWorkbookAnswer = (moduleId: string, promptId: string, answer: string) => {
+  const updateWorkbookAnswer = (moduleId: string, questionIndex: number, answer: string) => {
     setAcademyModules((prev) =>
-      prev.map((mod) => {
-        if (mod.id !== moduleId) return mod;
+      prev.map((m) => {
+        if (m.id !== moduleId) return m;
+        const newPrompts = [...m.workbookPrompts];
+        if (newPrompts[questionIndex]) {
+          newPrompts[questionIndex] = { ...newPrompts[questionIndex], userAnswer: answer };
+        }
         return {
-          ...mod,
-          workbookPrompts: mod.workbookPrompts.map((p) => (p.id === promptId ? { ...p, userAnswer: answer } : p))
+          ...m,
+          workbookPrompts: newPrompts,
         };
       })
     );
   };
 
-  const sendCoachMessage = (text: string) => {
-    if (!text.trim()) return;
+  const saveScript = (script: SavedScript) => {
+    setSavedScripts((prev) => [script, ...prev.filter((s) => s.id !== script.id)]);
+    addToast('Script saved to your library!', 'success');
+  };
 
+  const removeSavedScript = (id: string) => {
+    setSavedScripts((prev) => prev.filter((s) => s.id !== id));
+    addToast('Script removed.', 'info');
+  };
+
+  const [coachMessages, setCoachMessages] = useState<CoachMessage[]>([
+    {
+      id: '1',
+      sender: 'assistant',
+      content:
+        'Hello Alex. I am your strategic AI brand coach. I have analyzed your **Strategic Creator** archetype and your **QUAN (Authority)** focus. What content or monetization challenge are we solving today?',
+      timestamp: '2026-08-21T10:00:00Z',
+    },
+  ]);
+
+  const sendCoachMessage = (content: string) => {
     const userMsg: CoachMessage = {
-      id: `msg_u_${Date.now()}`,
+      id: String(Date.now()),
       sender: 'user',
-      content: text,
-      timestamp: 'Just now'
+      content,
+      timestamp: new Date().toISOString(),
     };
 
     setCoachMessages((prev) => [...prev, userMsg]);
+    trackEvent('coach_message_sent', { query: content });
+  };
 
-    // Generate intelligent contextual response
+  const openUpgradeModal = (featureName?: string) => {
+    setUpgradeModalFeature(featureName || 'Pro Feature');
+    setIsUpgradeModalOpen(true);
+    trackEvent('pro_paywall_viewed', { feature: featureName });
+  };
+
+  const closeUpgradeModal = () => {
+    setIsUpgradeModalOpen(false);
+  };
+
+  const addToast = (message: string, type: 'success' | 'info' | 'warning' = 'info') => {
+    const id = String(Date.now()) + Math.random();
+    setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
-      const lower = text.toLowerCase();
-      let replyContent = '';
+      removeToast(id);
+    }, 4000);
+  };
 
-      if (lower.includes('post') || lower.includes('today') || lower.includes('topic') || text.includes('post_today')) {
-        replyContent = AI_COACH_KNOWLEDGE_RESPONSES.post_today;
-      } else if (lower.includes('sell') || lower.includes('offer') || lower.includes('price') || lower.includes('pricing') || text.includes('what_to_sell')) {
-        replyContent = AI_COACH_KNOWLEDGE_RESPONSES.what_to_sell;
-      } else if (lower.includes('convert') || lower.includes('lead') || lower.includes('sales') || lower.includes('not converting') || text.includes('not_converting')) {
-        replyContent = AI_COACH_KNOWLEDGE_RESPONSES.not_converting;
-      } else if (lower.includes('video') || lower.includes('camera') || lower.includes('film') || text.includes('video_fit')) {
-        replyContent = AI_COACH_KNOWLEDGE_RESPONSES.video_fit;
-      } else if (lower.includes('audience') || lower.includes('who') || text.includes('ideal_audience')) {
-        replyContent = AI_COACH_KNOWLEDGE_RESPONSES.ideal_audience;
-      } else if (lower.includes('position') || lower.includes('statement') || text.includes('how_to_position')) {
-        replyContent = AI_COACH_KNOWLEDGE_RESPONSES.how_to_position;
-      } else {
-        replyContent = `Based on your **${userProfile.primaryArchetype.name}** profile with an **Authority score of ${userProfile.scores.authority}**:
-
-When addressing "${text}", remember that your highest leverage is **structural clarity over emotional hype**.
-
-💡 **Strategic Action**:
-1. Anchor your solution in a 3-part framework rather than scattered tips.
-2. Use the **Four Transformations** model: Start with LU to resonate with the exact pain, then QUAN to establish your standard.
-3. Keep your call-to-action focused on a single DM trigger or Diagnostic Audit.
-
-Would you like to generate a tailored script in the AI Content Studio or review your Offer Ladder?`;
-      }
-
-      const aiMsg: CoachMessage = {
-        id: `msg_ai_${Date.now()}`,
-        sender: 'assistant',
-        content: replyContent,
-        timestamp: 'Just now',
-        contextRef: 'Strategic Creator DNA Model v2.6',
-        actions: [
-          { label: '⚡ Open AI Content Studio', linkUrl: '/studio' },
-          { label: '📋 View Brand Blueprint', linkUrl: '/blueprint' },
-          { label: '💰 Explore Offer Ladder', linkUrl: '/business' }
-        ]
-      };
-
-      setCoachMessages((prev) => [...prev, aiMsg]);
-    }, 600);
+  const removeToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
   return (
@@ -236,50 +298,64 @@ Would you like to generate a tailored script in the AI Content Studio or review 
       value={{
         userProfile,
         setUserProfile,
+        entitlements,
+        demoRole,
+        setDemoRole,
+        pricing,
+        freeGenerationsUsed,
+        incrementGenerationCount,
+        unlockBlueprint,
+        unlockCourse,
+        unlockPro,
+        submitEliteApplication,
         testAnswers,
-        setTestAnswers,
-        contentPillars,
-        setContentPillars,
-        businessOffers,
-        setBusinessOffers,
-        academyModules,
-        setAcademyModules,
+        updateTestAnswers,
+        resetTest,
+        customPillars,
+        updatePillars,
+        contentPillars: customPillars,
+        setContentPillars: setCustomPillars,
+        customOffers,
+        updateOffers,
+        businessOffers: customOffers,
+        setBusinessOffers: setCustomOffers,
         businessMetrics,
-        setBusinessMetrics,
+        academyModules,
+        toggleModuleCompletion,
+        updateWorkbookAnswer,
         savedScripts,
         saveScript,
         removeSavedScript,
         coachMessages,
         sendCoachMessage,
         isUpgradeModalOpen,
-        setIsUpgradeModalOpen,
-        upgradeModalTriggerReason,
+        upgradeModalFeature,
         openUpgradeModal,
+        closeUpgradeModal,
         activePlan,
         setActivePlan,
-        completeOnboarding,
-        toggleModuleCompletion,
-        updateWorkbookAnswer,
-        addToast
+        toasts,
+        addToast,
+        removeToast,
+        trackEvent,
+        eventsLog,
       }}
     >
       {children}
-
-      {/* Global Toast Container */}
-      <div className="fixed bottom-20 md:bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm pointer-events-none">
-        {toasts.map((toast) => (
+      {/* Toast Render */}
+      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none">
+        {toasts.map((t) => (
           <div
-            key={toast.id}
-            className={`pointer-events-auto px-4 py-3 rounded-xl border text-sm font-medium shadow-2xl backdrop-blur-xl animate-fade-in flex items-center gap-3 ${
-              toast.type === 'success'
-                ? 'bg-emerald-950/80 border-emerald-500/40 text-emerald-200'
-                : toast.type === 'warning'
-                ? 'bg-amber-950/80 border-amber-500/40 text-amber-200'
-                : 'bg-slate-900/90 border-slate-700 text-slate-200'
+            key={t.id}
+            className={`pointer-events-auto px-4 py-3 rounded-xl text-xs font-semibold shadow-xl border animate-slide-up flex items-center gap-2 ${
+              t.type === 'success'
+                ? 'bg-emerald-950 text-emerald-200 border-emerald-500/40'
+                : t.type === 'warning'
+                ? 'bg-amber-950 text-amber-200 border-amber-500/40'
+                : 'bg-surface-100 text-slate-100 border-white/20'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
-            <span>{toast.message}</span>
+            <span>{t.message}</span>
           </div>
         ))}
       </div>

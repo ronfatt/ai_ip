@@ -10,31 +10,41 @@ export type UserRole =
   | 'Other';
 
 export type TransformationKey = 'LU' | 'QUAN' | 'KE' | 'JI';
+export type PlanTier = 'free' | 'pro' | 'elite';
+
+export interface IPScores {
+  authority: number; // 0-100 (QUAN)
+  trust: number;     // 0-100 (KE)
+  attraction: number;// 0-100 (LU)
+  expression: number;// 0-100 (Clarity/Delivery)
+  monetization: number; // 0-100 (Pricing Power/Offer)
+}
 
 export interface TransformationDetail {
   key: TransformationKey;
-  chineseName: string;
-  pinyin: string;
-  businessTitle: string;
-  themeColor: string;
-  badgeBg: string;
-  borderColor: string;
-  glowColor: string;
-  iconName: string;
-  summary: string;
-  strategicInsight: string;
-  recommendedContent: string[];
-  avoidances: string[];
-  suggestedCTAs: string[];
-  samplePrompt: string;
-}
-
-export interface IPScores {
-  authority: number; // e.g. 92
-  trust: number;     // e.g. 87
-  attraction: number; // e.g. 76
-  expression: number; // e.g. 81
-  monetization: number; // e.g. 88
+  chineseName?: string;
+  chineseChar?: string;
+  pinyin?: string;
+  businessTitle?: string;
+  nameEn?: string;
+  themeColor?: string;
+  badgeBg?: string;
+  borderColor?: string;
+  glowColor?: string;
+  iconName?: string;
+  summary?: string;
+  strategicInsight?: string;
+  recommendedContent?: string[];
+  avoidances?: string[];
+  suggestedCTAs?: string[];
+  samplePrompt?: string;
+  score?: number;
+  definition?: string;
+  purpose?: string;
+  bestContentFormats?: string[];
+  recommendedHookFormula?: string;
+  avoidPitfall?: string;
+  distributionRatio?: number; // e.g. 30%
 }
 
 export interface IPArchetype {
@@ -60,16 +70,26 @@ export interface BirthProfile {
 }
 
 export interface TestAnswers {
-  birthProfile: BirthProfile;
-  currentRole: UserRole;
-  currentChallenges: string[];
-  businessGoals: string[];
-  communicationPrefs: {
-    analyticalVsEmotional: number; // 0-100 (0=Analytical, 100=Emotional)
-    directVsGentle: number;         // 0-100
-    structuredVsSpontaneous: number; // 0-100
-    teachingVsStorytelling: number;  // 0-100
-    expertVsLifestyle: number;      // 0-100
+  name?: string;
+  birthDate?: string;
+  birthTime?: string;
+  birthLocation?: string;
+  role?: string;
+  challenges?: string[];
+  primaryGoal?: string;
+  businessModels?: string[];
+  contentFrequency?: string;
+  platforms?: string[];
+  birthProfile?: BirthProfile;
+  currentRole?: UserRole;
+  currentChallenges?: string[];
+  businessGoals?: string[];
+  communicationPrefs?: {
+    analyticalVsEmotional?: number;
+    directVsGentle?: number;
+    structuredVsSpontaneous?: number;
+    teachingVsStorytelling?: number;
+    expertVsLifestyle?: number;
   };
 }
 
@@ -125,6 +145,37 @@ export interface GeneratedScript {
   shotSuggestions: string[];
   createdAt: string;
   saved?: boolean;
+}
+
+export interface SavedScript {
+  id: string;
+  topic: string;
+  contentType: string;
+  transformation: TransformationKey;
+  hookOptions: { text: string; score: number; style: string }[];
+  coreIdea: string;
+  script30s: string;
+  script60s: string;
+  cta: string;
+  caption: string;
+  thumbnailTitle: string;
+  bRollIdeas: string[];
+  shotSuggestions: string[];
+  createdAt: string;
+  saved?: boolean;
+}
+
+export interface OfferTier {
+  id: string;
+  tier: 'Free' | 'Entry' | 'Core' | 'Premium' | 'Continuity';
+  name: string;
+  priceFormatted: string;
+  priceNumeric: number;
+  promise: string;
+  audience: string;
+  deliverables: string[];
+  cta: string;
+  conversionFunnelStage: string;
 }
 
 export interface BusinessOffer {

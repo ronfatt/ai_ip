@@ -15,7 +15,9 @@ import {
   User,
   Crown,
   ChevronRight,
-  Database
+  Database,
+  BarChart3,
+  CreditCard
 } from 'lucide-react';
 import { useAppState } from '@/context/AppStateContext';
 
@@ -28,13 +30,14 @@ const NAV_ITEMS = [
   { href: '/business', label: 'Business Builder', icon: Briefcase, badge: 'Offers' },
   { href: '/academy', label: 'Academy', icon: GraduationCap, badge: '8 Mods' },
   { href: '/coach', label: 'AI Coach', icon: Bot, badge: 'Live' },
+  { href: '/analytics', label: 'Funnel Analytics', icon: BarChart3, badge: 'Funnel' },
   { href: '/progress', label: 'Progress', icon: LineChart, badge: '' },
   { href: '/account', label: 'Account', icon: User, badge: '' },
 ];
 
 export const Sidebar: React.FC = () => {
   const pathname = usePathname();
-  const { userProfile, openUpgradeModal, activePlan } = useAppState();
+  const { userProfile, openUpgradeModal, activePlan, demoRole, setDemoRole } = useAppState();
 
   return (
     <aside className="hidden lg:flex flex-col w-64 h-screen fixed left-0 top-0 bg-surface-300 border-r border-surface-border z-30 select-none">
@@ -52,7 +55,7 @@ export const Sidebar: React.FC = () => {
                 ZIWEI IP
               </span>
               <span className="text-[10px] px-1.5 py-0.2 bg-brand-champagne/15 text-brand-champagne rounded font-mono font-bold">
-                PRO
+                {demoRole}
               </span>
             </div>
             <p className="text-[10px] text-slate-400 font-medium tracking-tight">Personal Brand Intelligence</p>
@@ -95,7 +98,7 @@ export const Sidebar: React.FC = () => {
                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-semibold ${
                       item.badge === 'AI'
                         ? 'bg-brand-violet/20 text-brand-violet border border-brand-violet/30'
-                        : item.badge === 'Master'
+                        : item.badge === 'Master' || item.badge === 'Funnel'
                         ? 'bg-brand-champagne/15 text-brand-champagne border border-brand-champagne/30'
                         : 'bg-white/5 text-slate-400'
                     }`}
@@ -110,28 +113,30 @@ export const Sidebar: React.FC = () => {
         })}
       </div>
 
-      {/* Upgrade Banner (if not elite) */}
+      {/* Upgrade Banner & Quick Elite CTA */}
       <div className="p-3 border-t border-surface-border">
-        <div className="rounded-xl p-3.5 bg-gradient-to-b from-surface-100 to-surface-200 border border-brand-champagne/20 relative overflow-hidden">
-          <div className="flex items-center gap-2 mb-1.5">
+        <Link
+          href="/elite"
+          className="block rounded-xl p-3 bg-gradient-to-b from-surface-100 to-surface-200 border border-brand-champagne/20 relative overflow-hidden group hover:border-brand-champagne/50 transition-colors"
+        >
+          <div className="flex items-center gap-2 mb-1">
             <div className="p-1 rounded-md bg-brand-champagne/20 text-brand-champagne">
               <Crown className="w-4 h-4" />
             </div>
-            <span className="text-xs font-bold text-white">12-Week Guided Elite</span>
+            <span className="text-xs font-bold text-white group-hover:text-brand-champagne transition-colors">
+              12-Week Guided Elite
+            </span>
           </div>
-          <p className="text-[11px] text-slate-400 mb-3 leading-snug">
+          <p className="text-[11px] text-slate-400 mb-2 leading-snug">
             Private 1-on-1 brand positioning cohort with high-ticket offer architecture.
           </p>
-          <button
-            onClick={() => openUpgradeModal('Upgrade to 12-Week Guided Elite Cohort')}
-            className="w-full py-1.5 rounded-lg bg-brand-champagne text-slate-950 font-bold text-xs hover:bg-brand-gold transition-all shadow-md"
-          >
-            Upgrade Plan
-          </button>
-        </div>
+          <span className="text-brand-champagne font-bold text-xs flex items-center gap-1">
+            Apply for Cohort &rarr;
+          </span>
+        </Link>
 
         {/* User Mini Profile */}
-        <div className="mt-3 flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+        <div className="mt-2.5 flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-surface-50 border border-white/20 overflow-hidden flex items-center justify-center font-bold text-brand-champagne text-xs">
               AT
@@ -142,7 +147,7 @@ export const Sidebar: React.FC = () => {
             </div>
           </div>
           <Link href="/pricing" className="text-[10px] text-brand-champagne hover:underline font-mono">
-            {activePlan.toUpperCase()}
+            {demoRole}
           </Link>
         </div>
       </div>
