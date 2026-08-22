@@ -10,111 +10,95 @@ interface GenerateParams {
 }
 
 export function generateScriptContent(params: GenerateParams): GeneratedScript {
-  const { topic, contentType, transformation, userName = 'Alex Tan', userRole = 'Brand Consultant', archetype = 'Strategic Creator' } = params;
-  const cleanTopic = topic.trim() || 'Why high-performing professionals struggle with personal branding';
+  const { topic, contentType, transformation, userName = '陈志远', userRole = '商业战略顾问', archetype = '策略型破局者' } = params;
+  const cleanTopic = topic.trim() || '为什么资深专家每天工作14小时却赚不到钱？';
   const id = `scr_${Date.now()}`;
   const now = new Date().toISOString();
 
-  // Transformation specifics
+  // 四化特定配置
   const transMap: Record<TransformationKey, { prefix: string; hookAngle: string; tone: string; ctaWord: string; ctaText: string }> = {
     LU: {
-      prefix: '🌟 LU (Attraction & Resonance)',
-      hookAngle: 'Unspoken Frustration / Deep Resonance',
-      tone: 'Empathic, observant, insightful',
-      ctaWord: 'BLUEPRINT',
-      ctaText: 'Comment "BLUEPRINT" and I will send you our 5-Step Brand Resonance Audit template.'
+      prefix: '🌟 禄 (痛点共鸣与引力池)',
+      hookAngle: '扎心痛点共鸣 / 情绪深层呼应',
+      tone: '温和共情、观察入微、见解独到',
+      ctaWord: '蓝图',
+      ctaText: '在评论区回复【蓝图】，我将发送给你完整的《5步个人品牌共鸣自测表》。'
     },
     QUAN: {
-      prefix: '👑 QUAN (Authority & Conviction)',
-      hookAngle: 'Contrarian Truth / Industry Critique',
-      tone: 'Direct, uncompromising, high-conviction, authoritative',
+      prefix: '👑 权 (行业权威与强定力)',
+      hookAngle: '逆主流洞察 / 行业伪常识拆解',
+      tone: '直接犀利、从容沉稳、高认知定力、权威说服',
       ctaWord: 'IP',
-      ctaText: 'Comment "IP" to get our confidential High-Ticket Positioning Framework.'
+      ctaText: '在评论区回复【IP】，免费获取我们的《高客单商业定位与定价矩阵》。'
     },
     KE: {
-      prefix: '🛡️ KE (Trust & Reputation)',
-      hookAngle: 'Diagnostic Evidence / Before-and-After Autopsy',
-      tone: 'Analytical, pragmatic, evidence-based, credible',
-      ctaWord: 'CASE',
-      ctaText: 'DM me "CASE" to read the complete confidential breakdown and diagnostic sheets.'
+      prefix: '🛡️ 科 (信任背书与方法论)',
+      hookAngle: '案例复盘剖析 / 数据与实证',
+      tone: '逻辑严密、务实落地、证据确凿、公信力强',
+      ctaWord: '案例',
+      ctaText: '私信我发送【案例】，获取完整的商业案例拆解与诊断底稿。'
     },
     JI: {
-      prefix: '⚡ JI (Breakthrough & Blind Spot)',
-      hookAngle: 'Counter-Intuitive Bottleneck / Vulnerable Awakening',
-      tone: 'Revealing, self-aware, perspective-shifting',
-      ctaWord: 'AUDIT',
-      ctaText: 'Take the free 3-minute IP DNA Test to uncover your blind spots before your next launch.'
+      prefix: '⚡ 忌 (认知盲点与破局卡点)',
+      hookAngle: '反常识瓶颈警示 / 觉醒破局',
+      tone: '直击本质、促人深思、认知升维',
+      ctaWord: '体检',
+      ctaText: '点击链接完成 3 分钟免费 IP 基因测评，在下次启动前排查出核心盲点。'
     }
   };
 
   const currentTrans = transMap[transformation] || transMap.QUAN;
 
-  // Generate 3 dynamic hook options
+  // 动态生成 3 组破局钩子
   const hookOptions = [
     {
-      text: `If you are an experienced ${userRole.toLowerCase()} and you are still struggling with ${cleanTopic.toLowerCase()}, you have a positioning problem, not an effort problem.`,
+      text: `如果你是一名资深的${userRole}，却依然在为“${cleanTopic}”感到焦虑，这根本不是你不够努力，而是你的定位出现了系统性偏差。`,
       score: 96,
-      style: 'High-Conviction Polarizing'
+      style: '高定力犀利破局'
     },
     {
-      text: `The single biggest mistake I see 6-figure practitioners make when tackling ${cleanTopic.toLowerCase()}—and what to do instead.`,
+      text: `年入百万的资深从业者在面对“${cleanTopic}”时最常犯的 1 个隐蔽错误——以及你应该如何正确应对。`,
       score: 92,
-      style: 'Direct Diagnostic Warning'
+      style: '诊断式警示提醒'
     },
     {
-      text: `Why conventional advice about ${cleanTopic.toLowerCase()} actually repels your highest-paying clients.`,
+      text: `为什么市面上关于“${cleanTopic}”的常规教学，正在悄悄赶走你最优质的高客单客户？`,
       score: 89,
-      style: 'Counter-Intuitive Insight'
+      style: '逆主流反常识洞察'
     }
   ];
 
-  const coreIdea = `For a ${archetype}, the key to mastering "${cleanTopic}" is replacing superficial noise with structural clarity, setting clear boundaries, and anchoring your natural authority.`;
+  const coreIdea = `作为【${archetype}】，攻克“${cleanTopic}”的核心在于摒弃低效浮夸的泛流量套路，用结构化的认知模型与清晰的交付边界，稳固你天生的行业权威。`;
 
-  const script30s = `Most people think ${cleanTopic.toLowerCase()} is about creating more content and shouting louder.
-Here is the truth: High-value decision makers don't buy noise; they buy clarity and conviction.
-When you master your natural IP Archetype, you stop competing on algorithm tricks and start commanding premium respect.
-Stop copying generic tactics. Build your authentic strategic brand engine.
-Follow for daily high-ticket brand intelligence.`;
+  const script30s = `绝大多数人以为解决“${cleanTopic}”的办法是多发内容、大声叫卖。
+但真相是：真正有支付能力的高净值客户从来不买单嘈杂的噪音，他们只买单确定性与高维洞察。
+当你掌握了天生的 IP 原型与核心杠杆，你就不需要讨好算法，而是直接掌握高客单定价权。
+停止盲目跟风套路，构建专属于你的高维品牌操作系统。
+关注我，每天为你拆解高客单商业品牌底层逻辑。`;
 
-  const script60s = `Let me tell you something that most social media coaches will never admit:
-When it comes to ${cleanTopic.toLowerCase()}, doing what everyone else does is the fastest way to become invisible.
-If you have 10+ years of domain expertise, trying to win with fast-cut viral trends makes you look commoditized.
-High-paying enterprise clients look for three specific signals:
-1. Deep Diagnostic Precision: Can you pinpoint their exact problem in 30 seconds?
-2. Methodological Restraint: Do you have a structured framework, or are you just guessing?
-3. Unshakable Conviction: Do you hold your standards when everyone else is cutting prices?
-When you align your content with your true nature—using our Four Transformations model—client acquisition stops feeling like a struggle.
-You transition from chasing leads to attracting buyers who already respect your price.
-If you are ready to stop guessing your positioning, ${currentTrans.ctaText.toLowerCase()}`;
+  const script60s = `告诉你一个很多所谓的流量导师从来不敢承认的真相：
+在探讨“${cleanTopic}”时，跟着所有人做同样的事，是你在这个市场迅速隐形的最快方式。
+如果你有 10 年以上的行业深厚积淀，却尝试靠快节奏的搞笑段子或情绪喧闹来获客，只会让你的专业形象严重贬值。
+高净值企业决策者在为高客单咨询买单时，只看 3 个核心信号：
+第一：30秒直击问题本质的手术刀级诊断力；
+第二：拥有清晰可落地的结构化交付模型，而不是随性发挥；
+第三：在所有人低价内卷打折时，依然坚守价值底线的战略定力。
+当你将内容与天性深度对齐——运用我们的四化内容飞轮——获客将不再是一场痛苦的挣扎。
+你将从被动追逐线索，转变为持续吸引主动认可你价值的精准买家。
+如果你准备好重构你的商业定位，${currentTrans.ctaText}`;
 
-  const caption = `Stop trying to solve ${cleanTopic.toLowerCase()} with generic advice. 🛑
+  const caption = `别再用泛滥的表面技巧去应对“${cleanTopic}”了。🛑
 
-As a ${userRole}, your greatest asset isn't viral reach—it's intellectual authority and deep trust.
+作为一名${userRole}，你最大的核心壁垒不是泛娱乐播放量，而是你的专业权威与深度信任。
 
-Here are the 3 structural shifts required:
-1️⃣ Replace volume with diagnostic depth.
-2️⃣ Filter out unqualified spectators with strong boundary-setting.
-3️⃣ Speak directly to the pain points of 5-figure decision-makers.
+实现高客单跃迁需要的 3 个关键转变：
+1️⃣ 用高密度认知诊断取代流水线内容；
+2️⃣ 用清晰的客户筛选标准过滤低意向比价人群；
+3️⃣ 直接针对愿意为结果买单的企业决策者痛点发声。
 
-What is your biggest bottleneck with this right now? Drop your thoughts below. 👇
+关于这个主题，你目前最大的卡点是什么？欢迎在评论区探讨交流。👇
 
-#PersonalBranding #ConsultingStrategy #BrandIntelligence #HighTicketPositioning #ZiweiIP #ExecutiveLeadership #${transformation}Content`;
-
-  const thumbnailTitle = `${transformation}: ${cleanTopic.toUpperCase().slice(0, 32)}`;
-
-  const bRollIdeas = [
-    'Overhead desk shot writing a 3-part framework diagram on an iPad Pro with dark aesthetic',
-    'Tight close-up of a premium notebook with handwritten strategic notes and a fountain pen',
-    'Clean mid-shot in a modern studio adjusting microphone and speaking with quiet intensity',
-    'Screen recording showing the ZIWEI IP radar momentum score rising from 72 to 92'
-  ];
-
-  const shotSuggestions = [
-    '0:00 - 0:08 | Hook: Direct camera eye-contact, no smile, high-conviction delivery with clear mic proximity',
-    '0:09 - 0:25 | Core Shift: Cut to side angle (45 degrees) explaining the structural industry flaw',
-    '0:26 - 0:48 | Framework: Visual overlay of the 3-step transformation model while speaking',
-    '0:49 - 0:60 | Resolution & CTA: Return to central eye-level framing for the clear unhurried call-to-action'
-  ];
+#商业战略 #个人IP #高客单定位 #知识变现 #紫微IP`;
 
   return {
     id,
@@ -127,9 +111,18 @@ What is your biggest bottleneck with this right now? Drop your thoughts below. �
     script60s,
     cta: currentTrans.ctaText,
     caption,
-    thumbnailTitle,
-    bRollIdeas,
-    shotSuggestions,
+    thumbnailTitle: `为什么高手从来不卷\n${cleanTopic.slice(0, 8)}`,
+    bRollIdeas: [
+      'iPad 黑暗模式下用 Apple Pencil 绘制商业 2x2 战略矩阵',
+      '近景展示简洁现代的实木工作台与专业广播级麦克风',
+      '黑白极简风格展示核心战略公式卡片'
+    ],
+    shotSuggestions: [
+      '镜头 01 (0–3秒)：直视镜头，语速沉稳，开门见山抛出破局钩子',
+      '镜头 02 (4–15秒)：切至侧机位 45 度角，iPad 屏幕录制同步推演逻辑架构',
+      '镜头 03 (16–45秒)：切回正机位中景，结合真实商业案例展开深度剖析',
+      '镜头 04 (46–60秒)：保持直接目光接触，发出单一明确的高转化行动指令'
+    ],
     createdAt: now,
     saved: false
   };

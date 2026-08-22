@@ -124,7 +124,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [activePlan, setActivePlan] = useState<PlanTier>('pro');
 
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState<boolean>(false);
-  const [upgradeModalFeature, setUpgradeModalFeature] = useState<string>('Pro Feature');
+  const [upgradeModalFeature, setUpgradeModalFeature] = useState<string>('PRO 会员专属功能');
   const [toasts, setToasts] = useState<{ id: string; message: string; type: 'success' | 'info' | 'warning' }[]>([]);
   const [eventsLog, setEventsLog] = useState<FunnelEvent[]>([]);
 
@@ -241,12 +241,12 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const saveScript = (script: SavedScript) => {
     setSavedScripts((prev) => [script, ...prev.filter((s) => s.id !== script.id)]);
-    addToast('Script saved to your library!', 'success');
+    addToast('脚本已成功保存至您的资产库！', 'success');
   };
 
   const removeSavedScript = (id: string) => {
     setSavedScripts((prev) => prev.filter((s) => s.id !== id));
-    addToast('Script removed.', 'info');
+    addToast('脚本已从资产库移除。', 'info');
   };
 
   const [coachMessages, setCoachMessages] = useState<CoachMessage[]>([
@@ -254,7 +254,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       id: '1',
       sender: 'assistant',
       content:
-        'Hello Alex. I am your strategic AI brand coach. I have analyzed your **Strategic Creator** archetype and your **QUAN (Authority)** focus. What content or monetization challenge are we solving today?',
+        '你好，志远。我是你的专属 AI 品牌战略教练。我已经完整读取了你的【策略型破局者】原型档案与【权·权威定力 (92分)】战略核心。今天我们需要解决什么内容创作或商业变现难题？',
       timestamp: '2026-08-21T10:00:00Z',
     },
   ]);
@@ -272,7 +272,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const openUpgradeModal = (featureName?: string) => {
-    setUpgradeModalFeature(featureName || 'Pro Feature');
+    setUpgradeModalFeature(featureName || 'PRO 会员专属功能');
     setIsUpgradeModalOpen(true);
     trackEvent('pro_paywall_viewed', { feature: featureName });
   };
