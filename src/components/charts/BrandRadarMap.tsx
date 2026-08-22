@@ -101,16 +101,21 @@ interface BrandRadarMapProps {
   size?: number;
 }
 
-export const BrandRadarMap: React.FC<BrandRadarMapProps> = ({ size = 260 }) => {
+export const BrandRadarMap: React.FC<BrandRadarMapProps> = ({ scores, size = 260 }) => {
+  const authorityVal = scores?.authority || 92;
+  const trustVal = scores?.trust || 87;
+  const attractionVal = scores?.attraction || 76;
+  const expressionVal = scores?.expression || 81;
+  const monetizationVal = scores?.monetization || 88;
   const [selectedNodeKey, setSelectedNodeKey] = useState<string>('expertise');
   const selectedNode = RADAR_NODES_DATA[selectedNodeKey];
 
   const axes = [
-    { key: 'expertise', labelZh: '专业定位', score: 92, angleDeg: -90, color: '#F59E0B' },
-    { key: 'identity', labelZh: '核心天性', score: 89, angleDeg: -18, color: '#8B5CF6' },
-    { key: 'values', labelZh: '价值底线', score: 87, angleDeg: 54, color: '#3B82F6' },
-    { key: 'audience', labelZh: '精准买家', score: 84, angleDeg: 126, color: '#10B981' },
-    { key: 'delivery', labelZh: '出镜表达', score: 81, angleDeg: 198, color: '#E5C07B' },
+    { key: 'expertise', labelZh: '专业定位', score: authorityVal, angleDeg: -90, color: '#F59E0B' },
+    { key: 'identity', labelZh: '核心天性', score: Math.round((authorityVal + trustVal) / 2), angleDeg: -18, color: '#8B5CF6' },
+    { key: 'values', labelZh: '价值底线', score: trustVal, angleDeg: 54, color: '#3B82F6' },
+    { key: 'audience', labelZh: '精准买家', score: attractionVal, angleDeg: 126, color: '#10B981' },
+    { key: 'delivery', labelZh: '出镜表达', score: expressionVal, angleDeg: 198, color: '#E5C07B' },
   ];
 
   const center = size / 2;

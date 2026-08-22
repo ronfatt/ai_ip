@@ -28,6 +28,7 @@ import {
   ACADEMY_MODULES,
   DEMO_BUSINESS_METRICS
 } from '@/lib/mock-data';
+import { generateDynamicUserProfile } from '@/lib/ziwei-engine';
 
 interface AppStateContextType {
   // User Profile & Entitlements
@@ -148,10 +149,10 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setActivePlan('free');
     } else if (role === 'BLUEPRINT') {
       setEntitlements({ has_blueprint: true, has_course: false, has_pro: false, has_elite: false });
-      setActivePlan('free');
+      setActivePlan('pro');
     } else if (role === 'COURSE') {
       setEntitlements({ has_blueprint: true, has_course: true, has_pro: false, has_elite: false });
-      setActivePlan('free');
+      setActivePlan('pro');
     } else if (role === 'PRO') {
       setEntitlements({ has_blueprint: true, has_course: true, has_pro: true, has_elite: false });
       setActivePlan('pro');
@@ -159,53 +160,58 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setEntitlements({ has_blueprint: true, has_course: true, has_pro: true, has_elite: true });
       setActivePlan('elite');
     }
-    addToast(`Switched Demo Role to: ${role}`, 'info');
   };
 
-  // Increment Generation Count with Free Limit Check
-  const incrementGenerationCount = (): boolean => {
-    if (entitlements.has_pro || activePlan === 'pro' || activePlan === 'elite') {
-      return true; // Unlimited for PRO
+  const incrementGenerationCount = () => {
+    if (entitlements.has_pro || entitlements.has_elite) {
+      return true;
     }
-    if (freeGenerationsUsed >= 3) {
-      openUpgradeModal('AI Content Studio Limit Reached (3/3 Free Generations Used)');
+    if (freeGenerationsUsed >= 2) {
+      openUpgradeModal('无限次 AI 创作脚本生成');
+      addToast('您已用完免费 AI 生成次数。升级为 PRO 会员即可畅享无限次生成。', 'warning');
       return false;
     }
     setFreeGenerationsUsed((prev) => prev + 1);
     return true;
   };
 
-  // Purchase Actions
   const unlockBlueprint = () => {
     setEntitlements((prev) => ({ ...prev, has_blueprint: true }));
     trackEvent('blueprint_purchased', { price: pricing.blueprintPrice });
-    addToast('🎉 Full ZIWEI IP Blueprint Unlocked!', 'success');
+    addToast('🎉 您的完整战略蓝图已正式解锁！', 'success');
   };
 
   const unlockCourse = () => {
     setEntitlements((prev) => ({ ...prev, has_course: true }));
     trackEvent('course_purchased', { price: pricing.coursePrice });
-    addToast('🎓 《紫微IP定位学》 Course Unlocked in Academy!', 'success');
+    addToast('🎓 《紫微IP定位学》核心大师课已开通！', 'success');
   };
 
   const unlockPro = () => {
     setEntitlements((prev) => ({ ...prev, has_pro: true }));
     setActivePlan('pro');
     trackEvent('pro_upgraded', { price: pricing.proMonthlyPrice });
-    addToast('⭐ Upgraded to ZIWEI IP PRO Membership!', 'success');
+    addToast('⭐ 已成功升级为 ZIWEI IP PRO 会员！', 'success');
   };
 
   const submitEliteApplication = (data: EliteApplicationData) => {
     trackEvent('elite_application_submitted', { business: data.currentBusiness });
-    addToast('📋 Elite Application submitted! Our advisory team will reach out within 24h.', 'success');
+    addToast('📋 私享陪跑申请已提交！我们的顾问团队将在 24 小时内与您取得联系。', 'success');
   };
 
+  // 动态更新问卷回答并实时重新计算个性化画像
   const updateTestAnswers = (answers: Partial<TestAnswers>) => {
-    setTestAnswers((prev) => ({ ...prev, ...answers }));
+    setTestAnswers((prev) => {
+      const merged = { ...prev, ...answers };
+      const newProfile = generateDynamicUserProfile(merged);
+      setUserProfile(newProfile);
+      return merged;
+    });
   };
 
   const resetTest = () => {
     setTestAnswers({});
+    setUserProfile(DEMO_USER_PROFILE);
   };
 
   const updatePillars = (pillars: ContentPillar[]) => {
@@ -220,7 +226,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setAcademyModules((prev) =>
       prev.map((m) => (m.id === id ? { ...m, completed: !m.completed } : m))
     );
-    addToast('Module progress updated!', 'success');
+    addToast('课程学习进度已更新！', 'success');
   };
 
   const updateWorkbookAnswer = (moduleId: string, questionIndex: number, answer: string) => {
@@ -342,7 +348,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }}
     >
       {children}
-      {/* Toast Render */}
+      {/* Toast 提示渲染 */}
       <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none">
         {toasts.map((t) => (
           <div

@@ -59,13 +59,13 @@ export const ShareableArchetypeCard: React.FC<ShareableArchetypeCardProps> = ({
             核心定位主原型
           </span>
           <h3 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-champagne to-brand-gold tracking-tight">
-            策略型破局者
+            {archetypeName}
           </h3>
           <span className="text-xs font-mono font-bold text-brand-champagne block">
-            次要原型：{secondaryArchetype}
+            次要支撑原型：{secondaryArchetype}
           </span>
           <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium max-w-xs mx-auto pt-2 italic">
-            “用结构化洞察、高维认知与清晰框架建立不可替代的行业权威。”
+            {tagline}
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export const ShareableArchetypeCard: React.FC<ShareableArchetypeCardProps> = ({
           </div>
           <div className="text-right">
             <span className="text-[10px] text-slate-400 block">综合战略势能</span>
-            <strong className="text-brand-champagne text-sm font-bold">84.8 分</strong>
+            <strong className="text-brand-champagne text-sm font-bold">{userProfile.momentumScore} 分</strong>
           </div>
         </div>
       </div>

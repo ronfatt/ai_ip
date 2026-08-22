@@ -109,6 +109,9 @@ export interface UserProfile {
   positioningStatement: string;
   brandVoice: string[];
   cameraPersonality: {
+    pace?: string;
+    posture?: string;
+    setting?: string;
     recommended: string[];
     avoid: string[];
   };

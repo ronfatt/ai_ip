@@ -22,11 +22,12 @@ import { RadarChart } from '@/components/charts/RadarChart';
 import { LockedFeature } from '@/components/ui/LockedFeature';
 import { ShareableArchetypeCard } from '@/components/ui/ShareableArchetypeCard';
 import { useAppState } from '@/context/AppStateContext';
+import { generateDynamicInsights } from '@/lib/ziwei-engine';
 
 function ReportContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { userProfile, pricing, trackEvent, addToast } = useAppState();
+  const { userProfile, testAnswers, pricing, trackEvent, addToast } = useAppState();
 
   const isSample = searchParams?.get('sample') === 'true';
 
@@ -34,7 +35,7 @@ function ReportContent() {
   const [exitEmail, setExitEmail] = useState('');
 
   useEffect(() => {
-    trackEvent('report_viewed', { isSample });
+    trackEvent('report_viewed', { isSample, userName: userProfile.name });
 
     // 桌面端鼠标移出检测（挽留弹窗）
     const handleMouseLeave = (e: MouseEvent) => {
@@ -44,7 +45,7 @@ function ReportContent() {
     };
     document.addEventListener('mouseleave', handleMouseLeave);
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
-  }, [isExitIntentOpen, isSample]);
+  }, [isExitIntentOpen, isSample, userProfile.name]);
 
   const handleSaveSnapshotEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,31 +54,15 @@ function ReportContent() {
     setIsExitIntentOpen(false);
   };
 
-  const freeScores = [
-    { label: '权威定力', score: 92, labelZh: '权·行业话语权', color: 'text-amber-400' },
-    { label: '信任背书', score: 87, labelZh: '科·口碑与确定性', color: 'text-blue-400' },
-    { label: '共情引力', score: 76, labelZh: '禄·客户共鸣度', color: 'text-emerald-400' },
-    { label: '表达语态', score: 81, labelZh: '表达·出镜穿透力', color: 'text-purple-400' },
-    { label: '变现势能', score: 88, labelZh: '变现·高客单溢价', color: 'text-brand-champagne' },
+  const dynamicScores = [
+    { label: '权威定力', score: userProfile.scores.authority, labelZh: '权·行业话语权', color: 'text-amber-400' },
+    { label: '信任背书', score: userProfile.scores.trust, labelZh: '科·口碑与确定性', color: 'text-blue-400' },
+    { label: '共情引力', score: userProfile.scores.attraction, labelZh: '禄·客户共鸣度', color: 'text-emerald-400' },
+    { label: '表达语态', score: userProfile.scores.expression, labelZh: '表达·出镜穿透力', color: 'text-purple-400' },
+    { label: '变现势能', score: userProfile.scores.monetization, labelZh: '变现·高客单溢价', color: 'text-brand-champagne' },
   ];
 
-  const topThreeInsights = [
-    {
-      number: '01',
-      title: '核心优势：商业判断力远超泛娱乐搞怪',
-      desc: '高净值客户对你的专业判断与逻辑框架产生信任的速度，远快于对你的情感依赖。当你进行高密度认知拆解时，高客单转化率最高。'
-    },
-    {
-      number: '02',
-      title: '破局机会：公开输出差异化逆主流观点',
-      desc: '你的专业实力极其扎实，但如果能在公开内容中敢于挑战行业内的 2-3 个低效伪常识，你的品牌辨识度与记忆点将提升 10 倍。'
-    },
-    {
-      number: '03',
-      title: '本周行动：增加权（观点型）内容比重',
-      desc: '多输出强观点与高维框架（权），减少基础的小技巧教学，能更快把泛流量观看者转化为高意向咨询客户。'
-    }
-  ];
+  const dynamicInsights = generateDynamicInsights(userProfile, testAnswers);
 
   return (
     <div className="min-h-screen bg-surface-300 text-white selection:bg-brand-champagne selection:text-slate-950">
@@ -108,14 +93,14 @@ function ReportContent() {
         <div className="text-center space-y-4 max-w-2xl mx-auto animate-fade-in">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-champagne/10 border border-brand-champagne/30 text-brand-champagne text-xs font-mono font-bold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>个人商业IP绝密档案</span>
+            <span>【{userProfile.name}】的个人商业IP专属档案</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             您的个人商业IP定位快照
           </h1>
           <p className="text-sm sm:text-base text-slate-300">
-            初次揭示你天生建立行业影响力、赢得决策者信任并掌握高客单定价权的底层逻辑。
+            初次揭示您天生建立行业影响力、赢得高净值决策者信任并掌握高客单定价权的底层逻辑。
           </p>
         </div>
 
@@ -126,20 +111,20 @@ function ReportContent() {
               核心定位主原型
             </span>
             <h2 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
-              策略型破局者
+              {userProfile.primaryArchetype.titleZh}
             </h2>
             <span className="text-xs sm:text-sm text-brand-gold font-mono font-bold block">
-              次要原型：权威建构者
+              次要支撑原型：{userProfile.secondaryArchetype.titleZh}
             </span>
           </div>
 
           <p className="text-base sm:text-lg text-slate-200 max-w-xl mx-auto leading-relaxed font-medium relative z-10">
-            “你建立影响力的核心方式，是将极端复杂的商业与认知难题，转化为直击本质的清晰结构与战略方向。”
+            “{userProfile.primaryArchetype.tagline}”
           </p>
 
           {/* 5维能力得分卡片 */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-4 text-xs font-mono relative z-10">
-            {freeScores.map((s) => (
+            {dynamicScores.map((s) => (
               <div key={s.label} className="p-3 rounded-2xl bg-surface-300/80 border border-white/5 space-y-1">
                 <span className="text-slate-400 text-[10px] block">{s.label}</span>
                 <span className={`text-2xl font-black ${s.color}`}>{s.score}</span>
@@ -149,7 +134,7 @@ function ReportContent() {
           </div>
 
           <div className="text-[11px] text-slate-400 font-mono relative z-10">
-            *基于紫微命盘时空矩阵与五维商业表达模型推演生成的战略评估估值。
+            *基于紫微命盘时空矩阵与您填写的五维商业偏好综合动态推演生成的专属估值。
           </div>
         </div>
 
@@ -158,15 +143,15 @@ function ReportContent() {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-champagne">
-                战略诊断提炼
+                个性化战略诊断提炼
               </span>
-              <h3 className="text-2xl font-bold text-white mt-0.5">已解锁的前 3 大核心破局洞察</h3>
+              <h3 className="text-2xl font-bold text-white mt-0.5">已为您定制解锁的前 3 大核心破局洞察</h3>
             </div>
             <span className="text-xs text-slate-400 font-mono">免费快照层级</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
-            {topThreeInsights.map((ins) => (
+            {dynamicInsights.map((ins) => (
               <div
                 key={ins.number}
                 className="p-6 rounded-3xl bg-surface-200/90 border border-white/10 space-y-3 flex flex-col justify-between"
@@ -185,16 +170,16 @@ function ReportContent() {
         <div className="pt-4 space-y-4">
           <div className="text-center space-y-1">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-champagne">
-              社交传播资产
+              专属社交传播资产
             </span>
-            <h3 className="text-xl font-bold text-white">分享你的专属 IP 基因徽章</h3>
+            <h3 className="text-xl font-bold text-white">分享【{userProfile.name}】的专属 IP 基因徽章</h3>
             <p className="text-xs text-slate-400">支持一键导出高清卡片至领英、小红书或微信朋友圈。</p>
           </div>
 
           <ShareableArchetypeCard
-            archetypeName="策略型破局者"
-            secondaryArchetype="权威建构者"
-            tagline="“用结构化洞察、高维认知与清晰框架建立不可替代的行业权威。”"
+            archetypeName={userProfile.primaryArchetype.titleZh}
+            secondaryArchetype={userProfile.secondaryArchetype.titleZh}
+            tagline={`“${userProfile.primaryArchetype.tagline}”`}
           />
         </div>
 
@@ -208,7 +193,7 @@ function ReportContent() {
               完整战略蓝图中包含的高阶系统
             </h3>
             <p className="text-xs text-slate-300">
-              免费快照仅提供初始诊断。完整战略蓝图将为你提供具体到每一步的落地执行路线图。
+              免费快照仅提供初始诊断。完整战略蓝图将为您提供具体到每一步的落地执行路线图。
             </p>
           </div>
 
@@ -216,17 +201,17 @@ function ReportContent() {
             <LockedFeature
               featureName="目标受众反向筛选与主动过滤机制"
               requiredProduct="Blueprint"
-              previewText="你最强烈的市场买家来自具备稳定营收的中小企业主与高管。为了过滤低价比价者，需要在所有前端内容中植入反向筛选话术..."
+              previewText={`核心买家：${userProfile.audience.primary}\n过滤人群：${userProfile.audience.avoid}`}
             />
             <LockedFeature
               featureName="定制化品牌语态与坚决防坑负面清单"
               requiredProduct="Blueprint"
-              previewText="语态校准：直接率（90%）、战略定力（95%）、冷静沉稳（85%）。坚决禁止快节奏抖音弹幕、制造焦虑或泛娱乐网红表演..."
+              previewText={`核心语态：${userProfile.brandVoice.join('、')}\n红线清单：坚决禁止制造焦虑、泛娱乐搞怪或虚假逼单...`}
             />
             <LockedFeature
               featureName="坐姿出镜镜头风格与表达节奏指南"
               requiredProduct="Blueprint"
-              previewText="黄金语速保持在 120-130 词/分钟，留白沉稳。搭配 iPad 黑暗模式手绘架构图与 Shure 广播级麦克风音频质感..."
+              previewText={`出镜语速：${userProfile.cameraPersonality.pace}\n体态要求：${userProfile.cameraPersonality.posture}...`}
             />
             <LockedFeature
               featureName="四化内容飞轮科学配比（禄 / 权 / 科 / 忌）"
@@ -236,7 +221,7 @@ function ReportContent() {
             <LockedFeature
               featureName="4大核心内容支柱与爆款选题库"
               requiredProduct="Blueprint"
-              previewText="1. 商业案例深度尸检（35%）\n2. 逆主流高穿透力观点（30%）\n3. 诊断体检清单（20%）\n4. 幕后战略决策实录（15%）"
+              previewText="1. 商业案例深度剖析（35%）\n2. 逆主流高穿透力观点（30%）\n3. 诊断体检清单（20%）\n4. 幕后战略决策实录（15%）"
             />
             <LockedFeature
               featureName="高客单产品天梯设计与30天启动日历"
@@ -253,10 +238,10 @@ function ReportContent() {
               完整战略升级
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              解锁我的完整战略蓝图
+              解锁【{userProfile.name}】的完整战略蓝图
             </h2>
             <p className="text-sm text-slate-300">
-              将你的天赋诊断转化为一套完整的个人商业品牌操作手册与 30 天内容落地引擎。
+              将您的天赋诊断转化为一套完整的个人商业品牌操作手册与 30 天内容落地引擎。
             </p>
           </div>
 
@@ -269,13 +254,13 @@ function ReportContent() {
               </span>
               <ul className="space-y-2 text-slate-400">
                 <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-slate-500" /> 核心主定位原型揭晓
+                  <Check className="w-4 h-4 text-slate-500" /> 核心主定位原型揭晓 ({userProfile.primaryArchetype.titleZh})
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-slate-500" /> 5 项基础能力得分
+                  <Check className="w-4 h-4 text-slate-500" /> 5 项个性化能力得分
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-slate-500" /> 前 3 条通用建议
+                  <Check className="w-4 h-4 text-slate-500" /> 前 3 条专属定制建议
                 </li>
                 <li className="flex items-center gap-2 text-slate-600">
                   <X className="w-4 h-4" /> 完整受众反向筛选与产品阶梯
@@ -380,7 +365,7 @@ function ReportContent() {
               </div>
               <h3 className="text-xl font-bold text-white">保存您的 IP 定位快照</h3>
               <p className="text-xs text-slate-300">
-                输入您的邮箱地址，在离开前为您免费保存策略型破局者定位与核心诊断洞察。
+                输入您的邮箱地址，在离开前为您免费保存【{userProfile.primaryArchetype.titleZh}】定位与核心诊断洞察。
               </p>
             </div>
 
